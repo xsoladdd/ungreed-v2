@@ -11,7 +11,7 @@
 
 ## Structure
 
-| Codebase       |  Description  |
-| :------------- | :-----------: |
-| [Black](black) | Hasura Server |
-| [Mocha](mocha) |  NEXT JS PWA  |
+| Codebase           |  Description  |
+| :----------------- | :-----------: |
+| [Black](black)     | Hasura Server |
+| [Mocha](app/mocha) |  NEXT JS PWA  |
