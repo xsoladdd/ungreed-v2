@@ -1,7 +1,5 @@
-import React from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -13,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
 import { signIn } from "next-auth/react";
+import React from "react";
 
 const LoginModal: React.FC = () => {
   return (
