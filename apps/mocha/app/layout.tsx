@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 // import Nav from "../components/layout/nav";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -17,17 +18,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-primary- font-sans antialiased",
           fontSans.variable
         )}
-        suppressHydrationWarning={true}
+        suppressHydrationWarning
       >
-        <div className="bg-red-300 h-24 w-24"></div>
-        {/* <Nav /> */}
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
