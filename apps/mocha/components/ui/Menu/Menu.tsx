@@ -17,7 +17,12 @@ const Menu: React.FC<IMenuProps> = ({ options, children }) => {
         <DropdownMenuContent>
           {options.map(({ items, title }, x) => (
             <React.Fragment key={x}>
-              {title && <DropdownMenuLabel>{title}</DropdownMenuLabel>}
+              {title && x >= 1 && <DropdownMenuSeparator />}
+              {title && (
+                <DropdownMenuLabel className="text-center">
+                  {title}
+                </DropdownMenuLabel>
+              )}
               {title && <DropdownMenuSeparator />}
               {items.map(({ title: itemTitle, onClick }, i) => (
                 <DropdownMenuItem

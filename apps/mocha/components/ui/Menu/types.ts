@@ -1,5 +1,5 @@
 export type menuItem = {
-  title: string;
+  title: string | React.ReactNode;
   onClick?: () => void;
 };
 

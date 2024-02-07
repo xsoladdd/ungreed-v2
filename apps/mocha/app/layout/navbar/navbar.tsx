@@ -3,8 +3,7 @@
 import { Session } from "next-auth";
 import Image from "next/image";
 import AvatarMenu from "./avatar-menu";
-import LoginModal from "./login-modal";
-import { ThemeToggle } from "./theme-toggle";
+import Link from "next/link";
 
 export default function NavBar({ session }: { session: Session | null }) {
   return (
@@ -12,22 +11,20 @@ export default function NavBar({ session }: { session: Session | null }) {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex flex-1 items-center justify-between space-x-4">
           <div className="">
-            <Image
-              alt="Logo"
-              height={24}
-              priority
-              src="/logo.svg"
-              width={100}
-            />
+            <Link href={"/dashboard"}>
+              <Image
+                alt="Logo"
+                height={24}
+                priority
+                src="/logo.svg"
+                width={100}
+              />
+            </Link>
           </div>
 
           <nav className="flex items-center space-x-1">
-            {session ? (
-              <AvatarMenu imgString={session.user?.name} />
-            ) : (
-              <LoginModal />
-            )}
-            <ThemeToggle />
+            <AvatarMenu imgString={session?.user?.name} />
+            {/* <ThemeToggle /> */}
           </nav>
         </div>
       </div>
