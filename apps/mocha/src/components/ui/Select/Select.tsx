@@ -11,14 +11,20 @@ const Select: React.FC<SelectProps> = ({
   value,
   name,
   placeholder = "Please select",
+  disabled = false,
 }) => {
   return (
     <>
-      <Root onValueChange={onValueChange} value={value} name={name}>
-        <SelectTrigger className="">
+      <Root
+        onValueChange={onValueChange}
+        value={value}
+        name={name}
+        disabled={disabled}
+      >
+        <SelectTrigger className="" id={name}>
           <Value placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent id={name}>
           {options?.map(({ text, value }, i) => (
             <SelectItem value={value} key={i}>
               {text}

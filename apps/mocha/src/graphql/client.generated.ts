@@ -1443,6 +1443,24 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type LedgerFragmentFragment = { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> };
+
+export type TransactionFragmentFragment = { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any };
+
+export type GenerateLedgerMutationVariables = Exact<{
+  input: Ledger_Insert_Input;
+}>;
+
+
+export type GenerateLedgerMutation = { __typename?: 'mutation_root', insert_ledger_one?: { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> } | null };
+
+export type InserTransactionMutationVariables = Exact<{
+  input: Transaction_Insert_Input;
+}>;
+
+
+export type InserTransactionMutation = { __typename?: 'mutation_root', insert_transaction_one?: { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any } | null };
+
 export type InsertUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
@@ -1450,21 +1468,121 @@ export type InsertUserMutationVariables = Exact<{
 
 export type InsertUserMutation = { __typename?: 'mutation_root', insert_users?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', email: string }> } | null };
 
+export type UpdateTransactionMutationVariables = Exact<{
+  pkColumns: Transaction_Pk_Columns_Input;
+  set?: InputMaybe<Transaction_Set_Input>;
+}>;
+
+
+export type UpdateTransactionMutation = { __typename?: 'mutation_root', update_transaction_by_pk?: { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any } | null };
+
 export type GetLedgerQueryVariables = Exact<{
   month: Scalars['Int']['input'];
   year: Scalars['Int']['input'];
   email: Scalars['String']['input'];
+  cutoff: Scalars['bpchar']['input'];
 }>;
 
 
-export type GetLedgerQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', cutoff: any, month: number, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any }> }> };
+export type GetLedgerQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', email: string, id: any }> };
 
+export const TransactionFragmentFragmentDoc = /*#__PURE__*/ gql`
+    fragment TransactionFragment on transaction {
+  amount
+  created_at
+  description
+  id
+  is_deleted
+  ledger_id
+  transaction_type
+  updated_at
+}
+    `;
+export const LedgerFragmentFragmentDoc = /*#__PURE__*/ gql`
+    fragment LedgerFragment on ledger {
+  created_at
+  cutoff
+  id
+  lock
+  month
+  transactions {
+    ...TransactionFragment
+  }
+  updated_at
+  year
+}
+    ${TransactionFragmentFragmentDoc}`;
+export const GenerateLedgerDocument = /*#__PURE__*/ gql`
+    mutation generateLedger($input: ledger_insert_input!) {
+  insert_ledger_one(object: $input) {
+    ...LedgerFragment
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
+export type GenerateLedgerMutationFn = Apollo.MutationFunction<GenerateLedgerMutation, GenerateLedgerMutationVariables>;
 
+/**
+ * __useGenerateLedgerMutation__
+ *
+ * To run a mutation, you first call `useGenerateLedgerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateLedgerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [generateLedgerMutation, { data, loading, error }] = useGenerateLedgerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGenerateLedgerMutation(baseOptions?: Apollo.MutationHookOptions<GenerateLedgerMutation, GenerateLedgerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GenerateLedgerMutation, GenerateLedgerMutationVariables>(GenerateLedgerDocument, options);
+      }
+export type GenerateLedgerMutationHookResult = ReturnType<typeof useGenerateLedgerMutation>;
+export type GenerateLedgerMutationResult = Apollo.MutationResult<GenerateLedgerMutation>;
+export type GenerateLedgerMutationOptions = Apollo.BaseMutationOptions<GenerateLedgerMutation, GenerateLedgerMutationVariables>;
+export const InserTransactionDocument = /*#__PURE__*/ gql`
+    mutation inserTransaction($input: transaction_insert_input!) {
+  insert_transaction_one(object: $input) {
+    ...TransactionFragment
+  }
+}
+    ${TransactionFragmentFragmentDoc}`;
+export type InserTransactionMutationFn = Apollo.MutationFunction<InserTransactionMutation, InserTransactionMutationVariables>;
+
+/**
+ * __useInserTransactionMutation__
+ *
+ * To run a mutation, you first call `useInserTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInserTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [inserTransactionMutation, { data, loading, error }] = useInserTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useInserTransactionMutation(baseOptions?: Apollo.MutationHookOptions<InserTransactionMutation, InserTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InserTransactionMutation, InserTransactionMutationVariables>(InserTransactionDocument, options);
+      }
+export type InserTransactionMutationHookResult = ReturnType<typeof useInserTransactionMutation>;
+export type InserTransactionMutationResult = Apollo.MutationResult<InserTransactionMutation>;
+export type InserTransactionMutationOptions = Apollo.BaseMutationOptions<InserTransactionMutation, InserTransactionMutationVariables>;
 export const InsertUserDocument = /*#__PURE__*/ gql`
     mutation insertUser($email: String!) {
   insert_users(objects: {email: $email}) {
@@ -1501,25 +1619,49 @@ export function useInsertUserMutation(baseOptions?: Apollo.MutationHookOptions<I
 export type InsertUserMutationHookResult = ReturnType<typeof useInsertUserMutation>;
 export type InsertUserMutationResult = Apollo.MutationResult<InsertUserMutation>;
 export type InsertUserMutationOptions = Apollo.BaseMutationOptions<InsertUserMutation, InsertUserMutationVariables>;
-export const GetLedgerDocument = /*#__PURE__*/ gql`
-    query getLedger($month: Int!, $year: Int!, $email: String!) {
-  ledger(
-    where: {month: {_eq: $month}, year: {_eq: $year}, user: {email: {_eq: $email}}}
-  ) {
-    cutoff
-    month
-    year
-    transactions {
-      amount
-      description
-      id
-      is_deleted
-      ledger_id
-      transaction_type
-    }
+export const UpdateTransactionDocument = /*#__PURE__*/ gql`
+    mutation updateTransaction($pkColumns: transaction_pk_columns_input!, $set: transaction_set_input) {
+  update_transaction_by_pk(pk_columns: $pkColumns, _set: $set) {
+    ...TransactionFragment
   }
 }
-    `;
+    ${TransactionFragmentFragmentDoc}`;
+export type UpdateTransactionMutationFn = Apollo.MutationFunction<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+
+/**
+ * __useUpdateTransactionMutation__
+ *
+ * To run a mutation, you first call `useUpdateTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTransactionMutation, { data, loading, error }] = useUpdateTransactionMutation({
+ *   variables: {
+ *      pkColumns: // value for 'pkColumns'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTransactionMutation, UpdateTransactionMutationVariables>(UpdateTransactionDocument, options);
+      }
+export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
+export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
+export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+export const GetLedgerDocument = /*#__PURE__*/ gql`
+    query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
+  ledger(
+    where: {month: {_eq: $month}, year: {_eq: $year}, user: {email: {_eq: $email}}, cutoff: {_eq: $cutoff}}
+  ) {
+    ...LedgerFragment
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
 
 /**
  * __useGetLedgerQuery__
@@ -1536,6 +1678,7 @@ export const GetLedgerDocument = /*#__PURE__*/ gql`
  *      month: // value for 'month'
  *      year: // value for 'year'
  *      email: // value for 'email'
+ *      cutoff: // value for 'cutoff'
  *   },
  * });
  */

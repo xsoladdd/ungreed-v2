@@ -1,5 +1,6 @@
 import { options } from "@/components/ui/Select/types";
 import { whichCutoff } from "@/lib/whichCutoff";
+import { cutoffType } from "@/store/slices/filterSlice";
 
 export const months_options: options = [
   { text: "January", value: "1" },
@@ -26,11 +27,11 @@ export const getCurrentMonthNumber = () => {
   return new Date().getMonth() + 1;
 };
 
-export const getCurrentCutoff = () => {
+export const getCurrentCutoff = (): cutoffType => {
   const day = new Date().getDate();
   const which = whichCutoff(day);
   if (which === "first") {
-    return "1";
+    return "1st";
   }
-  return "2";
+  return "2nd";
 };

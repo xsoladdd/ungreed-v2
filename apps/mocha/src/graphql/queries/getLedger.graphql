@@ -1,21 +1,12 @@
-query getLedger($month: Int!, $year: Int!, $email: String!) {
+query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
   ledger(
     where: {
       month: { _eq: $month }
       year: { _eq: $year }
       user: { email: { _eq: $email } }
+      cutoff: { _eq: $cutoff }
     }
   ) {
-    cutoff
-    month
-    year
-    transactions {
-      amount
-      description
-      id
-      is_deleted
-      ledger_id
-      transaction_type
-    }
+    ...LedgerFragment
   }
 }

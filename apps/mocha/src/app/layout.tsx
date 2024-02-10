@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 // import Nav from "../components/layout/nav";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import ApolloProvider from "./Providers/ApolloProvider";
+import ToastProvider from "./Providers/ToastProvider";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,7 +29,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ApolloProvider>{children}</ApolloProvider>
+          <ToastProvider>
+            <ApolloProvider>{children}</ApolloProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

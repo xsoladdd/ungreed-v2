@@ -8,4 +8,5 @@ export type SelectProps = {
   onValueChange?: (e: any) => void;
   name?: string;
   placeholder?: string;
+  disabled?: boolean;
 };

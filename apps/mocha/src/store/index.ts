@@ -5,15 +5,25 @@ import { BearSlice } from "./slices/bearSlice";
 import { createBearSlice } from "./slices/bearSlice";
 import { createSessionSlice } from "./slices/sessionSlice";
 import { SessionSlice } from "./slices/sessionSlice";
+import { DashboardSlice, createDashboardSlice } from "./slices/dashboardSlice";
+import { FilterSlice, createFilterSlice } from "./slices/filterSlice";
 
-export const useZustand = create<BearSlice & SessionSlice>()(
+interface ZustandStore
+  extends BearSlice,
+    SessionSlice,
+    DashboardSlice,
+    FilterSlice {}
+
+export const useZustand = create<ZustandStore>()(
   devtools(
-    persist(
-      (...a) => ({
-        ...createBearSlice(...a),
-        ...createSessionSlice(...a),
-      }),
-      { name: "bearStore" }
-    )
+    // persist(
+    (...a) => ({
+      ...createBearSlice(...a),
+      ...createSessionSlice(...a),
+      ...createDashboardSlice(...a),
+      ...createFilterSlice(...a),
+    })
+    // { name: "bearStore" }
+    // )
   )
 );

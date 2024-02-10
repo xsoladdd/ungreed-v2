@@ -1,0 +1,12 @@
+fragment LedgerFragment on ledger {
+  created_at
+  cutoff
+  id
+  lock
+  month
+  transactions {
+    ...TransactionFragment
+  }
+  updated_at
+  year
+}

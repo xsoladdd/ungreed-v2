@@ -16,6 +16,5 @@ export const createSessionSlice: StateCreator<
   SessionSlice
 > = (set) => ({
   user: { email: "", id: "" },
-
   setUser: (user) => set(() => ({ user })),
 });

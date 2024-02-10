@@ -1,0 +1,10 @@
+fragment TransactionFragment on transaction {
+  amount
+  created_at
+  description
+  id
+  is_deleted
+  ledger_id
+  transaction_type
+  updated_at
+}

@@ -1,0 +1,5 @@
+mutation generateLedger($input: ledger_insert_input!) {
+  insert_ledger_one(object: $input) {
+    ...LedgerFragment
+  }
+}

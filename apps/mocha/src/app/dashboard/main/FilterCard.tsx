@@ -1,6 +1,5 @@
 "use client";
 import Card from "@/components/ui/Card";
-import Select from "@/components/ui/Select";
 import React, { useState } from "react";
 import {
   getCurrentCutoff,
@@ -12,31 +11,57 @@ import { Button } from "@/components/ui/button";
 import InputWrapper from "@/components/ui/InputWrapper";
 import { useGetLedgerLazyQuery } from "@/graphql/client.generated";
 import { useZustand } from "@/store";
+import Select from "@/components/ui/Select";
 
 const FilterCard: React.FC = () => {
-  const [getLedger, { loading }] = useGetLedgerLazyQuery({
-    onCompleted: (x) => console.log(x),
-    onError: (err) => console.log("error", err),
-  });
-
+  const {
+    resetSelectedLedger,
+    setSelectedLedger,
+    setLedgerStatus,
+    setFilterData,
+    ledgerFetchStatus,
+  } = useZustand();
   const [month, setMonth] = useState(getCurrentMonthNumber().toString());
   const [year, setYear] = useState("2024");
   const [cutoff, setCutoff] = useState(getCurrentCutoff());
 
   const email = useZustand((state) => state.user.email);
 
+  const [getLedger, { loading: ledgerLoading }] = useGetLedgerLazyQuery({
+    fetchPolicy: "network-only",
+  });
+  // console.log(setLedgerStatus, setSelectedRecord);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setLedgerStatus("loading");
     e.preventDefault();
-    console.log({ month: parseInt(month), year: parseInt(year), email });
+    setFilterData({
+      cutoff: cutoff,
+      month: parseInt(month),
+      year: parseInt(year),
+    });
     getLedger({
       variables: {
+        cutoff,
         month: parseInt(month),
         year: parseInt(year),
         email,
       },
+      ssr: true,
+      onCompleted: (x) => {
+        if (x.ledger.length === 0) {
+          return resetSelectedLedger();
+        }
+        if (x.ledger[0]) {
+          return setSelectedLedger(x.ledger[0]);
+        } else {
+          console.error("something went wrong with the useLedger");
+        }
+      },
+      onError: (err) => console.log("error", err),
     });
   };
 
+  const loading = ledgerLoading || ledgerFetchStatus === "loading";
   return (
     <Card
       title="Filter Money Sheet"
@@ -45,25 +70,25 @@ const FilterCard: React.FC = () => {
     >
       {/* {JSON.stringify(data)} */}
       <form className="flex gap-4 flex-col sm:flex-row" onSubmit={handleSubmit}>
-        <InputWrapper>
+        <InputWrapper className="md: max-w-[250px]">
           <Select
             options={months_options}
             onValueChange={(e) => setMonth(e)}
             value={month}
           />
         </InputWrapper>
-        <InputWrapper>
+        <InputWrapper className="md: max-w-[250px]">
           <Select
             options={year_options}
             onValueChange={(e) => setYear(e)}
             value={year}
           />
         </InputWrapper>
-        <InputWrapper>
+        <InputWrapper className="md: max-w-[250px]">
           <Select
             options={[
-              { text: "First", value: "1" },
-              { text: "Second", value: "2" },
+              { text: "First", value: "1st" },
+              { text: "Second", value: "2nd" },
             ]}
             onValueChange={(e) => setCutoff(e)}
             value={cutoff}
@@ -75,7 +100,7 @@ const FilterCard: React.FC = () => {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Loading" : "Generate"}
+          {loading ? "Loading" : "Filter"}
         </Button>
       </form>
     </Card>
