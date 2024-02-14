@@ -1,0 +1,8 @@
+mutation updateLedgerByPk(
+  $pkColumns: ledger_pk_columns_input!
+  $set: ledger_set_input
+) {
+  update_ledger_by_pk(pk_columns: $pkColumns, _set: $set) {
+    ...LedgerFragment
+  }
+}

@@ -5,6 +5,7 @@ query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
       year: { _eq: $year }
       user: { email: { _eq: $email } }
       cutoff: { _eq: $cutoff }
+      is_deleted: { _eq: false }
     }
   ) {
     ...LedgerFragment

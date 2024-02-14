@@ -1,9 +1,10 @@
-import Nav from "@/app/layout/navbar/nav";
+import Nav from "@/components/layout/navbar/nav";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/helper";
 import { redirect } from "next/navigation";
-import DashboardProvider from "../Providers/DashboardProvider";
+import DashboardProvider from "@/components/providers/DashboardProvider";
+import { getUser } from "@/lib/getUser";
 
 export const metadata: Metadata = {
   title: "UNGREED | DASHBOARD",
@@ -16,17 +17,15 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
+  const user = await getUser(session?.user?.email ?? "");
   if (!session) {
     redirect(`/`);
   }
-
   return (
     <div>
       <Nav />
-      <DashboardProvider session={session}>
-        {/* <ApolloProvider> */}
-        <div className="p-4 ">{children}</div>
-        {/* </ApolloProvider> */}
+      <DashboardProvider session={session} user={user}>
+        {children}
       </DashboardProvider>
     </div>
   );

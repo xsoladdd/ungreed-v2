@@ -1,0 +1,5 @@
+mutation deleteLedger($pkColumns: ledger_pk_columns_input!) {
+  update_ledger_by_pk(pk_columns: $pkColumns, _set: { is_deleted: true }) {
+    id
+  }
+}

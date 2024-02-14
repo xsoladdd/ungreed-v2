@@ -6,12 +6,11 @@ import React, { useEffect } from "react";
 const DashboardProvider: React.FC<{
   children: React.ReactNode;
   session: Session | null;
-}> = ({ children, session }) => {
+  user: { id: string; email: string };
+}> = ({ children, session, user }) => {
   const { setUser } = useZustand();
-
   useEffect(() => {
-    setUser({ email: session?.user?.email ?? "", id: "" });
-    // console.log(session);
+    setUser({ ...user });
   }, [session]);
 
   return <>{children}</>;

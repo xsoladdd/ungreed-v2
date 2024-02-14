@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 // Define the type for the useToggle hook
+// eslint-disable-next-line no-unused-vars
 type UseToggleReturnType = [boolean, (customState?: boolean) => void];
 
 // Define the useToggle hook

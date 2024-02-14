@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 // import Nav from "../components/layout/nav";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import ApolloProvider from "./Providers/ApolloProvider";
-import ToastProvider from "./Providers/ToastProvider";
+import ApolloProvider from "@/components/providers/ApolloProvider";
+import ToastProvider from "@/components/providers/ToastProvider";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

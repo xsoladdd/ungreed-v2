@@ -4,23 +4,18 @@ import { formatMoney } from "@/lib/formatMoney";
 import { useZustand } from "@/store";
 import React from "react";
 import { loader } from "./LedgerCard/helper";
+import useCalculateTable from "@/hooks/useCalculateTable";
 
 const BalanceCard: React.FC = () => {
   const { ledgerFetchStatus, selectedLedger } = useZustand();
-
+  const [calculateTable] = useCalculateTable();
   const loading = ledgerFetchStatus === "loading";
 
   const transactions = selectedLedger?.transactions ?? [];
 
-  const totalExpense = transactions
-    .filter((transaction) => transaction.transaction_type === "-")
-    .reduce((acc, curr) => acc + curr.amount, 0);
+  const { totalBalance, totalExpense, totalIncome } =
+    calculateTable(transactions);
 
-  const totalIncome = transactions
-    .filter((transaction) => transaction.transaction_type === "+")
-    .reduce((acc, curr) => acc + curr.amount, 0);
-
-  const totalbalance = totalIncome - totalExpense;
   return (
     <Card
       title="Balance Information"
@@ -30,7 +25,7 @@ const BalanceCard: React.FC = () => {
       <ul className="list-none [&>li]:mt-2 text-sm font-semibold">
         {ColumnWrapper({ label: "Total Income", value: totalIncome })}
         {ColumnWrapper({ label: "Total Expense", value: totalExpense })}
-        {ColumnWrapper({ label: "Total Balance", value: totalbalance })}
+        {ColumnWrapper({ label: "Total Balance", value: totalBalance })}
         {/* {ColumnWrapper({ label: "After Expense", value: 50000 })} */}
       </ul>
     </Card>

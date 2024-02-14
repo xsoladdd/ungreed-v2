@@ -4,6 +4,7 @@ import Card from "@/components/ui/Card";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -15,7 +16,6 @@ import { Toggle } from "@/components/ui/toggle";
 import { formatMoney } from "@/lib/formatMoney";
 import { useZustand } from "@/store";
 import { PencilLine } from "lucide-react";
-import { tableLoader } from "./helper";
 import { cn } from "@/lib/utils";
 import AlertDialog from "@/components/ui/AlertDialog";
 import useToggle from "@/hooks/useToggle";
@@ -24,6 +24,8 @@ import TableMessage from "@/components/ui/TableMessage";
 import NoLedgerFound from "./NoLedgerFound";
 import { useToast } from "@/components/ui/use-toast";
 import { getMonthName } from "@/lib/getMonthName";
+import useGenerateLedger from "./hooks";
+import { TableLoader } from "@/components/ui/Loader/";
 
 const LedgerCard: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
@@ -50,8 +52,8 @@ const LedgerCard: React.FC = () => {
       return a.updated_at.localeCompare(b.updated_at);
     }
   });
-  const tableBody =
-    tableData.map(({ amount, description, id, transaction_type, ...rest }) => (
+  const tableBody = tableData.map(
+    ({ amount, description, id, transaction_type, ...rest }) => (
       <TableRow
         key={id}
         className={cn(
@@ -90,21 +92,19 @@ const LedgerCard: React.FC = () => {
           {transaction_type === "-" ? formatMoney(amount) : " — "}
         </TableCell>
       </TableRow>
-    )) ||
-    (ledgerFetchStatus === "no record" ? (
-      <NoLedgerFound />
-    ) : ledgerFetchStatus === "unfetched" ? (
-      <TableMessage>Filter to select table</TableMessage>
-    ) : (
-      <TableMessage>Something went wrong</TableMessage>
-    ));
+    )
+  );
 
-  const disabledButton = ledgerFetchStatus !== "with record";
+  const [handleGenerateLedger] = useGenerateLedger();
+
+  const disabledButton =
+    ledgerFetchStatus !== "with record" || selectedLedger?.lock === true;
   return (
     <>
       <AlertDialog
         title="OVERLAP WARNING!"
         isOpen={status}
+        variant="destructive"
         handleCancel={() => toggle(false)}
         handleSubmit={() => {
           toggle(false);
@@ -119,7 +119,7 @@ const LedgerCard: React.FC = () => {
         Are you sure that you want overlap your currently selected data?
       </AlertDialog>
       <Card
-        title="Ledger Record"
+        title={`Ledger Record ${!loading && selectedLedger?.lock === true ? `(Locked Table)` : ""}`}
         sub={
           selectedLedger?.id
             ? `${selectedLedger?.cutoff && `${selectedLedger?.cutoff} trench`} of ${getMonthName(selectedLedger?.month ?? 0)} ${selectedLedger?.year} `
@@ -148,11 +148,17 @@ const LedgerCard: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loading ? tableLoader : tableBody}
-              {!loading && tableData.length === 0 && (
-                <TableMessage>No Transactions on this Ledger</TableMessage>
+              {loading ? <TableLoader /> : tableBody}
+              {!loading && ledgerFetchStatus === "no record" && (
+                <NoLedgerFound handleClick={() => handleGenerateLedger()} />
+              )}
+              {!loading && ledgerFetchStatus === "unfetched" && (
+                <TableMessage>Filter to select table</TableMessage>
               )}
             </TableBody>
+            {!loading && selectedLedger?.lock === true && (
+              <TableCaption>THIS TABLE IS LOCKED</TableCaption>
+            )}
           </Table>
         </div>
       </Card>

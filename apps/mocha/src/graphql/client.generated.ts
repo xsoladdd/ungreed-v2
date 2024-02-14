@@ -120,12 +120,306 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** Table of legends, Where i input all my monthly default data */
+export type Default_Ledger_Transactions = {
+  __typename?: 'default_ledger_transactions';
+  amount: Scalars['Int']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  cutoff: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  is_deleted: Scalars['Boolean']['output'];
+  transaction_type: Scalars['bpchar']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregated selection of "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Aggregate = {
+  __typename?: 'default_ledger_transactions_aggregate';
+  aggregate?: Maybe<Default_Ledger_Transactions_Aggregate_Fields>;
+  nodes: Array<Default_Ledger_Transactions>;
+};
+
+/** aggregate fields of "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Aggregate_Fields = {
+  __typename?: 'default_ledger_transactions_aggregate_fields';
+  avg?: Maybe<Default_Ledger_Transactions_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Default_Ledger_Transactions_Max_Fields>;
+  min?: Maybe<Default_Ledger_Transactions_Min_Fields>;
+  stddev?: Maybe<Default_Ledger_Transactions_Stddev_Fields>;
+  stddev_pop?: Maybe<Default_Ledger_Transactions_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Default_Ledger_Transactions_Stddev_Samp_Fields>;
+  sum?: Maybe<Default_Ledger_Transactions_Sum_Fields>;
+  var_pop?: Maybe<Default_Ledger_Transactions_Var_Pop_Fields>;
+  var_samp?: Maybe<Default_Ledger_Transactions_Var_Samp_Fields>;
+  variance?: Maybe<Default_Ledger_Transactions_Variance_Fields>;
+};
+
+
+/** aggregate fields of "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Default_Ledger_Transactions_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Default_Ledger_Transactions_Avg_Fields = {
+  __typename?: 'default_ledger_transactions_avg_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "default_ledger_transactions". All fields are combined with a logical 'AND'. */
+export type Default_Ledger_Transactions_Bool_Exp = {
+  _and?: InputMaybe<Array<Default_Ledger_Transactions_Bool_Exp>>;
+  _not?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+  _or?: InputMaybe<Array<Default_Ledger_Transactions_Bool_Exp>>;
+  amount?: InputMaybe<Int_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  cutoff?: InputMaybe<String_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  is_deleted?: InputMaybe<Boolean_Comparison_Exp>;
+  transaction_type?: InputMaybe<Bpchar_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "default_ledger_transactions" */
+export enum Default_Ledger_Transactions_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  DefaultLedgerTransactionsPkey = 'default_ledger_transactions_pkey'
+}
+
+/** input type for incrementing numeric columns in table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Inc_Input = {
+  amount?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Insert_Input = {
+  amount?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  cutoff?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Default_Ledger_Transactions_Max_Fields = {
+  __typename?: 'default_ledger_transactions_max_fields';
+  amount?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  cutoff?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  transaction_type?: Maybe<Scalars['bpchar']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Default_Ledger_Transactions_Min_Fields = {
+  __typename?: 'default_ledger_transactions_min_fields';
+  amount?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  cutoff?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  transaction_type?: Maybe<Scalars['bpchar']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Mutation_Response = {
+  __typename?: 'default_ledger_transactions_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Default_Ledger_Transactions>;
+};
+
+/** on_conflict condition type for table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_On_Conflict = {
+  constraint: Default_Ledger_Transactions_Constraint;
+  update_columns?: Array<Default_Ledger_Transactions_Update_Column>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "default_ledger_transactions". */
+export type Default_Ledger_Transactions_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  cutoff?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_deleted?: InputMaybe<Order_By>;
+  transaction_type?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: default_ledger_transactions */
+export type Default_Ledger_Transactions_Pk_Columns_Input = {
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "default_ledger_transactions" */
+export enum Default_Ledger_Transactions_Select_Column {
+  /** column name */
+  Amount = 'amount',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Cutoff = 'cutoff',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsDeleted = 'is_deleted',
+  /** column name */
+  TransactionType = 'transaction_type',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Set_Input = {
+  amount?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  cutoff?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Default_Ledger_Transactions_Stddev_Fields = {
+  __typename?: 'default_ledger_transactions_stddev_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Default_Ledger_Transactions_Stddev_Pop_Fields = {
+  __typename?: 'default_ledger_transactions_stddev_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Default_Ledger_Transactions_Stddev_Samp_Fields = {
+  __typename?: 'default_ledger_transactions_stddev_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "default_ledger_transactions" */
+export type Default_Ledger_Transactions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Default_Ledger_Transactions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Default_Ledger_Transactions_Stream_Cursor_Value_Input = {
+  amount?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  cutoff?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Default_Ledger_Transactions_Sum_Fields = {
+  __typename?: 'default_ledger_transactions_sum_fields';
+  amount?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "default_ledger_transactions" */
+export enum Default_Ledger_Transactions_Update_Column {
+  /** column name */
+  Amount = 'amount',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Cutoff = 'cutoff',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsDeleted = 'is_deleted',
+  /** column name */
+  TransactionType = 'transaction_type',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Default_Ledger_Transactions_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Default_Ledger_Transactions_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Default_Ledger_Transactions_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Default_Ledger_Transactions_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Default_Ledger_Transactions_Var_Pop_Fields = {
+  __typename?: 'default_ledger_transactions_var_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Default_Ledger_Transactions_Var_Samp_Fields = {
+  __typename?: 'default_ledger_transactions_var_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Default_Ledger_Transactions_Variance_Fields = {
+  __typename?: 'default_ledger_transactions_variance_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Ledger of transaction per month */
 export type Ledger = {
   __typename?: 'ledger';
   created_at: Scalars['timestamptz']['output'];
   cutoff: Scalars['bpchar']['output'];
   id: Scalars['Int']['output'];
+  is_deleted: Scalars['Boolean']['output'];
   lock: Scalars['Boolean']['output'];
   month: Scalars['Int']['output'];
   /** An array relationship */
@@ -205,6 +499,7 @@ export type Ledger_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   cutoff?: InputMaybe<Bpchar_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  is_deleted?: InputMaybe<Boolean_Comparison_Exp>;
   lock?: InputMaybe<Boolean_Comparison_Exp>;
   month?: InputMaybe<Int_Comparison_Exp>;
   transactions?: InputMaybe<Transaction_Bool_Exp>;
@@ -233,6 +528,7 @@ export type Ledger_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   cutoff?: InputMaybe<Scalars['bpchar']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   lock?: InputMaybe<Scalars['Boolean']['input']>;
   month?: InputMaybe<Scalars['Int']['input']>;
   transactions?: InputMaybe<Transaction_Arr_Rel_Insert_Input>;
@@ -287,6 +583,7 @@ export type Ledger_Order_By = {
   created_at?: InputMaybe<Order_By>;
   cutoff?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  is_deleted?: InputMaybe<Order_By>;
   lock?: InputMaybe<Order_By>;
   month?: InputMaybe<Order_By>;
   transactions_aggregate?: InputMaybe<Transaction_Aggregate_Order_By>;
@@ -310,6 +607,8 @@ export enum Ledger_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsDeleted = 'is_deleted',
+  /** column name */
   Lock = 'lock',
   /** column name */
   Month = 'month',
@@ -326,6 +625,7 @@ export type Ledger_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   cutoff?: InputMaybe<Scalars['bpchar']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   lock?: InputMaybe<Scalars['Boolean']['input']>;
   month?: InputMaybe<Scalars['Int']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -370,6 +670,7 @@ export type Ledger_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   cutoff?: InputMaybe<Scalars['bpchar']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   lock?: InputMaybe<Scalars['Boolean']['input']>;
   month?: InputMaybe<Scalars['Int']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -393,6 +694,8 @@ export enum Ledger_Update_Column {
   Cutoff = 'cutoff',
   /** column name */
   Id = 'id',
+  /** column name */
+  IsDeleted = 'is_deleted',
   /** column name */
   Lock = 'lock',
   /** column name */
@@ -441,6 +744,10 @@ export type Ledger_Variance_Fields = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "default_ledger_transactions" */
+  delete_default_ledger_transactions?: Maybe<Default_Ledger_Transactions_Mutation_Response>;
+  /** delete single row from the table: "default_ledger_transactions" */
+  delete_default_ledger_transactions_by_pk?: Maybe<Default_Ledger_Transactions>;
   /** delete data from the table: "ledger" */
   delete_ledger?: Maybe<Ledger_Mutation_Response>;
   /** delete single row from the table: "ledger" */
@@ -453,6 +760,10 @@ export type Mutation_Root = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "default_ledger_transactions" */
+  insert_default_ledger_transactions?: Maybe<Default_Ledger_Transactions_Mutation_Response>;
+  /** insert a single row into the table: "default_ledger_transactions" */
+  insert_default_ledger_transactions_one?: Maybe<Default_Ledger_Transactions>;
   /** insert data into the table: "ledger" */
   insert_ledger?: Maybe<Ledger_Mutation_Response>;
   /** insert a single row into the table: "ledger" */
@@ -465,6 +776,12 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** update data of the table: "default_ledger_transactions" */
+  update_default_ledger_transactions?: Maybe<Default_Ledger_Transactions_Mutation_Response>;
+  /** update single row of the table: "default_ledger_transactions" */
+  update_default_ledger_transactions_by_pk?: Maybe<Default_Ledger_Transactions>;
+  /** update multiples rows of table: "default_ledger_transactions" */
+  update_default_ledger_transactions_many?: Maybe<Array<Maybe<Default_Ledger_Transactions_Mutation_Response>>>;
   /** update data of the table: "ledger" */
   update_ledger?: Maybe<Ledger_Mutation_Response>;
   /** update single row of the table: "ledger" */
@@ -483,6 +800,18 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Default_Ledger_TransactionsArgs = {
+  where: Default_Ledger_Transactions_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Default_Ledger_Transactions_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -519,6 +848,20 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Default_Ledger_TransactionsArgs = {
+  objects: Array<Default_Ledger_Transactions_Insert_Input>;
+  on_conflict?: InputMaybe<Default_Ledger_Transactions_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Default_Ledger_Transactions_OneArgs = {
+  object: Default_Ledger_Transactions_Insert_Input;
+  on_conflict?: InputMaybe<Default_Ledger_Transactions_On_Conflict>;
 };
 
 
@@ -561,6 +904,28 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Default_Ledger_TransactionsArgs = {
+  _inc?: InputMaybe<Default_Ledger_Transactions_Inc_Input>;
+  _set?: InputMaybe<Default_Ledger_Transactions_Set_Input>;
+  where: Default_Ledger_Transactions_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Default_Ledger_Transactions_By_PkArgs = {
+  _inc?: InputMaybe<Default_Ledger_Transactions_Inc_Input>;
+  _set?: InputMaybe<Default_Ledger_Transactions_Set_Input>;
+  pk_columns: Default_Ledger_Transactions_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Default_Ledger_Transactions_ManyArgs = {
+  updates: Array<Default_Ledger_Transactions_Updates>;
 };
 
 
@@ -645,6 +1010,12 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "default_ledger_transactions" */
+  default_ledger_transactions: Array<Default_Ledger_Transactions>;
+  /** fetch aggregated fields from the table: "default_ledger_transactions" */
+  default_ledger_transactions_aggregate: Default_Ledger_Transactions_Aggregate;
+  /** fetch data from the table: "default_ledger_transactions" using primary key columns */
+  default_ledger_transactions_by_pk?: Maybe<Default_Ledger_Transactions>;
   /** fetch data from the table: "ledger" */
   ledger: Array<Ledger>;
   /** fetch aggregated fields from the table: "ledger" */
@@ -663,6 +1034,29 @@ export type Query_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootDefault_Ledger_TransactionsArgs = {
+  distinct_on?: InputMaybe<Array<Default_Ledger_Transactions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Default_Ledger_Transactions_Order_By>>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+};
+
+
+export type Query_RootDefault_Ledger_Transactions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Default_Ledger_Transactions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Default_Ledger_Transactions_Order_By>>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+};
+
+
+export type Query_RootDefault_Ledger_Transactions_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -736,6 +1130,14 @@ export type Query_RootUsers_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "default_ledger_transactions" */
+  default_ledger_transactions: Array<Default_Ledger_Transactions>;
+  /** fetch aggregated fields from the table: "default_ledger_transactions" */
+  default_ledger_transactions_aggregate: Default_Ledger_Transactions_Aggregate;
+  /** fetch data from the table: "default_ledger_transactions" using primary key columns */
+  default_ledger_transactions_by_pk?: Maybe<Default_Ledger_Transactions>;
+  /** fetch data from the table in a streaming manner: "default_ledger_transactions" */
+  default_ledger_transactions_stream: Array<Default_Ledger_Transactions>;
   /** fetch data from the table: "ledger" */
   ledger: Array<Ledger>;
   /** fetch aggregated fields from the table: "ledger" */
@@ -760,6 +1162,36 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootDefault_Ledger_TransactionsArgs = {
+  distinct_on?: InputMaybe<Array<Default_Ledger_Transactions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Default_Ledger_Transactions_Order_By>>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootDefault_Ledger_Transactions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Default_Ledger_Transactions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Default_Ledger_Transactions_Order_By>>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootDefault_Ledger_Transactions_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootDefault_Ledger_Transactions_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Default_Ledger_Transactions_Stream_Cursor_Input>>;
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
 };
 
 
@@ -1443,9 +1875,18 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type DefaultLedgerTransactionsFragmentFragment = { __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any };
+
 export type LedgerFragmentFragment = { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> };
 
 export type TransactionFragmentFragment = { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any };
+
+export type DeleteLedgerMutationVariables = Exact<{
+  pkColumns: Ledger_Pk_Columns_Input;
+}>;
+
+
+export type DeleteLedgerMutation = { __typename?: 'mutation_root', update_ledger_by_pk?: { __typename?: 'ledger', id: number } | null };
 
 export type GenerateLedgerMutationVariables = Exact<{
   input: Ledger_Insert_Input;
@@ -1468,6 +1909,14 @@ export type InsertUserMutationVariables = Exact<{
 
 export type InsertUserMutation = { __typename?: 'mutation_root', insert_users?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', email: string }> } | null };
 
+export type UpdateLedgerByPkMutationVariables = Exact<{
+  pkColumns: Ledger_Pk_Columns_Input;
+  set?: InputMaybe<Ledger_Set_Input>;
+}>;
+
+
+export type UpdateLedgerByPkMutation = { __typename?: 'mutation_root', update_ledger_by_pk?: { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> } | null };
+
 export type UpdateTransactionMutationVariables = Exact<{
   pkColumns: Transaction_Pk_Columns_Input;
   set?: InputMaybe<Transaction_Set_Input>;
@@ -1475,6 +1924,16 @@ export type UpdateTransactionMutationVariables = Exact<{
 
 
 export type UpdateTransactionMutation = { __typename?: 'mutation_root', update_transaction_by_pk?: { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any } | null };
+
+export type GetDefaultLedgerTransactionsQueryVariables = Exact<{
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+  orderBy?: InputMaybe<Array<Default_Ledger_Transactions_Order_By> | Default_Ledger_Transactions_Order_By>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetDefaultLedgerTransactionsQuery = { __typename?: 'query_root', default_ledger_transactions: Array<{ __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any }>, default_ledger_transactions_aggregate: { __typename?: 'default_ledger_transactions_aggregate', aggregate?: { __typename?: 'default_ledger_transactions_aggregate_fields', count: number } | null } };
 
 export type GetLedgerQueryVariables = Exact<{
   month: Scalars['Int']['input'];
@@ -1486,11 +1945,40 @@ export type GetLedgerQueryVariables = Exact<{
 
 export type GetLedgerQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> }> };
 
+export type GetLedgerListQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Ledger_Bool_Exp>;
+  orderBy?: InputMaybe<Array<Ledger_Order_By> | Ledger_Order_By>;
+}>;
+
+
+export type GetLedgerListQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any }> }>, ledger_aggregate: { __typename?: 'ledger_aggregate', aggregate?: { __typename?: 'ledger_aggregate_fields', count: number } | null } };
+
+export type GetUserQueryVariables = Exact<{
+  where?: InputMaybe<Users_Bool_Exp>;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', email: string, id: any }> };
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', email: string, id: any }> };
 
+export const DefaultLedgerTransactionsFragmentFragmentDoc = /*#__PURE__*/ gql`
+    fragment DefaultLedgerTransactionsFragment on default_ledger_transactions {
+  amount
+  created_at
+  cutoff
+  description
+  id
+  is_deleted
+  transaction_type
+  updated_at
+}
+    `;
 export const TransactionFragmentFragmentDoc = /*#__PURE__*/ gql`
     fragment TransactionFragment on transaction {
   amount
@@ -1517,6 +2005,39 @@ export const LedgerFragmentFragmentDoc = /*#__PURE__*/ gql`
   year
 }
     ${TransactionFragmentFragmentDoc}`;
+export const DeleteLedgerDocument = /*#__PURE__*/ gql`
+    mutation deleteLedger($pkColumns: ledger_pk_columns_input!) {
+  update_ledger_by_pk(pk_columns: $pkColumns, _set: {is_deleted: true}) {
+    id
+  }
+}
+    `;
+export type DeleteLedgerMutationFn = Apollo.MutationFunction<DeleteLedgerMutation, DeleteLedgerMutationVariables>;
+
+/**
+ * __useDeleteLedgerMutation__
+ *
+ * To run a mutation, you first call `useDeleteLedgerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteLedgerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteLedgerMutation, { data, loading, error }] = useDeleteLedgerMutation({
+ *   variables: {
+ *      pkColumns: // value for 'pkColumns'
+ *   },
+ * });
+ */
+export function useDeleteLedgerMutation(baseOptions?: Apollo.MutationHookOptions<DeleteLedgerMutation, DeleteLedgerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteLedgerMutation, DeleteLedgerMutationVariables>(DeleteLedgerDocument, options);
+      }
+export type DeleteLedgerMutationHookResult = ReturnType<typeof useDeleteLedgerMutation>;
+export type DeleteLedgerMutationResult = Apollo.MutationResult<DeleteLedgerMutation>;
+export type DeleteLedgerMutationOptions = Apollo.BaseMutationOptions<DeleteLedgerMutation, DeleteLedgerMutationVariables>;
 export const GenerateLedgerDocument = /*#__PURE__*/ gql`
     mutation generateLedger($input: ledger_insert_input!) {
   insert_ledger_one(object: $input) {
@@ -1619,6 +2140,40 @@ export function useInsertUserMutation(baseOptions?: Apollo.MutationHookOptions<I
 export type InsertUserMutationHookResult = ReturnType<typeof useInsertUserMutation>;
 export type InsertUserMutationResult = Apollo.MutationResult<InsertUserMutation>;
 export type InsertUserMutationOptions = Apollo.BaseMutationOptions<InsertUserMutation, InsertUserMutationVariables>;
+export const UpdateLedgerByPkDocument = /*#__PURE__*/ gql`
+    mutation updateLedgerByPk($pkColumns: ledger_pk_columns_input!, $set: ledger_set_input) {
+  update_ledger_by_pk(pk_columns: $pkColumns, _set: $set) {
+    ...LedgerFragment
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
+export type UpdateLedgerByPkMutationFn = Apollo.MutationFunction<UpdateLedgerByPkMutation, UpdateLedgerByPkMutationVariables>;
+
+/**
+ * __useUpdateLedgerByPkMutation__
+ *
+ * To run a mutation, you first call `useUpdateLedgerByPkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLedgerByPkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateLedgerByPkMutation, { data, loading, error }] = useUpdateLedgerByPkMutation({
+ *   variables: {
+ *      pkColumns: // value for 'pkColumns'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdateLedgerByPkMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLedgerByPkMutation, UpdateLedgerByPkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateLedgerByPkMutation, UpdateLedgerByPkMutationVariables>(UpdateLedgerByPkDocument, options);
+      }
+export type UpdateLedgerByPkMutationHookResult = ReturnType<typeof useUpdateLedgerByPkMutation>;
+export type UpdateLedgerByPkMutationResult = Apollo.MutationResult<UpdateLedgerByPkMutation>;
+export type UpdateLedgerByPkMutationOptions = Apollo.BaseMutationOptions<UpdateLedgerByPkMutation, UpdateLedgerByPkMutationVariables>;
 export const UpdateTransactionDocument = /*#__PURE__*/ gql`
     mutation updateTransaction($pkColumns: transaction_pk_columns_input!, $set: transaction_set_input) {
   update_transaction_by_pk(pk_columns: $pkColumns, _set: $set) {
@@ -1653,10 +2208,70 @@ export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
 export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
 export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+export const GetDefaultLedgerTransactionsDocument = /*#__PURE__*/ gql`
+    query getDefaultLedgerTransactions($where: default_ledger_transactions_bool_exp, $orderBy: [default_ledger_transactions_order_by!], $offset: Int, $limit: Int) {
+  default_ledger_transactions(
+    where: $where
+    order_by: $orderBy
+    offset: $offset
+    limit: $limit
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+  }
+  default_ledger_transactions_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetDefaultLedgerTransactionsQuery__
+ *
+ * To run a query within a React component, call `useGetDefaultLedgerTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDefaultLedgerTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDefaultLedgerTransactionsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useGetDefaultLedgerTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+      }
+export function useGetDefaultLedgerTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+        }
+export function useGetDefaultLedgerTransactionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+        }
+export type GetDefaultLedgerTransactionsQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsQuery>;
+export type GetDefaultLedgerTransactionsLazyQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsLazyQuery>;
+export type GetDefaultLedgerTransactionsSuspenseQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsSuspenseQuery>;
+export type GetDefaultLedgerTransactionsQueryResult = Apollo.QueryResult<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>;
 export const GetLedgerDocument = /*#__PURE__*/ gql`
     query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
   ledger(
-    where: {month: {_eq: $month}, year: {_eq: $year}, user: {email: {_eq: $email}}, cutoff: {_eq: $cutoff}}
+    where: {month: {_eq: $month}, year: {_eq: $year}, user: {email: {_eq: $email}}, cutoff: {_eq: $cutoff}, is_deleted: {_eq: false}}
   ) {
     ...LedgerFragment
   }
@@ -1698,6 +2313,95 @@ export type GetLedgerQueryHookResult = ReturnType<typeof useGetLedgerQuery>;
 export type GetLedgerLazyQueryHookResult = ReturnType<typeof useGetLedgerLazyQuery>;
 export type GetLedgerSuspenseQueryHookResult = ReturnType<typeof useGetLedgerSuspenseQuery>;
 export type GetLedgerQueryResult = Apollo.QueryResult<GetLedgerQuery, GetLedgerQueryVariables>;
+export const GetLedgerListDocument = /*#__PURE__*/ gql`
+    query getLedgerList($limit: Int, $offset: Int, $where: ledger_bool_exp, $orderBy: [ledger_order_by!]) {
+  ledger(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
+    ...LedgerFragment
+  }
+  ledger_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
+
+/**
+ * __useGetLedgerListQuery__
+ *
+ * To run a query within a React component, call `useGetLedgerListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLedgerListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLedgerListQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useGetLedgerListQuery(baseOptions?: Apollo.QueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+      }
+export function useGetLedgerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+        }
+export function useGetLedgerListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+        }
+export type GetLedgerListQueryHookResult = ReturnType<typeof useGetLedgerListQuery>;
+export type GetLedgerListLazyQueryHookResult = ReturnType<typeof useGetLedgerListLazyQuery>;
+export type GetLedgerListSuspenseQueryHookResult = ReturnType<typeof useGetLedgerListSuspenseQuery>;
+export type GetLedgerListQueryResult = Apollo.QueryResult<GetLedgerListQuery, GetLedgerListQueryVariables>;
+export const GetUserDocument = /*#__PURE__*/ gql`
+    query getUser($where: users_bool_exp) {
+  users(where: $where) {
+    email
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export function useGetUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUsersDocument = /*#__PURE__*/ gql`
     query getUsers {
   users {

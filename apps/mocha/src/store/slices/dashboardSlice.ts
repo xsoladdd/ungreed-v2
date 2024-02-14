@@ -23,6 +23,11 @@ export type DashboardSlice = {
     transaction: Partial<Transaction> | undefined
   ) => void;
   addLedgerTransaction: (transaction: Partial<Transaction>) => void;
+  updateLedgerTransaction: (
+    id: number,
+    transaction: Partial<Transaction>
+  ) => void;
+  deleteLedgerTransaction: (id: number) => void;
 };
 // Export the function to create the DashboardSlice state
 export const createDashboardSlice: StateCreator<DashboardSlice> = (set) => ({
@@ -70,6 +75,57 @@ export const createDashboardSlice: StateCreator<DashboardSlice> = (set) => ({
       };
       return {
         selectedLedger,
+        ledgerFetchStatus: "with record",
+      };
+    }),
+  updateLedgerTransaction: (id, transaction) =>
+    set((state) => {
+      const trans = {
+        amount: transaction.amount as number,
+        created_at: transaction.created_at as string,
+        description: transaction.description as string,
+        id: transaction.id as number,
+        is_deleted: transaction.is_deleted as boolean,
+        ledger_id: transaction.ledger_id as number,
+        transaction_type: transaction.transaction_type as string,
+        updated_at: transaction.updated_at as string,
+        __typename: transaction.__typename,
+      } satisfies Transaction;
+
+      const transactionList =
+        state.selectedLedger?.transactions ?? ([] satisfies Array<Transaction>);
+
+      const newTransactionList = transactionList.map((transaction) => {
+        if (transaction.id === id) {
+          // Replace transaction data with newTransactionData
+          return { ...trans };
+        } else {
+          return transaction;
+        }
+      });
+      const selectedLedger: Partial<Ledger> = {
+        ...state.selectedLedger,
+        transactions: newTransactionList,
+      };
+      return {
+        selectedLedger,
+        selectedTransaction: undefined,
+        ledgerFetchStatus: "with record",
+      };
+    }),
+  deleteLedgerTransaction: (selectedId) =>
+    set((state) => {
+      const transactions = (
+        state.selectedLedger?.transactions ?? ([] satisfies Array<Transaction>)
+      ).filter(({ id }) => id !== selectedId);
+
+      const selectedLedger: Partial<Ledger> = {
+        ...state.selectedLedger,
+        transactions,
+      };
+      return {
+        selectedLedger,
+        selectedTransaction: undefined,
         ledgerFetchStatus: "with record",
       };
     }),

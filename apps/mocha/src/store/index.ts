@@ -16,14 +16,19 @@ interface ZustandStore
 
 export const useZustand = create<ZustandStore>()(
   devtools(
-    // persist(
-    (...a) => ({
-      ...createBearSlice(...a),
-      ...createSessionSlice(...a),
-      ...createDashboardSlice(...a),
-      ...createFilterSlice(...a),
-    })
-    // { name: "bearStore" }
-    // )
+    persist(
+      (...a) => ({
+        ...createBearSlice(...a),
+        ...createSessionSlice(...a),
+        ...createDashboardSlice(...a),
+        ...createFilterSlice(...a),
+      }),
+      {
+        name: "bearStore",
+        partialize: (state) => ({
+          user: state.user,
+        }),
+      }
+    )
   )
 );

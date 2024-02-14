@@ -4,22 +4,19 @@ import BalanceCard from "./BalanceCard";
 // import MoneyTreeCard from "./MoneyTreeCard";
 import EditCard from "./AddEditCard";
 import LedgerCard from "./LedgerCard";
-
-const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <div className="flex gap-4 flex-col md:flex-row">{children}</div>;
-};
+import LayoutWrapper from "@/components/ui/LayoutWrapper";
 
 const Main: React.FC = () => {
   return (
-    <div className="flex gap-4 flex-col">
-      <Wrapper>
+    <div className="flex gap-4 flex-col p-4">
+      <LayoutWrapper>
         <FilterCard />
         <BalanceCard />
-      </Wrapper>
-      <Wrapper>
+      </LayoutWrapper>
+      <LayoutWrapper>
         <LedgerCard />
         <EditCard />
-      </Wrapper>
+      </LayoutWrapper>
     </div>
   );
 };

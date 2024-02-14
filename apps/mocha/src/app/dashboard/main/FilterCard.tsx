@@ -68,7 +68,6 @@ const FilterCard: React.FC = () => {
       sub="Select filter to display data"
       className="w-full lg:w-9/12"
     >
-      {/* {JSON.stringify(data)} */}
       <form className="flex gap-4 flex-col sm:flex-row" onSubmit={handleSubmit}>
         <InputWrapper className="md: max-w-[250px]">
           <Select

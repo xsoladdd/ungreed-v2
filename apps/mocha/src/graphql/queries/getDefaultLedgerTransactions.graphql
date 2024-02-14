@@ -1,0 +1,27 @@
+query getDefaultLedgerTransactions(
+  $where: default_ledger_transactions_bool_exp
+  $orderBy: [default_ledger_transactions_order_by!]
+  $offset: Int
+  $limit: Int
+) {
+  default_ledger_transactions(
+    where: $where
+    order_by: $orderBy
+    offset: $offset
+    limit: $limit
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+  }
+  default_ledger_transactions_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

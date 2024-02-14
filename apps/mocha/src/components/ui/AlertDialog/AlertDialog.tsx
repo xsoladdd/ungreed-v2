@@ -1,14 +1,13 @@
 import React, { ReactNode } from "react";
+import { Button } from "../button";
 import {
-  AlertDialog as Base,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialog as Base,
 } from "./base";
 
 interface IAlertDialogProps {
@@ -19,6 +18,14 @@ interface IAlertDialogProps {
   button?: ReactNode;
   title?: ReactNode;
   children?: ReactNode;
+  loading?: boolean;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
 }
 
 const AlertDialog: React.FC<IAlertDialogProps> = ({
@@ -29,6 +36,8 @@ const AlertDialog: React.FC<IAlertDialogProps> = ({
   button,
   children,
   title,
+  loading = false,
+  variant = "default",
 }) => {
   return (
     <>
@@ -44,10 +53,12 @@ const AlertDialog: React.FC<IAlertDialogProps> = ({
             )}
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleCancel}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmit} className="bg-primary">
-              Continue
-            </AlertDialogAction>
+            <Button onClick={handleCancel} disabled={loading} variant="outline">
+              Cancel
+            </Button>
+            <Button onClick={handleSubmit} disabled={loading} variant={variant}>
+              {loading ? "Loading" : "Continue"}
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </Base>

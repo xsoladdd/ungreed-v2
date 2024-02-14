@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { useInserTransactionMutation } from "@/graphql/client.generated";
+import {
+  useInserTransactionMutation,
+  useUpdateTransactionMutation,
+} from "@/graphql/client.generated";
 import useToggle from "@/hooks/useToggle";
 import { useZustand } from "@/store";
 import React, { useEffect } from "react";
@@ -21,10 +24,17 @@ const AddEditCard: React.FC = () => {
     selectedLedger,
     addLedgerTransaction,
     setLedgerStatus,
+    updateLedgerTransaction,
+    deleteLedgerTransaction,
   } = useZustand();
   const [insertTransaction] = useInserTransactionMutation();
-  const [alertStatus, toggleAlert] = useToggle(false);
+  const [updateTransaction, { loading: updateTransactionLoading }] =
+    useUpdateTransactionMutation();
+  const [overlapAlertStatus, toggleOverlapAlert] = useToggle(false);
+  const [deleteAlertStatus, toggleDeleteAlert] = useToggle(false);
   const { toast } = useToast();
+
+  const MODE = selectedTransaction ? "edit" : "add";
 
   const formik = useFormik({
     initialValues: {
@@ -45,11 +55,16 @@ const AddEditCard: React.FC = () => {
         .required("Amount is required"),
     }),
     onSubmit: (values) => {
+      if (!selectedLedger || !selectedLedger.id) {
+        console.error("no selected ledger id");
+        toast({
+          title: "Something went wrong",
+          description: `No selected ledger id`,
+          variant: "destructive",
+        });
+      }
+      setLedgerStatus("loading");
       if (MODE === "add") {
-        if (!selectedLedger || !selectedLedger.id) {
-          console.error("no selected ledger id");
-        }
-        setLedgerStatus("loading");
         insertTransaction({
           variables: {
             input: {
@@ -61,18 +76,64 @@ const AddEditCard: React.FC = () => {
           },
           onCompleted: (data) => {
             addLedgerTransaction({ ...data.insert_transaction_one });
+            formik.resetForm();
             toast({
               title: "Transaction Succesfully Added",
               description: `${data.insert_transaction_one?.description} succesfully added `,
             });
           },
+          onError: () => {
+            toast({
+              title: "Something went wrong",
+              description: `Error with adding transaction on ledger #${selectedLedger?.id}`,
+              variant: "destructive",
+            });
+          },
         });
+      }
+      if (MODE === "edit") {
+        if (selectedTransaction?.id) {
+          updateTransaction({
+            variables: {
+              pkColumns: {
+                id: selectedTransaction?.id ?? 0,
+              },
+              set: {
+                amount: parseInt(values.amount),
+                description: values.description,
+                transaction_type: values.transactionType,
+              },
+            },
+            onCompleted: (data) => {
+              if (selectedTransaction?.id !== undefined) {
+                updateLedgerTransaction(selectedTransaction.id, {
+                  ...data.update_transaction_by_pk,
+                });
+                formik.resetForm();
+                toast({
+                  title: "Update Succesfully",
+                  description: `The update for #${selectedTransaction.id} has been completed.`,
+                });
+              }
+            },
+            onError: () => {
+              toast({
+                title: "Something went wrong",
+                description: `Error with updating transaction #${selectedTransaction?.id}`,
+                variant: "destructive",
+              });
+            },
+          });
+        } else {
+          toast({
+            title: "Something went wrong",
+            description: `No Transaction ID found`,
+            variant: "destructive",
+          });
+        }
       }
     },
   });
-
-  const MODE = selectedTransaction ? "edit" : "add";
-
   useEffect(() => {
     if (selectedTransaction) {
       const { amount, transaction_type, description } = selectedTransaction;
@@ -83,16 +144,19 @@ const AddEditCard: React.FC = () => {
   }, [selectedTransaction?.id]);
 
   const disableForm =
-    formik.isSubmitting || ledgerFetchStatus !== "with record";
+    formik.isSubmitting ||
+    ledgerFetchStatus !== "with record" ||
+    selectedLedger?.lock === true;
 
   return (
     <>
       <AlertDialog
         title="UNSAVE CHANGES"
-        isOpen={alertStatus}
-        handleCancel={() => toggleAlert(false)}
+        isOpen={overlapAlertStatus}
+        handleCancel={() => toggleOverlapAlert(false)}
+        variant="destructive"
         handleSubmit={() => {
-          toggleAlert(false);
+          toggleOverlapAlert(false);
           toast({
             title: "Unsave Changes dismissed",
             description: `Your usave changes with the form is not saved and disregarded`,
@@ -102,6 +166,58 @@ const AddEditCard: React.FC = () => {
       >
         Resetting the form will discard any unsaved changes. Are you sure you
         want to proceed?
+      </AlertDialog>
+
+      <AlertDialog
+        title={`DELETE TRANSACTION`}
+        isOpen={deleteAlertStatus}
+        loading={updateTransactionLoading}
+        handleCancel={() => toggleDeleteAlert(false)}
+        handleSubmit={() => {
+          updateTransaction({
+            variables: {
+              pkColumns: {
+                id: selectedTransaction?.id as number,
+              },
+              set: {
+                is_deleted: true,
+              },
+            },
+            onCompleted: () => {
+              if (selectedTransaction?.id !== undefined) {
+                toggleDeleteAlert(false);
+                toast({
+                  title: "Delete Succesful",
+                  description: `Transaction #${selectedTransaction.id}} has been deleted succesfully`,
+                });
+                deleteLedgerTransaction(selectedTransaction.id);
+                formik.resetForm();
+                return;
+              }
+              toast({
+                title: "Something went wrong",
+                description: `No selected transaction id `,
+                variant: "destructive",
+              });
+            },
+            onError: () => {
+              toggleDeleteAlert(false);
+              toast({
+                title: "Something went wrong",
+                description: `Failed to delete transaction #${selectedTransaction?.id}} `,
+                variant: "destructive",
+              });
+            },
+          });
+        }}
+        variant="destructive"
+      >
+        Are you sure that you want delete this transaction?
+        <div className="flex flex-col pt-4">
+          <span>Transaction #: {selectedTransaction?.id}</span>
+          <span>Description: {selectedTransaction?.description}</span>
+          <span>Amount:: {selectedTransaction?.amount}</span>
+        </div>
       </AlertDialog>
       <Card
         title={MODE === "add" ? "Add Transaction" : " Edit Transaction"}
@@ -124,6 +240,7 @@ const AddEditCard: React.FC = () => {
               value={formik.values.description}
               id="description"
               name="description"
+              tabIndex={0}
             />
           </InputWrapper>
 
@@ -165,19 +282,35 @@ const AddEditCard: React.FC = () => {
               />
             </InputWrapper>
           </div>
-
+          <span className="text-sm text-red-400 ">
+            {(formik.touched.amount || formik.touched.description) &&
+              (formik.errors.amount || formik.errors.description)}
+          </span>
           <div className="flex justify-between py-4 gap-2">
-            <span className="text-sm text-red-400 ">
-              {formik.errors.amount || formik.errors.description}
-            </span>
+            <div className="">
+              {MODE === "edit" && (
+                <Button
+                  size="sm"
+                  className="w-full sm:w-fit"
+                  type="button"
+                  disabled={disableForm}
+                  onClick={() => toggleDeleteAlert(true)}
+                  variant={"destructive"}
+                >
+                  {"Delete Record"}
+                </Button>
+              )}
+            </div>
             <div className="flex gap-4">
-              {" "}
               <Button
                 size="sm"
                 className="w-full sm:w-fit"
                 type="button"
-                disabled={disableForm}
-                onClick={() => toggleAlert(true)}
+                disabled={
+                  disableForm ||
+                  (!formik.values.amount && !formik.values.description)
+                }
+                onClick={() => toggleOverlapAlert(true)}
                 variant={"outline"}
               >
                 {"Reset"}

@@ -25,7 +25,7 @@ const Card: React.FC<IcardProps> = ({
 }) => {
   return (
     <>
-      <BaseCard className={className}>
+      <BaseCard className={cn(className)}>
         <div className="flex justify-between place-items-center">
           <CardHeader className="">
             {title && <CardTitle>{title}</CardTitle>}
