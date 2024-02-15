@@ -43,7 +43,7 @@ const AlertDialog: React.FC<IAlertDialogProps> = ({
     <>
       <Base open={isOpen} onOpenChange={() => handleOpen && handleOpen()}>
         {button && <AlertDialogTrigger>{button}</AlertDialogTrigger>}
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[5000px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
               {title ? title : "Are you absolutely sure?"}

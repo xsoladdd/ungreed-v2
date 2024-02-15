@@ -25,9 +25,10 @@ import { months_options, year_options } from "../../main/helper";
 import TableRowData from "./TableRowData";
 import usePagination from "@/components/ui/Pagination/usePagination";
 import Pagination from "@/components/ui/Pagination";
+import { useEffect } from "react";
 
 const page: React.FC = () => {
-  const { user } = useZustand();
+  const { user, refetch: zRefetch } = useZustand();
 
   const {
     handleBack,
@@ -63,7 +64,9 @@ const page: React.FC = () => {
     },
     notifyOnNetworkStatusChange: true,
     onCompleted: ({ ledger_aggregate }) => {
-      setListSize(ledger_aggregate.aggregate?.count ?? 0);
+      if (ledger_aggregate.aggregate) {
+        setListSize(ledger_aggregate.aggregate?.count ?? 0);
+      }
     },
   });
 
@@ -110,6 +113,52 @@ const page: React.FC = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (zRefetch.ledgerList === true) {
+      refetch({
+        limit,
+        offset,
+        where: {
+          cutoff: {
+            _in:
+              cutoffFilter.selectedValues?.length !== 0
+                ? cutoffFilter.selectedValues
+                : undefined,
+          },
+          month: {
+            _in:
+              monthFilter.selectedValues?.length !== 0
+                ? monthFilter.selectedValues?.map((string) => parseInt(string))
+                : undefined,
+          },
+          year: {
+            _in:
+              yearFilter.selectedValues?.length !== 0
+                ? yearFilter.selectedValues?.map((string) => parseInt(string))
+                : undefined,
+          },
+          ...defaultWhere,
+        },
+      });
+      zRefetch.setter("ledgerList", true);
+    }
+
+    return () => {};
+  }, [zRefetch.ledgerList]);
+
+  useEffect(() => {
+    if (!loading) {
+      refetch({
+        limit,
+        offset,
+        where: {
+          ...defaultWhere,
+        },
+      });
+    }
+    return () => {};
+  }, []);
 
   const filterArea = (
     <div className="pb-4 flex gap-3 ">

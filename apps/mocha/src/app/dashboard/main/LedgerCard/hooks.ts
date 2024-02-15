@@ -1,7 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import {
   Transaction,
-  Users_Constraint,
   useGenerateLedgerMutation,
   useGetDefaultLedgerTransactionsLazyQuery,
 } from "@/graphql/client.generated";
@@ -9,7 +8,7 @@ import { useZustand } from "@/store";
 
 // Define the useToggle hook
 const useGenerateLedger = (): [() => void] => {
-  const [generateLedger] = useGenerateLedgerMutation();
+  const [generateLedger] = useGenerateLedgerMutation({});
 
   const [getDefaultLedgerTransactions] =
     useGetDefaultLedgerTransactionsLazyQuery();

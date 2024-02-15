@@ -1,0 +1,7 @@
+mutation insertDefaultLedgerTransaction(
+  $object: default_ledger_transactions_insert_input!
+) {
+  insert_default_ledger_transactions_one(object: $object) {
+    ...DefaultLedgerTransactionsFragment
+  }
+}

@@ -146,18 +146,7 @@ const TableRowData: React.FC<TTableRowData> = ({ item, handleRefetch }) => {
           </AlertDialog>
         </td>
       </tr>
-      <TableRow
-        key={id}
-        className={cn(lock && "bg-destructive/10")}
-        // onContextMenu={(e) => {
-        //   e.preventDefault();
-        //   console.log(e.clientX);
-        //   console.log(e.clientY);
-        //   if (e.type === "contextmenu") {
-        //     console.log("Right click");
-        //   }
-        // }}
-      >
+      <TableRow key={id} className={cn(lock && "bg-destructive/10")}>
         <TableCell className="font-medium">{id}</TableCell>
         <TableCell>{`${getMonthName(month)} ${year}, ${cutoff}`}</TableCell>
         <TableCell className="text-right">{formatMoney(totalIncome)}</TableCell>

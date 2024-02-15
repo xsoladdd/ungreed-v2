@@ -18,35 +18,3 @@ const NoLedgerFound: React.FC<{ handleClick: () => void }> = ({
   );
 };
 export default NoLedgerFound;
-
-/*
-    generateLedger({
-          variables: {
-            input: {
-              cutoff: filterData.cutoff,
-              month: filterData.month,
-              user: {
-                data: {
-                  email: user.email,
-                },
-              },
-              transactions: {
-                data: [...default_ledger_transactions],
-              },
-              year: filterData.year,
-            },
-          },
-          onCompleted: (data) => {
-            setSelectedLedger({
-              ...data.insert_ledger_one,
-            });
-          },
-          onError: () => {
-            toast({
-              title: "Something went wrong",
-              description: `Error generating ledger `,
-              variant: "destructive",
-            });
-          },
-        });
-*/

@@ -1,0 +1,8 @@
+mutation updateDefaultLedgerTransactionsByPk(
+  $pkColumns: default_ledger_transactions_pk_columns_input!
+  $set: default_ledger_transactions_set_input
+) {
+  update_default_ledger_transactions_by_pk(pk_columns: $pkColumns, _set: $set) {
+    ...DefaultLedgerTransactionsFragment
+  }
+}

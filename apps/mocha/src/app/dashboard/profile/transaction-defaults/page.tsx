@@ -24,9 +24,15 @@ import {
 import { useZustand } from "@/store";
 import TableRowData from "./TableRowData";
 import AddEditModal from "./AddEditModal";
+import useToggle from "@/hooks/useToggle";
+import { useEffect } from "react";
 
 const page: React.FC = () => {
-  const { user } = useZustand();
+  const {
+    user,
+    refetch: { defaultLedgerItems, setter },
+  } = useZustand();
+
   const {
     handleBack,
     handleNext,
@@ -37,6 +43,7 @@ const page: React.FC = () => {
     listSize,
   } = usePagination();
 
+  const [addEditModalStatus, setAddEditModalStatus] = useToggle(false);
   const cutoffFilter = useFacetedFilter();
 
   const defaultWhere: InputMaybe<Default_Ledger_Transactions_Bool_Exp> = {
@@ -88,6 +95,14 @@ const page: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    if (defaultLedgerItems === true) {
+      handleRefetch(true);
+      setter("defaultLedgerItems", false);
+    }
+    return () => {};
+  }, [defaultLedgerItems]);
+
   const filterArea = (
     <div className="flex justify-between">
       <div className="pb-4 flex gap-3 ">
@@ -121,13 +136,21 @@ const page: React.FC = () => {
         </Button>
       </div>
       <div className="pb-4 flex gap-3 ">
-        <Button variant="default" size="sm" className="h-8">
+        <AddEditModal
+          status={addEditModalStatus}
+          setStatus={(b) => setAddEditModalStatus(b)}
+        />
+        <Button
+          className="h-8"
+          size="sm"
+          onClick={() => setAddEditModalStatus(true)}
+        >
           Add Record
         </Button>
-        <AddEditModal />
       </div>
     </div>
   );
+
   const tableHead = (
     <TableHeader>
       <TableRow>
@@ -140,6 +163,7 @@ const page: React.FC = () => {
       </TableRow>
     </TableHeader>
   );
+
   const tableBody = (
     <TableBody>
       {loading && <TableLoader />}
@@ -149,10 +173,16 @@ const page: React.FC = () => {
       )}
       {!loading &&
         data?.default_ledger_transactions.map((x, i) => (
-          <TableRowData item={x} key={i} handleRefetch={handleRefetch} />
+          <TableRowData
+            item={x}
+            key={i}
+
+            // handleRefetch={handleRefetch}
+          />
         ))}
     </TableBody>
   );
+
   const pagination = (
     <div className="float-right">
       <Pagination
@@ -166,6 +196,7 @@ const page: React.FC = () => {
       />
     </div>
   );
+
   return (
     <>
       <PageLayoutHeader
@@ -174,7 +205,7 @@ const page: React.FC = () => {
       />
       {filterArea}
       <Separator />
-      <AddEditModal />
+
       <div className="">
         <Table>
           {tableHead}

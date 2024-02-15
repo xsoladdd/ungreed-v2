@@ -132,8 +132,8 @@ export type Default_Ledger_Transactions = {
   transaction_type: Scalars['bpchar']['output'];
   updated_at: Scalars['timestamptz']['output'];
   /** An object relationship */
-  user?: Maybe<Users>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
+  user: Users;
+  user_id: Scalars['uuid']['output'];
 };
 
 /** aggregated selection of "default_ledger_transactions" */
@@ -1902,12 +1902,27 @@ export type InserTransactionMutationVariables = Exact<{
 
 export type InserTransactionMutation = { __typename?: 'mutation_root', insert_transaction_one?: { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any } | null };
 
+export type InsertDefaultLedgerTransactionMutationVariables = Exact<{
+  object: Default_Ledger_Transactions_Insert_Input;
+}>;
+
+
+export type InsertDefaultLedgerTransactionMutation = { __typename?: 'mutation_root', insert_default_ledger_transactions_one?: { __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any } | null };
+
 export type InsertUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
 
 export type InsertUserMutation = { __typename?: 'mutation_root', insert_users?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', email: string }> } | null };
+
+export type UpdateDefaultLedgerTransactionsByPkMutationVariables = Exact<{
+  pkColumns: Default_Ledger_Transactions_Pk_Columns_Input;
+  set?: InputMaybe<Default_Ledger_Transactions_Set_Input>;
+}>;
+
+
+export type UpdateDefaultLedgerTransactionsByPkMutation = { __typename?: 'mutation_root', update_default_ledger_transactions_by_pk?: { __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any } | null };
 
 export type UpdateLedgerByPkMutationVariables = Exact<{
   pkColumns: Ledger_Pk_Columns_Input;
@@ -2104,6 +2119,39 @@ export function useInserTransactionMutation(baseOptions?: Apollo.MutationHookOpt
 export type InserTransactionMutationHookResult = ReturnType<typeof useInserTransactionMutation>;
 export type InserTransactionMutationResult = Apollo.MutationResult<InserTransactionMutation>;
 export type InserTransactionMutationOptions = Apollo.BaseMutationOptions<InserTransactionMutation, InserTransactionMutationVariables>;
+export const InsertDefaultLedgerTransactionDocument = /*#__PURE__*/ gql`
+    mutation insertDefaultLedgerTransaction($object: default_ledger_transactions_insert_input!) {
+  insert_default_ledger_transactions_one(object: $object) {
+    ...DefaultLedgerTransactionsFragment
+  }
+}
+    ${DefaultLedgerTransactionsFragmentFragmentDoc}`;
+export type InsertDefaultLedgerTransactionMutationFn = Apollo.MutationFunction<InsertDefaultLedgerTransactionMutation, InsertDefaultLedgerTransactionMutationVariables>;
+
+/**
+ * __useInsertDefaultLedgerTransactionMutation__
+ *
+ * To run a mutation, you first call `useInsertDefaultLedgerTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertDefaultLedgerTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertDefaultLedgerTransactionMutation, { data, loading, error }] = useInsertDefaultLedgerTransactionMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useInsertDefaultLedgerTransactionMutation(baseOptions?: Apollo.MutationHookOptions<InsertDefaultLedgerTransactionMutation, InsertDefaultLedgerTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertDefaultLedgerTransactionMutation, InsertDefaultLedgerTransactionMutationVariables>(InsertDefaultLedgerTransactionDocument, options);
+      }
+export type InsertDefaultLedgerTransactionMutationHookResult = ReturnType<typeof useInsertDefaultLedgerTransactionMutation>;
+export type InsertDefaultLedgerTransactionMutationResult = Apollo.MutationResult<InsertDefaultLedgerTransactionMutation>;
+export type InsertDefaultLedgerTransactionMutationOptions = Apollo.BaseMutationOptions<InsertDefaultLedgerTransactionMutation, InsertDefaultLedgerTransactionMutationVariables>;
 export const InsertUserDocument = /*#__PURE__*/ gql`
     mutation insertUser($email: String!) {
   insert_users(objects: {email: $email}) {
@@ -2140,6 +2188,40 @@ export function useInsertUserMutation(baseOptions?: Apollo.MutationHookOptions<I
 export type InsertUserMutationHookResult = ReturnType<typeof useInsertUserMutation>;
 export type InsertUserMutationResult = Apollo.MutationResult<InsertUserMutation>;
 export type InsertUserMutationOptions = Apollo.BaseMutationOptions<InsertUserMutation, InsertUserMutationVariables>;
+export const UpdateDefaultLedgerTransactionsByPkDocument = /*#__PURE__*/ gql`
+    mutation updateDefaultLedgerTransactionsByPk($pkColumns: default_ledger_transactions_pk_columns_input!, $set: default_ledger_transactions_set_input) {
+  update_default_ledger_transactions_by_pk(pk_columns: $pkColumns, _set: $set) {
+    ...DefaultLedgerTransactionsFragment
+  }
+}
+    ${DefaultLedgerTransactionsFragmentFragmentDoc}`;
+export type UpdateDefaultLedgerTransactionsByPkMutationFn = Apollo.MutationFunction<UpdateDefaultLedgerTransactionsByPkMutation, UpdateDefaultLedgerTransactionsByPkMutationVariables>;
+
+/**
+ * __useUpdateDefaultLedgerTransactionsByPkMutation__
+ *
+ * To run a mutation, you first call `useUpdateDefaultLedgerTransactionsByPkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDefaultLedgerTransactionsByPkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDefaultLedgerTransactionsByPkMutation, { data, loading, error }] = useUpdateDefaultLedgerTransactionsByPkMutation({
+ *   variables: {
+ *      pkColumns: // value for 'pkColumns'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdateDefaultLedgerTransactionsByPkMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDefaultLedgerTransactionsByPkMutation, UpdateDefaultLedgerTransactionsByPkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDefaultLedgerTransactionsByPkMutation, UpdateDefaultLedgerTransactionsByPkMutationVariables>(UpdateDefaultLedgerTransactionsByPkDocument, options);
+      }
+export type UpdateDefaultLedgerTransactionsByPkMutationHookResult = ReturnType<typeof useUpdateDefaultLedgerTransactionsByPkMutation>;
+export type UpdateDefaultLedgerTransactionsByPkMutationResult = Apollo.MutationResult<UpdateDefaultLedgerTransactionsByPkMutation>;
+export type UpdateDefaultLedgerTransactionsByPkMutationOptions = Apollo.BaseMutationOptions<UpdateDefaultLedgerTransactionsByPkMutation, UpdateDefaultLedgerTransactionsByPkMutationVariables>;
 export const UpdateLedgerByPkDocument = /*#__PURE__*/ gql`
     mutation updateLedgerByPk($pkColumns: ledger_pk_columns_input!, $set: ledger_set_input) {
   update_ledger_by_pk(pk_columns: $pkColumns, _set: $set) {
