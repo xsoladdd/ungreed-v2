@@ -1,9 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import Link from "next/link";
-import Nav from "./Nav";
 import Image from "next/image";
+import Nav from "./Nav";
 
 export const metadata: Metadata = {
   title: "UNGREED | AUTH",

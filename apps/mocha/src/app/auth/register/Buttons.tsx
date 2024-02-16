@@ -7,7 +7,7 @@ import { Icons } from "@/components/ui/Icons";
 // import { useInsertUserMutation } from "@/graphql/generated/graphql";
 
 const Buttons: React.FC = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading] = React.useState<boolean>(false);
 
   return (
     <div className={cn("grid gap-6")}>

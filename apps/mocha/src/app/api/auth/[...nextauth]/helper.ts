@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn() {
       // const url = GRAPHQL_URL;
       // const secret = GRAPHQL_SECRET;
       // const client = new GraphQLClient(url, {
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
       // console.log(x);
       return true;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return `${baseUrl}/dashboard`;
     },
     // async session({ session, user, token }) {
