@@ -7,6 +7,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { useZustand } from "@/store";
 interface avatarMenuProps {
   imgString?: string | null;
   imgSrc?: string | null;
@@ -17,6 +18,7 @@ const AvatarMenu: React.FC<avatarMenuProps> = ({
   imgSrc,
 }) => {
   const router = useRouter();
+  const { resetUser } = useZustand();
   const { setTheme, theme } = useTheme();
   const options: menu = [
     {
@@ -44,7 +46,8 @@ const AvatarMenu: React.FC<avatarMenuProps> = ({
           title: "logout",
           onClick: () => {
             signOut({ redirect: false, callbackUrl: "/" });
-            router.push("/");
+            resetUser();
+            router.push("/auth/login");
           },
         },
       ],

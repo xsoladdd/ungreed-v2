@@ -21,7 +21,6 @@ export default function NavBar({ session }: { session: Session | null }) {
               />
             </Link>
           </div>
-
           <nav className="flex items-center space-x-1">
             <AvatarMenu
               imgSrc={session?.user?.image}
