@@ -24,9 +24,9 @@ export default async function DashboardLayout({
   return (
     <div>
       <Nav />
-      <DashboardProvider session={session} user={user}>
-        {children}
-      </DashboardProvider>
+      {/* <DashboardProvider session={session} user={user}> */}
+      {children}
+      {/* </DashboardProvider> */}
     </div>
   );
 }
