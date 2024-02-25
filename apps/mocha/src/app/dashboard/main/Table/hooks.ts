@@ -29,7 +29,6 @@ const useGenerateLedger = (): [() => void] => {
         },
       },
       onCompleted: ({ default_ledger_transactions }) => {
-        console.log(default_ledger_transactions);
         const transactions: Array<Partial<Transaction>> = [
           ...default_ledger_transactions.map((x) => {
             const { transaction_type, amount, description } = x;
