@@ -6,4 +6,8 @@ module.exports = {
     NEXT_APP_HASURA_GRAPHQL_ADMIN_SECRET: process.env.NEXT_APP_HASURA_GRAPHQL_ADMIN_SECRET
   },
   // basePath:'/dashboard'
+  experimental: {
+    // fix this later
+    missingSuspenseWithCSRBailout: false,
+  }
 };

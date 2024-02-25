@@ -14,6 +14,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { cutoffType } from "@/store/slices/filterSlice";
 import { useFormik } from "formik";
+import { Suspense } from "react";
 
 const Filter: React.FC = () => {
   const searchParams = useSearchParams();
@@ -74,47 +75,50 @@ const Filter: React.FC = () => {
 
   return (
     <>
-      <form
-        className="flex space-x-2 md:gap-4 lg:flex-col lg:space-x-0 lg:space-y-1 w-full "
-        onSubmit={formik.handleSubmit}
-      >
-        <h3 className="text-lg font-medium">Filter</h3>
-        <InputWrapper className="md:max-w-[250px]">
-          <Select
-            options={months_options}
-            onValueChange={(e) => formik.setFieldValue("month", e)}
-            value={formik.values.month}
-          />
-        </InputWrapper>
-        <InputWrapper className="md:max-w-[250px]">
-          <Select
-            options={year_options}
-            onValueChange={(e) => formik.setFieldValue("year", e)}
-            value={formik.values.year}
-          />
-        </InputWrapper>
-        <InputWrapper className="md:max-w-[250px]">
-          <Select
-            options={[
-              { text: "First", value: "1st" },
-              { text: "Second", value: "2nd" },
-            ]}
-            onValueChange={(e) => formik.setFieldValue("cutoff", e)}
-            value={formik.values.cutoff}
-          />
-        </InputWrapper>
-        <span className="text-xs text-red-500">
-          {formik.errors.cutoff ?? formik.errors.month ?? formik.errors.year}
-        </span>
-        <Button
-          size="sm"
-          className="w-full md:max-w-[250px] h-8 "
-          type="submit"
-          disabled={loading}
+      {" "}
+      <Suspense>
+        <form
+          className="flex space-x-2 md:gap-4 lg:flex-col lg:space-x-0 lg:space-y-1 w-full "
+          onSubmit={formik.handleSubmit}
         >
-          {loading ? "Loading" : "Filter"}
-        </Button>
-      </form>
+          <h3 className="text-lg font-medium">Filter</h3>
+          <InputWrapper className="md:max-w-[250px]">
+            <Select
+              options={months_options}
+              onValueChange={(e) => formik.setFieldValue("month", e)}
+              value={formik.values.month}
+            />
+          </InputWrapper>
+          <InputWrapper className="md:max-w-[250px]">
+            <Select
+              options={year_options}
+              onValueChange={(e) => formik.setFieldValue("year", e)}
+              value={formik.values.year}
+            />
+          </InputWrapper>
+          <InputWrapper className="md:max-w-[250px]">
+            <Select
+              options={[
+                { text: "First", value: "1st" },
+                { text: "Second", value: "2nd" },
+              ]}
+              onValueChange={(e) => formik.setFieldValue("cutoff", e)}
+              value={formik.values.cutoff}
+            />
+          </InputWrapper>
+          <span className="text-xs text-red-500">
+            {formik.errors.cutoff ?? formik.errors.month ?? formik.errors.year}
+          </span>
+          <Button
+            size="sm"
+            className="w-full md:max-w-[250px] h-8 "
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Loading" : "Filter"}
+          </Button>
+        </form>
+      </Suspense>
     </>
   );
 };
