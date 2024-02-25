@@ -11,7 +11,7 @@ const DashboardProvider: React.FC<{
   const { setUser } = useZustand();
   useEffect(() => {
     setUser({ ...user });
-  }, [session]);
+  }, [session, user.id]);
 
   return <>{children}</>;
 };
