@@ -16,10 +16,9 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOption);
-
-  if (session?.user) {
-    redirect(`/dashboard`);
-  }
+  // if (session?.user) {
+  //   redirect(`/dashboard`);
+  // }
   return (
     <>
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
