@@ -10,7 +10,11 @@ const DashboardProvider: React.FC<{
 }> = ({ children, session, user }) => {
   const { setUser } = useZustand();
   useEffect(() => {
-    setUser({ ...user });
+    console.log(session);
+    console.log(user);
+    if (user) {
+      setUser({ ...user });
+    }
   }, [session]);
 
   return <>{children}</>;
