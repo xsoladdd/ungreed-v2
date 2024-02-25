@@ -1,6 +1,6 @@
 import Nav from "@/components/layout/navbar/nav";
 import type { Metadata } from "next";
-import DashboardProvider from "@/components/providers/DashboardProvider";
+// import DashboardProvider from "@/components/providers/DashboardProvider";
 import { getUser } from "@/lib/getUser";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -26,9 +26,11 @@ export default async function DashboardLayout({
     <div>
       <Nav />
       {JSON.stringify(session)}
-      <DashboardProvider session={session} user={user}>
-        {children}
-      </DashboardProvider>
+      <br />
+      {JSON.stringify(user)}
+      {/* <DashboardProvider session={session} user={user}> */}
+      {children}
+      {/* </DashboardProvider> */}
     </div>
   );
 }
