@@ -25,6 +25,7 @@ export default async function DashboardLayout({
   return (
     <div>
       <Nav />
+      {JSON.stringify(session)}
       {/* <DashboardProvider session={session} user={user}> */}
       {children}
       {/* </DashboardProvider> */}
