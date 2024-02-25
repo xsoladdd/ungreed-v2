@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import DashboardProvider from "@/components/providers/DashboardProvider";
 import { getUser } from "@/lib/getUser";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { authOption } from "../api/auth/[...nextauth]/helper";
 
 export const metadata: Metadata = {
