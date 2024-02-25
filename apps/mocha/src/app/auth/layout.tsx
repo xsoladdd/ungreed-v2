@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Nav from "./Nav";
-// import { getServerSession } from "next-auth";
-// import { authOption } from "../api/auth/[...nextauth]/helper";
-// import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOption } from "../api/auth/[...nextauth]/helper";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "UNGREED | AUTH",
@@ -15,10 +15,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getServerSession(authOption);
-  // if (session?.user) {
-  //   redirect(`/dashboard`);
-  // }
+  const session = await getServerSession(authOption);
+  if (session) {
+    redirect(`/dashboard`);
+  }
   return (
     <>
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
