@@ -18,6 +18,7 @@ export default async function DashboardLayout({
 }) {
   const session = await getServerSession(authOption);
   const user = await getUser(session?.user?.email ?? "");
+  console.log(session);
   // if (session?.user) {
   //   redirect(`/auth/login`, RedirectType.push);
   // }
