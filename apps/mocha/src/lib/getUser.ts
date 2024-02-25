@@ -3,6 +3,9 @@ import { GRAPHQL_SECRET, GRAPHQL_URL } from "@/config/res";
 export const getUser = async (
   email: string
 ): Promise<{ id: string; email: string }> => {
+  if (!email) {
+    throw new Error("No Session, EmailError ");
+  }
   const query = `
   query getUser($where: users_bool_exp) {
     users(where: $where) {
