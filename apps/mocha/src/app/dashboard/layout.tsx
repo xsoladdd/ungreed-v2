@@ -16,17 +16,17 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOption);
-  const user = await getUser(session?.user?.email ?? "");
-  if (user.email) {
-    redirect(`/auth/login`);
-  }
+  // const session = await getServerSession(authOption);
+  // const user = await getUser(session?.user?.email ?? "");
+  // if (user.email) {
+  //   redirect(`/auth/login`);
+  // }
   return (
     <div>
       <Nav />
-      <DashboardProvider session={session} user={user}>
-        {children}
-      </DashboardProvider>
+      {/* <DashboardProvider session={session} user={user}> */}
+      {children}
+      {/* </DashboardProvider> */}
     </div>
   );
 }
