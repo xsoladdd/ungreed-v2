@@ -16,11 +16,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOption);
-  if (session) {
-    redirect(`/dashboard`);
-  }
+  // if (session) {
+  //   redirect(`/dashboard`);
+  // }
   return (
     <>
+      {JSON.stringify(session)}
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Nav />
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
