@@ -1,4 +1,4 @@
-import { GRAPHQL_SECRET, GRAPHQL_URL } from "@/config/res";
+import { GRAPHQL_SECRET } from "@/config/res";
 
 export const getUser = async (
   email: string
@@ -31,6 +31,7 @@ export const getUser = async (
       },
     }),
   };
+  const GRAPHQL_URL = "https://ungreed.hasura.app/v1/graphql";
   const request = new Request(GRAPHQL_URL, options);
   const user = await fetch(request).then((data) => data.json());
   return user.data.users[0];
