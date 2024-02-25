@@ -13,6 +13,7 @@ import useToggle from "@/hooks/useToggle";
 import { formatMoney } from "@/lib/formatMoney";
 import { getMonthName } from "@/lib/getMonthName";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface TTableRowData {
   item: GetLedgerListQuery["ledger"][0];
@@ -23,6 +24,8 @@ const TableRowData: React.FC<TTableRowData> = ({ item, handleRefetch }) => {
   const { cutoff, id, lock, month, transactions, year } = item;
   const { toast } = useToast();
   const [calculateTable] = useCalculateTable();
+  const router = useRouter();
+
   const [updateLedger, { loading: lockLedgerLoading }] =
     useUpdateLedgerByPkMutation({
       notifyOnNetworkStatusChange: true,
@@ -52,7 +55,10 @@ const TableRowData: React.FC<TTableRowData> = ({ item, handleRefetch }) => {
           },
           {
             label: "View",
-            onClick: () => console.log("green"),
+            onClick: () =>
+              router.push(
+                `/dashboard?year=${item.year}&month=${item.month}&cutoff=${item.cutoff}`
+              ),
             // disabled: loading,
           },
           {

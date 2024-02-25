@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 const Nav: React.FC = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <>
       {pathname === "/auth/login" && (

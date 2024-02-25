@@ -1,4 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout";
+import SidebarNav from "@/components/ui/SideNav/SideNav";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,9 +30,9 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <>
       <PageLayout
-        sideBarItems={sidebarNavItems}
         caption="Manage your profile settings and set preferences."
         pageTitle="Profile"
+        SideBar={<SidebarNav items={sidebarNavItems} />}
       >
         {children}
       </PageLayout>

@@ -2,7 +2,6 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Menu from "@/components/ui/Menu/Menu";
 import { menu } from "@/components/ui/Menu/types";
-
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";

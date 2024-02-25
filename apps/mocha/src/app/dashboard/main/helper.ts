@@ -1,6 +1,7 @@
 import { options } from "@/components/ui/Select/types";
 import { whichCutoff } from "@/lib/whichCutoff";
 import { cutoffType } from "@/store/slices/filterSlice";
+import * as Yup from "yup";
 
 export const months_options: options = [
   { text: "January", value: "1" },
@@ -21,6 +22,8 @@ export const year_options: options = [
   { text: "2024", value: "2024" },
   { text: "2025", value: "2025" },
   { text: "2026", value: "2026" },
+  { text: "2027", value: "2027" },
+  { text: "2028", value: "2028" },
 ];
 
 export const getCurrentMonthNumber = () => {
@@ -35,3 +38,35 @@ export const getCurrentCutoff = (): cutoffType => {
   }
   return "2nd";
 };
+
+export const filterSchema = Yup.object({
+  month: Yup.string()
+    .required()
+    .oneOf(
+      months_options.map(({ value }) => value),
+      "Invalid Month, Please select to continue"
+    ),
+  year: Yup.string()
+    .required()
+    .oneOf(
+      year_options.map(({ value }) => value),
+      "Invalid Year, Please select to continue"
+    ),
+  cutoff: Yup.string().oneOf(
+    ["1st", "2nd"],
+    "Invalid Cutoff, Please select to continue"
+  ),
+});
+
+export const addEditTransactionSchema = Yup.object({
+  transactionType: Yup.string()
+    .oneOf(["+", "-"] as const)
+    .defined(),
+  description: Yup.string()
+    .min(2, "Description must be 2 characters or more")
+    .max(20, "Description must be 20 characters or less")
+    .required("Description is required"),
+  amount: Yup.number()
+    .min(1, "Amount must not have value lessthan 1")
+    .required("Amount is required"),
+});

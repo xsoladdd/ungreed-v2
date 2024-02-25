@@ -12,9 +12,15 @@ type filterType = {
   cutoff: cutoffType;
 };
 
+type setterT = (refetchKey: keyof filterType, status: boolean) => void;
+
+interface filterT extends filterType {
+  setItem: setterT;
+  setFilterData: (val: filterType) => void;
+}
+
 export type FilterSlice = {
-  setFilterData: (data: filterType) => void;
-  filterData: filterType;
+  filter: filterT;
 };
 
 export const createFilterSlice: StateCreator<
@@ -23,13 +29,17 @@ export const createFilterSlice: StateCreator<
   [],
   FilterSlice
 > = (set) => ({
-  filterData: {
+  filter: {
     cutoff: "1st",
     month: 2,
     year: 2024,
+    setItem: (refetchKey, value) =>
+      set(({ filter }) => ({
+        filter: { ...filter, [refetchKey]: value },
+      })),
+    setFilterData: (value) =>
+      set(({ filter }) => ({
+        filter: { ...filter, ...value },
+      })),
   },
-  setFilterData: (data) =>
-    set(() => ({
-      filterData: { ...data },
-    })),
 });

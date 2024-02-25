@@ -1,23 +1,18 @@
 import React from "react";
-import FilterCard from "./FilterCard";
-import BalanceCard from "./BalanceCard";
-// import MoneyTreeCard from "./MoneyTreeCard";
-import EditCard from "./AddEditCard";
-import LedgerCard from "./LedgerCard";
-import LayoutWrapper from "@/components/ui/LayoutWrapper";
+import PageLayout from "@/components/layout/PageLayout";
+import PageLayoutHeader from "@/components/layout/PageLayoutHeader";
+import Filter from "./Filter";
+import LedgerCard from "./Table";
 
 const Main: React.FC = () => {
   return (
-    <div className="flex gap-4 flex-col p-4">
-      <LayoutWrapper>
-        <FilterCard />
-        <BalanceCard />
-      </LayoutWrapper>
-      <LayoutWrapper>
-        <LedgerCard />
-        <EditCard />
-      </LayoutWrapper>
-    </div>
+    <PageLayout
+      pageTitle="UNGREED."
+      caption="Surpress your greed, control your expense"
+      SideBar={<Filter />}
+    >
+      <LedgerCard />
+    </PageLayout>
   );
 };
 export default Main;

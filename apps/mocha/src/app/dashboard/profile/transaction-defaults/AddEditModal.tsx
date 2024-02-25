@@ -1,32 +1,25 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
+  BasicDialogFooter,
+  BasicDialogHeader,
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import InputWrapper from "@/components/ui/InputWrapper";
-import { Textarea } from "@/components/ui/textarea";
 import Select from "@/components/ui/Select";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import {
-  GetDefaultLedgerTransactionsQuery,
   useInsertDefaultLedgerTransactionMutation,
   useUpdateDefaultLedgerTransactionsByPkMutation,
 } from "@/graphql/client.generated";
 import { useZustand } from "@/store";
-import { useToast } from "@/components/ui/use-toast";
-
-type addEditModalType = {
-  item?: GetDefaultLedgerTransactionsQuery["default_ledger_transactions"][0];
-  status: boolean;
-  setStatus: (b: boolean) => void;
-};
+import { useFormik } from "formik";
+import { addEditModalType, formSchema } from "./helper";
 
 const AddEditModal: React.FC<addEditModalType> = ({
   setStatus,
@@ -59,21 +52,7 @@ const AddEditModal: React.FC<addEditModalType> = ({
       description: item?.description ?? "",
       amount: item?.amount ?? "",
     },
-    validationSchema: Yup.object({
-      transactionType: Yup.string()
-        .oneOf(["+", "-"] as const)
-        .defined(),
-      cutoff: Yup.string()
-        .oneOf(["1st", "2nd"] as const)
-        .defined(),
-      description: Yup.string()
-        .min(2, "Description must be 2 characters or more")
-        .max(20, "Description must be 20 characters or less")
-        .required("Description is required"),
-      amount: Yup.number()
-        .min(1, "Amount must not have value lessthan 1")
-        .required("Amount is required"),
-    }),
+    validationSchema: formSchema,
     onSubmit: (values) => {
       const { amount, cutoff, description, transactionType } = values;
       if (user.id) {
@@ -143,33 +122,20 @@ const AddEditModal: React.FC<addEditModalType> = ({
   const disableForm = false;
 
   const footer = (
-    <DialogFooter>
-      <div className="w-full flex place-items-center">
-        <span className="text-sm text-red-400">
-          {(formik.touched.amount || formik.touched.description) &&
-            (formik.errors.amount || formik.errors.description)}
-        </span>
-      </div>
-
-      <Button
-        type="reset"
-        className="h-8"
-        variant={"outline"}
-        size="sm"
-        onClick={formik.handleReset}
-        disabled={loading}
-      >
-        Reset
-      </Button>
-      <Button type="submit" className="h-8" size="sm" disabled={loading}>
-        Save
-      </Button>
-    </DialogFooter>
-  );
-  const header = (
-    <DialogHeader>
-      <DialogTitle> {title}</DialogTitle>
-    </DialogHeader>
+    <BasicDialogFooter
+      error={
+        (formik.touched.amount || formik.touched.description) &&
+        (formik.errors.amount || formik.errors.description)
+      }
+      primaryButton={{
+        // onClick: () => console.log("aw"),
+        disabled: loading,
+      }}
+      resetButton={{
+        onClick: formik.handleReset,
+        disabled: loading,
+      }}
+    />
   );
   const content = (
     <div className="grid  py-4">
@@ -251,7 +217,7 @@ const AddEditModal: React.FC<addEditModalType> = ({
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
-          {header}
+          <BasicDialogHeader title={title} />
           <form onSubmit={formik.handleSubmit}>
             {content}
             {footer}

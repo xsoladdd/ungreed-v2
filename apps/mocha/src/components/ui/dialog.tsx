@@ -1,18 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Cross2Icon } from "@radix-ui/react-icons"
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { Button } from "./button";
+import { Boolean_Comparison_Exp } from "@/graphql/client.generated";
 
-const Dialog = DialogPrimitive.Root
+const Dialog = DialogPrimitive.Root;
 
-const DialogTrigger = DialogPrimitive.Trigger
+const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = DialogPrimitive.Portal
+const DialogPortal = DialogPrimitive.Portal;
 
-const DialogClose = DialogPrimitive.Close
+const DialogClose = DialogPrimitive.Close;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -26,8 +28,8 @@ const DialogOverlay = React.forwardRef<
     )}
     {...props}
   />
-))
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+));
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
@@ -50,8 +52,8 @@ const DialogContent = React.forwardRef<
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
-))
-DialogContent.displayName = DialogPrimitive.Content.displayName
+));
+DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({
   className,
@@ -64,8 +66,8 @@ const DialogHeader = ({
     )}
     {...props}
   />
-)
-DialogHeader.displayName = "DialogHeader"
+);
+DialogHeader.displayName = "DialogHeader";
 
 const DialogFooter = ({
   className,
@@ -78,8 +80,8 @@ const DialogFooter = ({
     )}
     {...props}
   />
-)
-DialogFooter.displayName = "DialogFooter"
+);
+DialogFooter.displayName = "DialogFooter";
 
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
@@ -93,8 +95,8 @@ const DialogTitle = React.forwardRef<
     )}
     {...props}
   />
-))
-DialogTitle.displayName = DialogPrimitive.Title.displayName
+));
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
@@ -105,9 +107,77 @@ const DialogDescription = React.forwardRef<
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-))
-DialogDescription.displayName = DialogPrimitive.Description.displayName
+));
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const BasicDialogHeader: React.FC<{ title: string }> = ({ title }) => {
+  return (
+    <>
+      <DialogHeader>
+        <DialogTitle> {title}</DialogTitle>
+      </DialogHeader>
+    </>
+  );
+};
+
+interface BasicDialogFooterProps {
+  error?: string | undefined | boolean;
+  resetButton?: {
+    title?: string;
+    onClick: (
+      // eslint-disable-next-line no-undef
+      e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    ) => void;
+    disabled?: boolean;
+  };
+  primaryButton?: {
+    title?: string;
+    onClick?: (
+      // eslint-disable-next-line no-undef
+      e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    ) => void;
+    disabled?: boolean;
+  };
+}
+
+const BasicDialogFooter: React.FC<BasicDialogFooterProps> = ({
+  error,
+  primaryButton,
+  resetButton,
+}) => {
+  return (
+    <>
+      <DialogFooter>
+        <div className="w-full flex place-items-center">
+          <span className="text-sm text-red-400">{error}</span>
+        </div>
+        {resetButton && (
+          <Button
+            type="reset"
+            className="h-8"
+            variant={"outline"}
+            size="sm"
+            disabled={resetButton.disabled}
+            onClick={resetButton.onClick}
+          >
+            {resetButton.title ?? "Reset"}
+          </Button>
+        )}
+        {primaryButton && (
+          <Button
+            type="submit"
+            className="h-8"
+            size="sm"
+            disabled={primaryButton.disabled}
+            onClick={primaryButton.onClick}
+          >
+            {primaryButton.title ?? "Save"}
+          </Button>
+        )}
+      </DialogFooter>
+    </>
+  );
+};
 export {
   Dialog,
   DialogPortal,
@@ -119,4 +189,6 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-}
+  BasicDialogHeader,
+  BasicDialogFooter,
+};

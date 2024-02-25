@@ -1,14 +1,13 @@
 "use client";
-import React from "react";
-import { signIn } from "next-auth/react";
+import React, { useState } from "react";
+// import { signIn } from "next-auth/react";
+import { Icons } from "@/components/ui/Icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Icons } from "@/components/ui/Icons";
-// import { useInsertUserMutation } from "@/graphql/generated/graphql";
+import { signIn } from "next-auth/react";
 
 const Buttons: React.FC = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className={cn("grid gap-6 lg:w-[300px]")}>
       <Button
@@ -27,6 +26,23 @@ const Buttons: React.FC = () => {
           <Icons.gitHub className="mr-2 h-4 w-4" />
         )}{" "}
         GitHub
+      </Button>
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={() => {
+          setIsLoading(true);
+          signIn("google");
+        }}
+        // className="max-w-[400px]"
+      >
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.gitHub className="mr-2 h-4 w-4" />
+        )}{" "}
+        Google
       </Button>
     </div>
   );

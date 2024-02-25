@@ -14,11 +14,9 @@ const useGenerateLedger = (): [() => void] => {
     useGetDefaultLedgerTransactionsLazyQuery();
 
   const {
-    setLedgerStatus,
-    setSelectedLedger,
+    ledger: { setLedgerStatus, setSelectedLedger, selectedLedger },
+    filter: { cutoff, month, year },
     user,
-    filterData,
-    selectedLedger,
   } = useZustand();
   const { toast } = useToast();
 
@@ -41,13 +39,13 @@ const useGenerateLedger = (): [() => void] => {
         generateLedger({
           variables: {
             input: {
-              cutoff: filterData.cutoff,
-              month: filterData.month,
+              cutoff: cutoff,
+              month: month,
               user_id: user.id ?? "",
               transactions: {
                 data: [...transactions],
               },
-              year: filterData.year,
+              year: year,
             },
           },
           onCompleted: (data) => {
