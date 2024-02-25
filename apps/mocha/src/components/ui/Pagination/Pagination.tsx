@@ -46,8 +46,6 @@ const Pagination: React.FC<PaginationProps> = ({
       onClick: () => setOffset((index + 1) * limit - limit),
     }));
 
-  // console.log(listSize);
-  // console.log(`page`, offset < Math.ceil(listSize / limit));
   return (
     <>
       <Root className=" py-[4px] w-fit">

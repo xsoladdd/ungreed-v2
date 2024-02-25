@@ -33,7 +33,6 @@ const PageLayoutHeader: React.FC<IPageLayoutHeaderProps> = ({
             size="sm"
             onClick={(e) => button.onClick(e)}
             disabled={button.disabled}
-            // onClick={(e) => console.log('aw')}
           >
             {button.title}
           </Button>

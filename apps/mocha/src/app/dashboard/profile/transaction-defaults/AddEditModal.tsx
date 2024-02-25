@@ -128,7 +128,6 @@ const AddEditModal: React.FC<addEditModalType> = ({
         (formik.errors.amount || formik.errors.description)
       }
       primaryButton={{
-        // onClick: () => console.log("aw"),
         disabled: loading,
       }}
       resetButton={{

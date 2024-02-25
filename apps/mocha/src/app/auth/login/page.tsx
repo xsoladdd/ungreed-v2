@@ -1,10 +1,6 @@
-import { getServerSession } from "next-auth";
 import Buttons from "./Buttons";
-import { authOption } from "@/app/api/auth/[...nextauth]/helper";
 
 const page: React.FC = async () => {
-  const session = await getServerSession(authOption);
-  console.log(session);
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">

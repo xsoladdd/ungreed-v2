@@ -30,11 +30,6 @@ const client = new ApolloClient({
 const ApolloProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  // const client = new ApolloClient({
-  //   uri: GRAPHQL_URL,
-  //   cache: new InMemoryCache(),
-  // });
-  // console.log(GRAPHQL_URL);
   return (
     <>
       <Provider client={client}>{children}</Provider>
