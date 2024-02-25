@@ -21,13 +21,9 @@ export default async function DashboardLayout({
   if (!user.email) {
     redirect(`/auth/login`);
   }
-  // console.log(session);
   return (
     <div>
       <Nav />
-      {JSON.stringify(session)}
-      <br />
-      {JSON.stringify(user)}
       <DashboardProvider session={session} user={user}>
         {children}
       </DashboardProvider>
