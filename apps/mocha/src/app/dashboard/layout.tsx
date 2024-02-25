@@ -20,14 +20,14 @@ export default async function DashboardLayout({
   // if (!session) {
   //   redirect(`/auth/login`);
   // }
-  const user = await getUser(session?.user?.email ?? "");
+  // const user = await getUser(session?.user?.email ?? "");
   // console.log(session);
   return (
     <div>
       <Nav />
       {JSON.stringify(session)}
       <br />
-      {JSON.stringify(user)}
+      {/* {JSON.stringify(user)} */}
       {/* <DashboardProvider session={session} user={user}> */}
       {children}
       {/* </DashboardProvider> */}
