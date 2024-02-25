@@ -44,9 +44,8 @@ const AvatarMenu: React.FC<avatarMenuProps> = ({
         {
           title: "logout",
           onClick: () => {
-            signOut({ redirect: false, callbackUrl: "/" });
+            signOut({ redirect: true, callbackUrl: "/" });
             resetUser();
-            router.push("/");
           },
         },
       ],

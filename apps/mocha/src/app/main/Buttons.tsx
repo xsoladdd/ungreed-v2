@@ -9,7 +9,7 @@ import { signIn } from "next-auth/react";
 const Buttons: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <div className={cn("grid gap-6 lg:w-[300px]")}>
+    <div className={cn("grid gap-3 lg:w-[300px]")}>
       <Button
         variant="outline"
         type="button"
@@ -40,7 +40,7 @@ const Buttons: React.FC = () => {
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
+          <Icons.google className="mr-2 h-4 w-4" />
         )}{" "}
         Google
       </Button>

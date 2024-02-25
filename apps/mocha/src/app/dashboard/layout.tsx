@@ -1,10 +1,11 @@
 import Nav from "@/components/layout/navbar/nav";
 import type { Metadata } from "next";
 import DashboardProvider from "@/components/providers/DashboardProvider";
-import { getUser } from "@/lib/getUser";
+import { getUser } from "@/graphql/rest/getUser";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOption } from "../api/auth/[...nextauth]/helper";
+import { createUser } from "@/graphql/rest/createUser";
 
 export const metadata: Metadata = {
   title: "UNGREED | DASHBOARD",
@@ -17,9 +18,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOption);
+  if (!session) {
+    redirect(`/`);
+  }
   const user = await getUser(session?.user?.email ?? "");
   if (!user.email) {
-    redirect(`/auth/login`);
+    redirect(`/`);
   }
   return (
     <div>

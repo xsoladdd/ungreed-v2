@@ -15,10 +15,11 @@ import { useSearchParams } from "next/navigation";
 import { cutoffType } from "@/store/slices/filterSlice";
 import { useFormik } from "formik";
 import { Suspense } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Filter: React.FC = () => {
   const searchParams = useSearchParams();
-
+  const { toast } = useToast();
   const {
     ledger: {
       resetSelectedLedger,
@@ -59,10 +60,22 @@ const Filter: React.FC = () => {
           if (x.ledger[0]) {
             return setSelectedLedger(x.ledger[0]);
           } else {
+            toast({
+              title: "Something went wrong",
+              description: `No ledger found in db`,
+              variant: "destructive",
+            });
             console.error("something went wrong with the useLedger");
           }
         },
-        onError: (err) => console.log("error", err),
+        onError: (err) => {
+          toast({
+            title: "Something went wrong",
+            description: `something went wrong with the useLedger `,
+            variant: "destructive",
+          });
+          console.error("error", err);
+        },
       });
     },
   });
@@ -75,7 +88,6 @@ const Filter: React.FC = () => {
 
   return (
     <>
-      {" "}
       <Suspense>
         <form
           className="flex space-x-2 md:gap-4 lg:flex-col lg:space-x-0 lg:space-y-1 w-full "
