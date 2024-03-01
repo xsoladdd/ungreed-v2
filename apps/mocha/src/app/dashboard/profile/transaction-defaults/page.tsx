@@ -104,7 +104,7 @@ const page: React.FC = () => {
   }, [defaultLedgerItems]);
 
   const filterArea = (
-    <div className="flex justify-between">
+    <div className="flex justify-between flex-col md:flex-row">
       <div className="pb-4 flex gap-3 ">
         <FacetedFilter
           options={[

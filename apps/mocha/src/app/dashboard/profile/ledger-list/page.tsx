@@ -161,52 +161,56 @@ const page: React.FC = () => {
   }, []);
 
   const filterArea = (
-    <div className="pb-4 flex gap-3 ">
-      <FacetedFilter
-        options={[
-          ...months_options.map(({ text, value }) => ({
-            label: text,
-            value,
-          })),
-        ]}
-        title="Month"
-        {...monthFilter}
-      />
-      <FacetedFilter
-        options={[
-          ...year_options.map(({ text, value }) => ({
-            label: text,
-            value,
-          })),
-        ]}
-        title="Year"
-        {...yearFilter}
-      />
-      <FacetedFilter
-        options={[
-          { label: "First", value: "1st" },
-          { label: "Second", value: "2nd" },
-        ]}
-        title="Cutoff"
-        {...cutoffFilter}
-      />
-      <Button
-        variant="secondary"
-        size="sm"
-        className="h-8"
-        onClick={handleFilterClick}
-      >
-        Filter
-      </Button>
+    <div className="pb-4 flex gap-3 flex-col w-full md:flex-row">
+      <div className="w-full flex justify-evenly md:justify-start md:gap-3">
+        <FacetedFilter
+          options={[
+            ...months_options.map(({ text, value }) => ({
+              label: text,
+              value,
+            })),
+          ]}
+          title="Month"
+          {...monthFilter}
+        />
+        <FacetedFilter
+          options={[
+            ...year_options.map(({ text, value }) => ({
+              label: text,
+              value,
+            })),
+          ]}
+          title="Year"
+          {...yearFilter}
+        />
+        <FacetedFilter
+          options={[
+            { label: "First", value: "1st" },
+            { label: "Second", value: "2nd" },
+          ]}
+          title="Cutoff"
+          {...cutoffFilter}
+        />
+      </div>
+      <div className="flex w-full gap-4 md:justify-end">
+        <Button
+          variant="secondary"
+          size="sm"
+          className="h-8 w-1/2 md:w-fit"
+          onClick={handleFilterClick}
+        >
+          Filter
+        </Button>
 
-      <Button
-        variant="outline"
-        size="sm"
-        className="h-8"
-        onClick={handleResetClick}
-      >
-        Reset
-      </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 w-1/2 md:w-fit"
+          onClick={handleResetClick}
+        >
+          Reset
+        </Button>
+      </div>
     </div>
   );
   const tableHead = (

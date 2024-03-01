@@ -43,16 +43,18 @@ const AlertDialog: React.FC<IAlertDialogProps> = ({
     <>
       <Base open={isOpen} onOpenChange={() => handleOpen && handleOpen()}>
         {button && <AlertDialogTrigger>{button}</AlertDialogTrigger>}
-        <AlertDialogContent className="w-[5000px]">
+        <AlertDialogContent className=" w-full max-w-[300px] md:max-w-[600px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
               {title ? title : "Are you absolutely sure?"}
             </AlertDialogTitle>
             {children && (
-              <AlertDialogDescription>{children}</AlertDialogDescription>
+              <AlertDialogDescription className="">
+                {children}
+              </AlertDialogDescription>
             )}
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className="flex gap-3">
             <Button onClick={handleCancel} disabled={loading} variant="outline">
               Cancel
             </Button>

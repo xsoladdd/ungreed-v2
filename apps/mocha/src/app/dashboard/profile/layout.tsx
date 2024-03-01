@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 };
 
 const sidebarNavItems = [
-  {
-    title: "Profile",
-    href: "/dashboard/profile",
-  },
+  // {
+  //   title: "Profile",
+  //   href: "/dashboard/profile",
+  // },
   {
     title: "Ledger List",
     href: "/dashboard/profile/ledger-list",

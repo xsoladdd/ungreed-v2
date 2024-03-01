@@ -32,7 +32,7 @@ const AvatarMenu: React.FC<avatarMenuProps> = ({
         {
           title: "profile",
           onClick: () => {
-            router.push("/dashboard/profile");
+            router.push("/dashboard/profile/ledger-list");
           },
         },
         {
