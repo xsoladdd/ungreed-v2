@@ -9,7 +9,7 @@ import { signIn } from "next-auth/react";
 const Buttons: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <div className={cn("grid gap-3 lg:w-[300px]")}>
+    <div className={cn("grid gap-3 lg:w-[300px] w-full")}>
       <Button
         variant="outline"
         type="button"
