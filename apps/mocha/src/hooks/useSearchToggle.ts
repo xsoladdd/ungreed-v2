@@ -20,6 +20,14 @@ const useSearchToggle = (searchKey: string): UseToggleReturnType => {
     },
     [searchParams]
   );
+  const deleteParamQueryString = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete(name);
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const router = useRouter();
 
@@ -27,11 +35,15 @@ const useSearchToggle = (searchKey: string): UseToggleReturnType => {
 
   const state = getParams ? true : false;
   const toggle = (status?: boolean) => {
-    router.push(
-      pathname +
-        "?" +
-        createQueryString(searchKey, status ? status.toString() : "false")
-    );
+    if (status == true) {
+      router.push(
+        pathname +
+          "?" +
+          createQueryString(searchKey, status ? status.toString() : "false")
+      );
+    } else {
+      router.push(pathname + "?" + deleteParamQueryString(searchKey));
+    }
   };
   return [state, toggle];
 };

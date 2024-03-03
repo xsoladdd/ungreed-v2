@@ -216,7 +216,7 @@ const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
       >
         <DialogContent
           className="h-full max-h-screen sm:max-h-[400px] sm:max-w-[425px]"
-          onCloseAutoFocus={(x) => console.log(x)}
+          onCloseAutoFocus={(x) => x.preventDefault()}
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
