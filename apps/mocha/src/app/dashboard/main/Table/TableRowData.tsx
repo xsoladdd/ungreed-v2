@@ -44,8 +44,8 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
 
   return (
     <>
-      <tr>
-        <td>
+      <TableRow className={cn("hover:bg-card odd:bg-[#fafafa4]")}>
+        <td className="hidden">
           <AddEditTransaction
             setStatus={setEditModalStatus}
             status={editModalStatus}
@@ -102,8 +102,6 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
             </span>
           </AlertDialog>
         </td>
-      </tr>
-      <TableRow className={cn("hover:bg-card")}>
         <TableCell className="font-medium ">{data.description}</TableCell>
         <TableCell className="w-[200px] text-right">
           {data.transaction_type === "+" ? formatMoney(data.amount) : " — "}

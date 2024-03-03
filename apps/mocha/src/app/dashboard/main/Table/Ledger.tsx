@@ -20,8 +20,6 @@ import TableRowData from "./TableRowData";
 import useGenerateLedger from "./hooks";
 import useToggle from "@/hooks/useToggle";
 import AddEditTransaction from "../Modal/AddEditTransaction";
-import AlertDialog from "@/components/ui/AlertDialog";
-import { useUpdateTransactionMutation } from "@/graphql/client.generated";
 
 const LedgerCard: React.FC = () => {
   const {
