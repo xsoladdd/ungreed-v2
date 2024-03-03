@@ -147,7 +147,7 @@ const BasicDialogFooter: React.FC<BasicDialogFooterProps> = ({
 }) => {
   return (
     <>
-      <DialogFooter>
+      <DialogFooter className="flex gap-4 ">
         <div className="w-full flex place-items-center">
           <span className="text-sm text-red-400">{error}</span>
         </div>
@@ -158,7 +158,7 @@ const BasicDialogFooter: React.FC<BasicDialogFooterProps> = ({
             variant={"outline"}
             size="sm"
             disabled={resetButton.disabled}
-            onClick={resetButton.onClick}
+            // onClick={resetButton.onClick}
           >
             {resetButton.title ?? "Reset"}
           </Button>
@@ -169,7 +169,7 @@ const BasicDialogFooter: React.FC<BasicDialogFooterProps> = ({
             className="h-8"
             size="sm"
             disabled={primaryButton.disabled}
-            onClick={primaryButton.onClick}
+            // onClick={primaryButton.onClick}
           >
             {primaryButton.title ?? "Save"}
           </Button>

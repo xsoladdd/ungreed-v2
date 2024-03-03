@@ -1,11 +1,10 @@
 import Nav from "@/components/layout/navbar/nav";
-import type { Metadata } from "next";
 import DashboardProvider from "@/components/providers/DashboardProvider";
 import { getUser } from "@/graphql/rest/getUser";
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOption } from "../api/auth/[...nextauth]/helper";
-import { createUser } from "@/graphql/rest/createUser";
 
 export const metadata: Metadata = {
   title: "UNGREED | DASHBOARD",

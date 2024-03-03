@@ -1,4 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout";
+import { PageLoader } from "@/components/ui/Loader";
 import SidebarNav from "@/components/ui/SideNav/SideNav";
 import { Metadata } from "next";
 

@@ -24,7 +24,7 @@ const Select: React.FC<SelectProps> = ({
         <SelectTrigger className="" id={name}>
           <Value placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent id={name}>
+        <SelectContent id={name} className="z-50">
           {options?.map(({ text, value }, i) => (
             <SelectItem value={value} key={i}>
               {text}

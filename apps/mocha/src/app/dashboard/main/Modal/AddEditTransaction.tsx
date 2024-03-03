@@ -215,13 +215,16 @@ const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
         }}
       >
         <DialogContent
-          className="sm:max-w-[425px]"
+          className="h-full max-h-screen sm:max-h-[400px] sm:max-w-[425px]"
           onCloseAutoFocus={(x) => console.log(x)}
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
           <BasicDialogHeader title={title} />
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            className="flex justify-between flex-col"
+          >
             {content}
             <BasicDialogFooter
               error={formik.errors.amount ?? formik.errors.description}

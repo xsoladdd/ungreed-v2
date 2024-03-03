@@ -166,12 +166,8 @@ const AddEditModal: React.FC<addEditModalType> = ({
           value={formik.values.amount}
         />
       </InputWrapper>
-      <div className="flex flex-col md:flex-row gap-4">
-        <InputWrapper
-          label="Transaction"
-          className="py-2"
-          htmlFor="transaction"
-        >
+      <div className="flex flex-col md:flex-row gap-4 md:py-3  ">
+        <InputWrapper label="Transaction" className="" htmlFor="transaction">
           <Select
             options={[
               { text: "Expense", value: "-" },
@@ -183,7 +179,7 @@ const AddEditModal: React.FC<addEditModalType> = ({
             name="transaction"
           />
         </InputWrapper>
-        <InputWrapper label="Cutoff" className="py-2" htmlFor="cutoff">
+        <InputWrapper label="Cutoff" className="" htmlFor="cutoff">
           <Select
             options={[
               { text: "First", value: "1st" },
@@ -211,13 +207,16 @@ const AddEditModal: React.FC<addEditModalType> = ({
         }}
       >
         <DialogContent
-          className="sm:max-w-[425px]"
+          className="h-full max-h-screen sm:max-h-[400px] sm:max-w-[425px]"
           onCloseAutoFocus={(x) => console.log(x)}
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
           <BasicDialogHeader title={title} />
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            className="flex justify-between flex-col  "
+          >
             {content}
             {footer}
           </form>

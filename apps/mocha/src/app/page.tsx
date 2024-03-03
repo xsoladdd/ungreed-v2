@@ -3,6 +3,7 @@ import Login from "./main/Login";
 import { getServerSession } from "next-auth";
 import { authOption } from "./api/auth/[...nextauth]/helper";
 import { redirect } from "next/navigation";
+import { PageLoader } from "@/components/ui/Loader";
 
 const page = async () => {
   const session = await getServerSession(authOption);
