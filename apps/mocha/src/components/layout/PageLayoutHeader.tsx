@@ -28,7 +28,7 @@ const PageLayoutHeader: React.FC<IPageLayoutHeaderProps> = ({
         </div>
         {button && (
           <Button
-            variant="outline"
+            variant="secondary"
             className="h-8 my-auto"
             size="sm"
             onClick={(e) => button.onClick(e)}

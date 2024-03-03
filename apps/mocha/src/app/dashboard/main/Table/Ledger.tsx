@@ -79,7 +79,7 @@ const LedgerCard: React.FC = () => {
               <NoLedgerFound handleClick={() => handleGenerateLedger()} />
             )}
             {!loading && ledgerFetchStatus === "unfetched" && (
-              <TableMessage>Filter to select table</TableMessage>
+              <TableMessage>Select ledger to continue</TableMessage>
             )}
           </TableBody>
           {!loading &&

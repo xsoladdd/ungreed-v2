@@ -47,7 +47,7 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
 
   return (
     <>
-      <TableRow className={cn("hover:bg-card odd:bg-[#fafafa4]")}>
+      <TableRow className={cn("hover:bg-card odd:bg-[#fafafa03] font-light")}>
         <td className="hidden">
           <AddEditTransaction
             setStatus={setEditModalStatus}

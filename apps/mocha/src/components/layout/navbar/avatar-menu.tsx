@@ -35,12 +35,12 @@ const AvatarMenu: React.FC<avatarMenuProps> = ({
             router.push("/dashboard/profile/ledger-list");
           },
         },
-        {
-          title: "settings",
-          onClick: () => {
-            router.push("/dashboard/settings");
-          },
-        },
+        // {
+        //   title: "settings",
+        //   onClick: () => {
+        //     router.push("/dashboard/settings");
+        //   },
+        // },
         {
           title: "logout",
           onClick: () => {

@@ -94,7 +94,9 @@ const Filter: React.FC = () => {
           onSubmit={formik.handleSubmit}
         >
           <div className="flex gap-2 w-full lg:flex-col lg:space-x-0 lg:space-y">
-            <h3 className="text-lg font-medium hidden md:block">Filter</h3>
+            <h3 className="text-md font-medium hidden md:block">
+              Select Ledger
+            </h3>
             <InputWrapper className="md:max-w-[250px]">
               <Select
                 options={months_options}
@@ -128,11 +130,12 @@ const Filter: React.FC = () => {
             </span>
             <Button
               size="sm"
+              variant="default"
               className="w-full md:max-w-[250px] h-8 "
               type="submit"
               disabled={loading}
             >
-              {loading ? "Loading" : "Filter"}
+              {loading ? "Loading" : "Select Ledger"}
             </Button>
           </div>
         </form>

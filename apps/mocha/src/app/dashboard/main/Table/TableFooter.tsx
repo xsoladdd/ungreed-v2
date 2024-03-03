@@ -25,14 +25,7 @@ const TableFooter: React.FC = () => {
           {formatMoney(totalExpense)}
         </TableCell>
       </TableRow>
-      {/* <TableRow>
-        <TableCell colSpan={2}>Total Expense</TableCell>
-        <TableCell className="text-right">
-          {formatMoney(totalExpense)}
-        </TableCell>
-        <TableCell></TableCell>
-      </TableRow> */}
-      <TableRow className="bg-primary-foreground/50 border-t-2 text-lg">
+      <TableRow className="bg-slate-50/5 border-t-2 text-lg">
         <TableCell>Total Balance</TableCell>
         <TableCell className="text-right font-extrabold " colSpan={2}>
           {formatMoney(totalBalance)}
