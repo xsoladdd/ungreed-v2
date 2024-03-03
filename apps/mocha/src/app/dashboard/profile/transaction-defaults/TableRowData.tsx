@@ -12,6 +12,7 @@ import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useZustand } from "@/store";
+import useSearchToggle from "@/hooks/useSearchToggle";
 interface ITableRowDataProps {
   item: GetDefaultLedgerTransactionsQuery["default_ledger_transactions"][0];
   // handleRefetch: () => void;
@@ -22,7 +23,8 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
   item,
 }) => {
   const { amount, id, cutoff, description, transaction_type } = item;
-  const [editModalStatus, setEditModalStatus] = useToggle(false);
+  // const [editModalStatus, setEditModalStatus] = useToggle(false);
+  const [editModalStatus, setEditModalStatus] = useSearchToggle("editStatus");
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
   const { toast } = useToast();
   const { refetch: zRefetch } = useZustand();

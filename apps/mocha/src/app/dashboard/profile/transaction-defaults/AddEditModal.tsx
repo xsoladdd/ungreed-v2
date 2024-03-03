@@ -1,11 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   BasicDialogFooter,
   BasicDialogHeader,
   Dialog,
   DialogContent,
-  DialogFooter,
 } from "@/components/ui/dialog";
 
 import InputWrapper from "@/components/ui/InputWrapper";

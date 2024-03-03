@@ -11,13 +11,16 @@ import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useZustand } from "@/store";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
+import useSearchToggle from "@/hooks/useSearchToggle";
 
 interface ITableRowProps {
   data: Transaction;
 }
 
 const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
-  const [editModalStatus, setEditModalStatus] = useToggle(false);
+  const [editModalStatus, setEditModalStatus] = useSearchToggle("editStatus");
   const { toast } = useToast();
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
 

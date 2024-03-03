@@ -26,6 +26,7 @@ import { useZustand } from "@/store";
 import { useEffect } from "react";
 import AddEditModal from "./AddEditModal";
 import TableRowData from "./TableRowData";
+import useSearchToggle from "@/hooks/useSearchToggle";
 
 const page: React.FC = () => {
   const {
@@ -43,7 +44,10 @@ const page: React.FC = () => {
     listSize,
   } = usePagination();
 
-  const [addEditModalStatus, setAddEditModalStatus] = useToggle(false);
+  // const [addEditModalStatus, setAddEditModalStatus] = useToggle(false);
+
+  const [addEditModalStatus, setAddEditModalStatus] =
+    useSearchToggle("addStatus");
   const cutoffFilter = useFacetedFilter();
 
   const defaultWhere: InputMaybe<Default_Ledger_Transactions_Bool_Exp> = {
