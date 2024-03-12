@@ -11,16 +11,14 @@ import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useZustand } from "@/store";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
-import useSearchToggle from "@/hooks/useSearchToggle";
+import useSearchParams from "@/hooks/useSearchParams";
 
 interface ITableRowProps {
   data: Transaction;
 }
 
 const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
-  const [editModalStatus, setEditModalStatus] = useSearchToggle("editStatus");
+  const [activeId, setActiveId] = useSearchParams("editStatus");
   const { toast } = useToast();
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
 
@@ -29,7 +27,7 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
       item: [
         {
           label: `Edit`,
-          onClick: () => setEditModalStatus(true),
+          onClick: () => setActiveId(data.id.toString()),
         },
         {
           label: "Delete",
@@ -50,8 +48,8 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
       <TableRow className={cn("hover:bg-card odd:bg-[#fafafa03] font-light")}>
         <td className="hidden">
           <AddEditTransaction
-            setStatus={setEditModalStatus}
-            status={editModalStatus}
+            setStatus={() => setActiveId()}
+            status={activeId === data.id.toString()}
             transaction={data}
           />
           <AlertDialog

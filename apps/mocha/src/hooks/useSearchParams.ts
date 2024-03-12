@@ -1,13 +1,17 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams as useSearchParamsBase,
+} from "next/navigation";
+import { useCallback } from "react";
 
 // Define the type for the useToggle hook
 // eslint-disable-next-line no-unused-vars
-type UseToggleReturnType = [boolean, (status?: boolean) => void];
+type useSearchParamsReturnType = [string | null, (id?: string) => void];
 
 // Define the useToggle hook
-const useSearchToggle = (searchKey: string): UseToggleReturnType => {
-  const searchParams = useSearchParams();
+const useSearchParams = (searchKey: string): useSearchParamsReturnType => {
+  const searchParams = useSearchParamsBase();
   const pathname = usePathname();
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
@@ -33,14 +37,10 @@ const useSearchToggle = (searchKey: string): UseToggleReturnType => {
 
   const getParams = searchParams.get(searchKey);
 
-  const state = getParams ? true : false;
-  const toggle = (status?: boolean) => {
-    if (status == true) {
-      router.push(
-        pathname +
-          "?" +
-          createQueryString(searchKey, status ? status.toString() : "false")
-      );
+  const state = getParams;
+  const toggle = (id?: string) => {
+    if (id) {
+      router.push(pathname + "?" + createQueryString(searchKey, id));
     } else {
       router.push(pathname + "?" + deleteParamQueryString(searchKey));
     }
@@ -48,4 +48,4 @@ const useSearchToggle = (searchKey: string): UseToggleReturnType => {
   return [state, toggle];
 };
 
-export default useSearchToggle;
+export default useSearchParams;

@@ -21,12 +21,11 @@ import {
   Order_By,
   useGetDefaultLedgerTransactionsQuery,
 } from "@/graphql/client.generated";
-import useToggle from "@/hooks/useToggle";
 import { useZustand } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import AddEditModal from "./AddEditModal";
 import TableRowData from "./TableRowData";
-import useSearchToggle from "@/hooks/useSearchToggle";
+import useSearchParams from "@/hooks/useSearchParams";
 
 const page: React.FC = () => {
   const {
@@ -45,9 +44,8 @@ const page: React.FC = () => {
   } = usePagination();
 
   // const [addEditModalStatus, setAddEditModalStatus] = useToggle(false);
-
-  const [addEditModalStatus, setAddEditModalStatus] =
-    useSearchToggle("addStatus");
+  const randomId = useId();
+  const [activeId, setActiveId] = useSearchParams("addStatus");
   const cutoffFilter = useFacetedFilter();
 
   const defaultWhere: InputMaybe<Default_Ledger_Transactions_Bool_Exp> = {
@@ -141,14 +139,10 @@ const page: React.FC = () => {
       </div>
       <div className="pb-4 flex gap-3 ">
         <AddEditModal
-          status={addEditModalStatus}
-          setStatus={(b) => setAddEditModalStatus(b)}
+          status={activeId === randomId}
+          setStatus={(b) => setActiveId(randomId)}
         />
-        <Button
-          className="h-8"
-          size="sm"
-          onClick={() => setAddEditModalStatus(true)}
-        >
+        <Button className="h-8" size="sm" onClick={() => setActiveId()}>
           Add Record
         </Button>
       </div>

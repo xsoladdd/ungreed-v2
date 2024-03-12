@@ -12,7 +12,7 @@ import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useZustand } from "@/store";
-import useSearchToggle from "@/hooks/useSearchToggle";
+import useSearchParams from "@/hooks/useSearchParams";
 interface ITableRowDataProps {
   item: GetDefaultLedgerTransactionsQuery["default_ledger_transactions"][0];
   // handleRefetch: () => void;
@@ -24,7 +24,7 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
 }) => {
   const { amount, id, cutoff, description, transaction_type } = item;
   // const [editModalStatus, setEditModalStatus] = useToggle(false);
-  const [editModalStatus, setEditModalStatus] = useSearchToggle("editStatus");
+  const [activeId, setActiveId] = useSearchParams("editStatus");
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
   const { toast } = useToast();
   const { refetch: zRefetch } = useZustand();
@@ -33,7 +33,7 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
       item: [
         {
           label: `Edit`,
-          onClick: () => setEditModalStatus(true),
+          onClick: () => setActiveId(item.id.toString()),
         },
         {
           label: "Delete",
@@ -90,8 +90,8 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
             Are you sure that you want to delete record # {item.id}?
           </AlertDialog>
           <AddEditModal
-            status={editModalStatus}
-            setStatus={(b) => setEditModalStatus(b)}
+            status={activeId === item.id.toString()}
+            setStatus={(b) => setActiveId()}
             item={item}
           />
         </td>
