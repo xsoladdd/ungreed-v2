@@ -1,3 +1,5 @@
+"use client";
+
 import InputWrapper from "@/components/ui/InputWrapper";
 import Select from "@/components/ui/Select";
 import {
@@ -10,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import {
-  Transaction,
   useInserTransactionMutation,
   useUpdateTransactionMutation,
 } from "@/graphql/client.generated";
@@ -18,26 +19,36 @@ import { useZustand } from "@/store";
 import { useFormik } from "formik";
 import { addEditTransactionSchema } from "../helper";
 import { useEffect, useRef } from "react";
+import useSearchParams from "@/hooks/useSearchParams";
 interface AddEditTransactionProps {
   status: boolean;
   setStatus: (b: boolean) => void;
-  transaction?: Transaction;
+  // transaction?: Transaction;
 }
 
 const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
   setStatus,
   status,
-  transaction,
 }) => {
+  const [activeId] = useSearchParams("editStatus");
+  const {
+    user,
+    ledger: { selectedLedger, addLedgerTransaction, updateLedgerTransaction },
+  } = useZustand();
+
+  const transactionsArr =
+    selectedLedger &&
+    selectedLedger?.transactions?.filter(
+      ({ id }) => activeId && activeId.toString() === id.toString()
+    );
+  const transaction =
+    transactionsArr && transactionsArr.length !== 0 ? transactionsArr[0] : null;
   const MODE: "add" | "edit" =
     typeof transaction !== "undefined" ? "edit" : "add";
   const title =
     MODE === "add" ? `ADD NEW RECORD` : `EDIT RECORD #  ${transaction?.id}`;
   // const loading = false;
-  const {
-    user,
-    ledger: { selectedLedger, addLedgerTransaction, updateLedgerTransaction },
-  } = useZustand();
+
   const { toast } = useToast();
 
   const [insertTransaction, { loading: insertLoading }] =
@@ -140,10 +151,21 @@ const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
     },
   });
 
+  useEffect(() => {
+    if (transaction) {
+      formik.setValues({
+        amount: transaction?.amount,
+        description: transaction?.description,
+        transactionType: transaction?.transaction_type ?? "-",
+      });
+    }
+
+    return () => {};
+  }, [transaction]);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    // textareaRef.current?;
     textareaRef.current?.focus();
 
     return () => {};

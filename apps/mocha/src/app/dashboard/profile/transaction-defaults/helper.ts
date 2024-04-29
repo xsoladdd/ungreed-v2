@@ -9,7 +9,7 @@ export const formSchema = Yup.object({
     .defined(),
   description: Yup.string()
     .min(2, "Description must be 2 characters or more")
-    .max(20, "Description must be 20 characters or less")
+    .max(50, "Description must be 20 characters or less")
     .required("Description is required"),
   amount: Yup.number()
     .min(1, "Amount must not have value lessthan 1")

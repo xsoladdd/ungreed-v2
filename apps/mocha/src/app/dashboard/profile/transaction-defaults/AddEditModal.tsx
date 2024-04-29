@@ -18,16 +18,38 @@ import {
 import { useZustand } from "@/store";
 import { useFormik } from "formik";
 import { addEditModalType, formSchema } from "./helper";
+import useSearchParams from "@/hooks/useSearchParams";
+import { useEffect } from "react";
 
 const AddEditModal: React.FC<addEditModalType> = ({
   setStatus,
   status,
-  item,
+  // item,
 }) => {
   // const [status, setstatus] = useToggle(false);
-  const MODE: "add" | "edit" = typeof item !== "undefined" ? "edit" : "add";
-  const title = MODE === "add" ? `ADD NEW RECORD` : `EDIT RECORD # ${item?.id}`;
-  const { user, refetch } = useZustand();
+
+  const [activeId, setActiveId] = useSearchParams("editTransactionId");
+
+  const {
+    user,
+    refetch,
+    transactionDefault: { data },
+  } = useZustand();
+
+  const transactionsArr =
+    data &&
+    data.filter(({ id }) => {
+      return activeId && activeId.toString() === id.toString();
+    });
+  const item =
+    transactionsArr && transactionsArr.length !== 0
+      ? transactionsArr[0]
+      : undefined;
+  console.log(`item`, item);
+
+  const MODE: "add" | "edit" = activeId === "new" ? "add" : "edit";
+  const title =
+    MODE === "add" ? `ADD NEW RECORD` : `EDIT RECORD # ${item && item.id}`;
   const { toast } = useToast();
 
   const [insertDefaultLedgerTransaction, { loading: insertLoading }] =
@@ -118,6 +140,19 @@ const AddEditModal: React.FC<addEditModalType> = ({
     },
   });
   const disableForm = false;
+
+  useEffect(() => {
+    if (item) {
+      formik.setValues({
+        transactionType: item?.transaction_type ?? "-",
+        cutoff: item?.cutoff ?? "1st",
+        description: item?.description ?? "",
+        amount: item?.amount ?? "",
+      });
+    }
+
+    return () => {};
+  }, [item?.id]);
 
   const footer = (
     <BasicDialogFooter

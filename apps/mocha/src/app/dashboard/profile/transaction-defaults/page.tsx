@@ -31,6 +31,7 @@ const page: React.FC = () => {
   const {
     user,
     refetch: { defaultLedgerItems, setter },
+    transactionDefault: { setData, data },
   } = useZustand();
 
   const {
@@ -43,9 +44,7 @@ const page: React.FC = () => {
     listSize,
   } = usePagination();
 
-  // const [addEditModalStatus, setAddEditModalStatus] = useToggle(false);
-  const randomId = useId();
-  const [activeId, setActiveId] = useSearchParams("addStatus");
+  const [activeId, setActiveId] = useSearchParams("editTransactionId");
   const cutoffFilter = useFacetedFilter();
 
   const defaultWhere: InputMaybe<Default_Ledger_Transactions_Bool_Exp> = {
@@ -59,25 +58,26 @@ const page: React.FC = () => {
     },
   };
 
-  const { loading, data, error, refetch } =
-    useGetDefaultLedgerTransactionsQuery({
-      variables: {
-        limit,
-        offset,
-        orderBy: {
-          created_at: Order_By.Asc,
-        },
-        where: {
-          ...defaultWhere,
-        },
+  const { loading, error, refetch } = useGetDefaultLedgerTransactionsQuery({
+    variables: {
+      limit,
+      offset,
+      orderBy: {
+        created_at: Order_By.Asc,
       },
-      notifyOnNetworkStatusChange: true,
-      onCompleted: ({ default_ledger_transactions_aggregate }) => {
-        setListSize(
-          default_ledger_transactions_aggregate.aggregate?.count ?? 0
-        );
+      where: {
+        ...defaultWhere,
       },
-    });
+    },
+    notifyOnNetworkStatusChange: true,
+    onCompleted: ({
+      default_ledger_transactions_aggregate,
+      default_ledger_transactions,
+    }) => {
+      setData(default_ledger_transactions);
+      setListSize(default_ledger_transactions_aggregate.aggregate?.count ?? 0);
+    },
+  });
 
   const handleRefetch = (withParams = false) => {
     refetch({
@@ -138,11 +138,7 @@ const page: React.FC = () => {
         </Button>
       </div>
       <div className="pb-4 flex gap-3 ">
-        <AddEditModal
-          status={activeId === randomId}
-          setStatus={(b) => setActiveId(randomId)}
-        />
-        <Button className="h-8" size="sm" onClick={() => setActiveId()}>
+        <Button className="h-8" size="sm" onClick={() => setActiveId("new")}>
           Add Record
         </Button>
       </div>
@@ -166,11 +162,13 @@ const page: React.FC = () => {
     <TableBody>
       {loading && <TableLoader />}
       {!loading && error && <TableMessage>Something went wrong</TableMessage>}
-      {!loading && data?.default_ledger_transactions.length === 0 && (
-        <TableMessage>No Data Existing</TableMessage>
-      )}
+      {(!loading && data !== undefined) ||
+        (data && data.length !== 0 && (
+          <TableMessage>No Data Existing</TableMessage>
+        ))}
       {!loading &&
-        data?.default_ledger_transactions.map((x, i) => (
+        data &&
+        data.map((x, i) => (
           <TableRowData
             item={x}
             key={i}
@@ -203,6 +201,8 @@ const page: React.FC = () => {
       />
       {filterArea}
       <Separator />
+
+      <AddEditModal status={!!activeId} setStatus={(b) => setActiveId()} />
 
       <div className="">
         <Table>

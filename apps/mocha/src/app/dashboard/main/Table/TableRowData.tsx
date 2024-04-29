@@ -6,7 +6,6 @@ import {
 } from "@/graphql/client.generated";
 import { formatMoney } from "@/lib/formatMoney";
 import { cn } from "@/lib/utils";
-import AddEditTransaction from "../Modal/AddEditTransaction";
 import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
@@ -18,9 +17,13 @@ interface ITableRowProps {
 }
 
 const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
-  const [activeId, setActiveId] = useSearchParams("editStatus");
+  const [_, setActiveId] = useSearchParams("editStatus");
   const { toast } = useToast();
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
+
+  const {
+    ledger: { deleteLedgerTransaction },
+  } = useZustand();
 
   const actionMenuData: IActionRowProps["items"] = [
     {
@@ -39,19 +42,10 @@ const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
   const [updateTransaction, { loading: updateTransactionLoading }] =
     useUpdateTransactionMutation();
 
-  const {
-    ledger: { deleteLedgerTransaction },
-  } = useZustand();
-
   return (
     <>
       <TableRow className={cn("hover:bg-card odd:bg-[#fafafa03] font-light")}>
         <td className="hidden">
-          <AddEditTransaction
-            setStatus={() => setActiveId()}
-            status={activeId === data.id.toString()}
-            transaction={data}
-          />
           <AlertDialog
             title={`DELETE TRANSACTION`}
             isOpen={deleteAlertStatus}

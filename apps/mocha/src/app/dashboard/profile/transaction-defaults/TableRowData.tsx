@@ -7,7 +7,6 @@ import {
 } from "@/graphql/client.generated";
 import { formatMoney } from "@/lib/formatMoney";
 
-import AddEditModal from "./AddEditModal";
 import useToggle from "@/hooks/useToggle";
 import AlertDialog from "@/components/ui/AlertDialog";
 import { useToast } from "@/components/ui/use-toast";
@@ -24,7 +23,7 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
 }) => {
   const { amount, id, cutoff, description, transaction_type } = item;
   // const [editModalStatus, setEditModalStatus] = useToggle(false);
-  const [activeId, setActiveId] = useSearchParams("editStatus");
+  const [_, setActiveId] = useSearchParams("editTransactionId");
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
   const { toast } = useToast();
   const { refetch: zRefetch } = useZustand();
@@ -89,11 +88,6 @@ const TableRowData: React.FC<ITableRowDataProps> = ({
           >
             Are you sure that you want to delete record # {item.id}?
           </AlertDialog>
-          <AddEditModal
-            status={activeId === item.id.toString()}
-            setStatus={(b) => setActiveId()}
-            item={item}
-          />
         </td>
         <TableCell className="font-medium">{id}</TableCell>
         <TableCell className="">{description}</TableCell>

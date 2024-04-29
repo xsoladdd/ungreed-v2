@@ -14,7 +14,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { cutoffType } from "@/store/slices/filterSlice";
 import { useFormik } from "formik";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Filter: React.FC = () => {
@@ -85,6 +85,45 @@ const Filter: React.FC = () => {
   });
 
   const loading = ledgerLoading || ledgerFetchStatus === "loading";
+
+  // useEffect(() => {
+  //   if (ledger === true) {
+  //     getLedger({
+  //       variables: {
+  //         cutoff: formik.values.cutoff,
+  //         month: parseInt(formik.values.month),
+  //         year: parseInt(formik.values.year),
+  //         email,
+  //       },
+  //       ssr: true,
+  //       onCompleted: (x) => {
+  //         if (x.ledger.length === 0) {
+  //           return resetSelectedLedger();
+  //         }
+  //         if (x.ledger[0]) {
+  //           setter("ledger", false);
+  //           return setSelectedLedger(x.ledger[0]);
+  //         } else {
+  //           toast({
+  //             title: "Something went wrong",
+  //             description: `No ledger found in db`,
+  //             variant: "destructive",
+  //           });
+  //           console.error("something went wrong with the useLedger");
+  //         }
+  //       },
+  //       onError: (err) => {
+  //         toast({
+  //           title: "Something went wrong",
+  //           description: `something went wrong with the useLedger `,
+  //           variant: "destructive",
+  //         });
+  //         console.error("error", err);
+  //       },
+  //     });
+  //   }
+  //   return () => {};
+  // }, [ledger]);
 
   return (
     <>
