@@ -20,13 +20,14 @@ import TableRowData from "./TableRowData";
 import useGenerateLedger from "./hooks";
 import useToggle from "@/hooks/useToggle";
 import AddEditTransaction from "../Modal/AddEditTransaction";
+import useSearchParams from "@/hooks/useSearchParams";
 
 const LedgerCard: React.FC = () => {
   const {
     ledger: { ledgerFetchStatus, selectedLedger },
   } = useZustand();
-  const [modalStatus, setModalStatus] = useToggle(false);
   const loading = ledgerFetchStatus === "loading";
+  const [activeId, setActiveId] = useSearchParams("ledgerTransactionId");
 
   const tableData = [...(selectedLedger?.transactions ?? [])].sort((a, b) => {
     if (a.transaction_type === "+" && b.transaction_type === "-") {
@@ -63,13 +64,11 @@ const LedgerCard: React.FC = () => {
         title="Ledger table"
         caption="Please filter to continue"
         button={{
-          onClick: () => setModalStatus(true),
+          onClick: () => setActiveId("new"),
           title: "New Transaction",
           disabled: disabledButton,
         }}
       />
-      <AddEditTransaction setStatus={setModalStatus} status={modalStatus} />
-
       <div className="">
         <Table>
           {tableHeader}

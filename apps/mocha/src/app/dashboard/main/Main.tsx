@@ -8,7 +8,7 @@ import AddEditTransaction from "./Modal/AddEditTransaction";
 import useSearchParams from "@/hooks/useSearchParams";
 
 const Main: React.FC = () => {
-  const [activeId, setActiveId] = useSearchParams("editStatus");
+  const [activeId, setActiveId] = useSearchParams("ledgerTransactionId");
   return (
     <PageLayout
       pageTitle="UNGREED."

@@ -30,7 +30,7 @@ const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
   setStatus,
   status,
 }) => {
-  const [activeId] = useSearchParams("editStatus");
+  const [activeId] = useSearchParams("ledgerTransactionId");
   const {
     user,
     ledger: { selectedLedger, addLedgerTransaction, updateLedgerTransaction },
@@ -43,8 +43,9 @@ const AddEditTransaction: React.FC<AddEditTransactionProps> = ({
     );
   const transaction =
     transactionsArr && transactionsArr.length !== 0 ? transactionsArr[0] : null;
-  const MODE: "add" | "edit" =
-    typeof transaction !== "undefined" ? "edit" : "add";
+  const MODE: "add" | "edit" = activeId !== "new" ? "edit" : "add";
+  // const MODE: "add" | "edit" =
+  //   typeof transaction !== "undefined" ? "edit" : "add";
   const title =
     MODE === "add" ? `ADD NEW RECORD` : `EDIT RECORD #  ${transaction?.id}`;
   // const loading = false;

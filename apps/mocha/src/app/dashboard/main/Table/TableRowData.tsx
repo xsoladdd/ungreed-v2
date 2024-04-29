@@ -17,7 +17,7 @@ interface ITableRowProps {
 }
 
 const TableRowData: React.FC<ITableRowProps> = ({ data }) => {
-  const [_, setActiveId] = useSearchParams("editStatus");
+  const [_, setActiveId] = useSearchParams("ledgerTransactionId");
   const { toast } = useToast();
   const [deleteAlertStatus, setDeleteAlertStatus] = useToggle(false);
 
