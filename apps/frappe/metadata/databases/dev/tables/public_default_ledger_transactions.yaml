@@ -1,0 +1,3 @@
+table:
+  name: default_ledger_transactions
+  schema: public

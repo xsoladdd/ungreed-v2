@@ -1,0 +1,3 @@
+table:
+  name: ping
+  schema: public
