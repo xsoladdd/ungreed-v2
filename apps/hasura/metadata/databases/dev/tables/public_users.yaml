@@ -1,0 +1,22 @@
+table:
+  name: users
+  schema: public
+object_relationships:
+  - name: user_profile
+    using:
+      foreign_key_constraint_on: profile_id
+array_relationships:
+  - name: default_ledger_transactions
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: default_ledger_transactions
+          schema: public
+  - name: ledgers
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: ledger
+          schema: public
