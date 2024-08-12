@@ -1,25 +1,19 @@
 "use client";
+import { useGetUserQuery } from "@/graphql/client.generated";
 import { useZustand } from "@/store";
 import { SessionUser } from "@/types/globa";
-import { Session } from "next-auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CircularSpinner from "../CircularSpinner";
-import { useGetUserQuery } from "@/graphql/client.generated";
 
 const DashboardProvider: React.FC<{
   children: React.ReactNode;
-  session: Session | null;
+  // session: Session | null;
   user: SessionUser;
-}> = ({ children, session, user }) => {
+}> = ({ children, user }) => {
   const { setUser } = useZustand();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useGetUserQuery({
-    variables: {
-      where: {
-        email: { _eq: session?.user?.email },
-      },
-    },
     skip: !user.email,
     onCompleted: (data) => {
       if (data.users?.length !== 0) {
@@ -29,16 +23,10 @@ const DashboardProvider: React.FC<{
           id: dbUser?.id,
           dbData: dbUser?.user_profile,
         });
+        setLoading(false);
       }
     },
   });
-
-  useEffect(() => {
-    if (user) {
-      setUser({ ...user });
-    }
-  }, [session?.user?.name]);
-
   return (
     <>
       {loading ? (

@@ -21,10 +21,10 @@ const Select: React.FC<SelectProps> = ({
         name={name}
         disabled={disabled}
       >
-        <SelectTrigger className="" id={name}>
+        <SelectTrigger className="w-full" id={name}>
           <Value placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent id={name} className="z-50">
+        <SelectContent id={name} className="z-50 w-full">
           {options?.map(({ text, value }, i) => (
             <SelectItem value={value} key={i}>
               {text}

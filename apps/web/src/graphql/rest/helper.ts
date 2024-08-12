@@ -1,14 +1,15 @@
-import { GRAPHQL_SECRET, GRAPHQL_URL } from "@/config/res";
+import { GRAPHQL_URL } from "@/config/res";
 
 export const fetchRequest = async (
   query: string,
-  variables?: any
+  variables?: any,
+  headers?: any
 ): Promise<any> => {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-hasura-admin-secret": GRAPHQL_SECRET,
+      ...headers,
     },
     body: JSON.stringify({
       query,

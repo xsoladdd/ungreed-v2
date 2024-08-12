@@ -1,17 +1,18 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", ".env"],
-  "globalDotEnv": [".env"],
   "globalEnv": [
     "GOOGLE_AUTH_CLIENT_ID",
     "GOOGLE_AUTH_CLIENT_SECRET",
     "GITHUB_AUTH_CLIENT_ID",
     "GITHUB_AUTH_CLIENT_SECRET",
-    "NEXT_APP_HASURA_GRAPHQL_ADMIN_SECRET",
-    "NEXT_APP_HASURA_GRAPHQL_ENDPOINT",
-    "AUTH_SECRET"
+    "HASURA_GRAPHQL_ADMIN_SECRET",
+    "HASURA_GRAPHQL_ENDPOINT",
+    "AUTH_SECRET",
+    "JWT_SECRET",
+    "WEB_AUTH_URL"
   ],
-  "pipeline": {
+  "globalDependencies": [".env"],
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]

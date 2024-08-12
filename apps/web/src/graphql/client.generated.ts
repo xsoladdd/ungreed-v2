@@ -2678,20 +2678,10 @@ export type UpdateTransactionMutationVariables = Exact<{
 
 export type UpdateTransactionMutation = { __typename?: 'mutation_root', update_transaction_by_pk?: { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any } | null };
 
-export type GetDefaultLedgerTransactionsQueryVariables = Exact<{
-  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
-  orderBy?: InputMaybe<Array<Default_Ledger_Transactions_Order_By> | Default_Ledger_Transactions_Order_By>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type GetDefaultLedgerTransactionsQuery = { __typename?: 'query_root', default_ledger_transactions: Array<{ __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any }>, default_ledger_transactions_aggregate: { __typename?: 'default_ledger_transactions_aggregate', aggregate?: { __typename?: 'default_ledger_transactions_aggregate_fields', count: number } | null } };
-
 export type GetLedgerQueryVariables = Exact<{
   month: Scalars['Int']['input'];
   year: Scalars['Int']['input'];
-  email: Scalars['String']['input'];
+  user_id: Scalars['uuid']['input'];
   cutoff: Scalars['bpchar']['input'];
 }>;
 
@@ -3046,70 +3036,10 @@ export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
 export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
 export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
-export const GetDefaultLedgerTransactionsDocument = /*#__PURE__*/ gql`
-    query getDefaultLedgerTransactions($where: default_ledger_transactions_bool_exp, $orderBy: [default_ledger_transactions_order_by!], $offset: Int, $limit: Int) {
-  default_ledger_transactions(
-    where: $where
-    order_by: $orderBy
-    offset: $offset
-    limit: $limit
-  ) {
-    amount
-    created_at
-    cutoff
-    description
-    id
-    is_deleted
-    transaction_type
-    updated_at
-  }
-  default_ledger_transactions_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}
-    `;
-
-/**
- * __useGetDefaultLedgerTransactionsQuery__
- *
- * To run a query within a React component, call `useGetDefaultLedgerTransactionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDefaultLedgerTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetDefaultLedgerTransactionsQuery({
- *   variables: {
- *      where: // value for 'where'
- *      orderBy: // value for 'orderBy'
- *      offset: // value for 'offset'
- *      limit: // value for 'limit'
- *   },
- * });
- */
-export function useGetDefaultLedgerTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
-      }
-export function useGetDefaultLedgerTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
-        }
-export function useGetDefaultLedgerTransactionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
-        }
-export type GetDefaultLedgerTransactionsQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsQuery>;
-export type GetDefaultLedgerTransactionsLazyQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsLazyQuery>;
-export type GetDefaultLedgerTransactionsSuspenseQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsSuspenseQuery>;
-export type GetDefaultLedgerTransactionsQueryResult = Apollo.QueryResult<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>;
 export const GetLedgerDocument = /*#__PURE__*/ gql`
-    query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
+    query getLedger($month: Int!, $year: Int!, $user_id: uuid!, $cutoff: bpchar!) {
   ledger(
-    where: {month: {_eq: $month}, year: {_eq: $year}, user: {email: {_eq: $email}}, cutoff: {_eq: $cutoff}, is_deleted: {_eq: false}}
+    where: {month: {_eq: $month}, year: {_eq: $year}, user: {id: {_eq: $user_id}}, cutoff: {_eq: $cutoff}, is_deleted: {_eq: false}}
   ) {
     ...LedgerFragment
   }
@@ -3130,12 +3060,12 @@ export const GetLedgerDocument = /*#__PURE__*/ gql`
  *   variables: {
  *      month: // value for 'month'
  *      year: // value for 'year'
- *      email: // value for 'email'
+ *      user_id: // value for 'user_id'
  *      cutoff: // value for 'cutoff'
  *   },
  * });
  */
-export function useGetLedgerQuery(baseOptions: Apollo.QueryHookOptions<GetLedgerQuery, GetLedgerQueryVariables>) {
+export function useGetLedgerQuery(baseOptions: Apollo.QueryHookOptions<GetLedgerQuery, GetLedgerQueryVariables> & ({ variables: GetLedgerQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetLedgerQuery, GetLedgerQueryVariables>(GetLedgerDocument, options);
       }

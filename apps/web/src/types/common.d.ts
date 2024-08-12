@@ -6,3 +6,7 @@ export type variableType<T, Y> = {
   orderBy: InputMaybe<Y | Y[]> | undefined;
   where: InputMaybe<T>;
 };
+
+type sessionType = {
+  accessToken: string;
+};

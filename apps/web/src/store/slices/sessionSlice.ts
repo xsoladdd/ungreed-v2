@@ -6,7 +6,7 @@ export type SessionSlice = {
   setUser: (user: SessionUser) => void;
   resetUser: () => void;
 };
-const defaultUserData = { email: "", id: "", dbData: {} };
+const defaultUserData = { email: "", id: "" };
 export const createSessionSlice: StateCreator<
   SessionSlice,
   [],
@@ -15,5 +15,13 @@ export const createSessionSlice: StateCreator<
 > = (set) => ({
   user: { ...defaultUserData },
   setUser: (user) => set((old) => ({ user: { ...old.user, ...user } })),
-  resetUser: () => set((old) => ({ user: { ...old, ...defaultUserData } })),
+  resetUser: () =>
+    set((old) => ({
+      user: {
+        ...defaultUserData,
+        dbData: {
+          ...old.user.dbData,
+        },
+      },
+    })),
 });

@@ -1,9 +1,9 @@
-query getLedger($month: Int!, $year: Int!, $email: String!, $cutoff: bpchar!) {
+query getLedger($month: Int!, $year: Int!, $user_id: uuid!, $cutoff: bpchar!) {
   ledger(
     where: {
       month: { _eq: $month }
       year: { _eq: $year }
-      user: { email: { _eq: $email } }
+      user: { id: { _eq: $user_id } }
       cutoff: { _eq: $cutoff }
       is_deleted: { _eq: false }
     }

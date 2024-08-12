@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import UserDetails from "@/app/dashboard/Components/layout/UserDetails";
 import { sidebarLinkItems } from "@/app/dashboard/Components/layout/helper";
-import AvatarMenu from "@/app/dashboard/Components/layout/navbar/avatar-menu";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../button";
 import { Separator } from "../separator";
@@ -16,14 +16,11 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
 
   return (
     <>
-      <aside className="w-[250px] relative flex flex-col px-4 h-100% ">
+      <aside className="w-[250px] relative  flex-col px-4 h-100% hidden md:flex">
         <div className="pt-20 flex flex-col gap-4">
-          <AvatarMenu />
+          <UserDetails />
           <nav
-            className={cn(
-              "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-              className
-            )}
+            className={cn("flex  flex-col space-x-0 space-y-1", className)}
             {...props}
           >
             {sidebarLinkItems.map((item, x) => {
@@ -35,8 +32,6 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
                   className={cn(
                     buttonVariants({ variant: "link" }),
                     isActive && "underline",
-                    //   ? "bg-primary-foreground hover:bg-primary-foreground/60"
-                    //   : "hover:bg-transparent hover:underline",
                     "justify-start font-semibold text-white w-full"
                   )}
                 >

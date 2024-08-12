@@ -9,3 +9,41 @@ array_relationships:
         table:
           name: users
           schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - image
+        - name
+        - created_at
+        - updated_at
+        - id
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - image
+        - name
+        - created_at
+        - updated_at
+        - id
+      filter:
+        users:
+          id:
+            _eq: X-Hasura-User-Id
+      limit: 1
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - image
+        - name
+        - created_at
+        - updated_at
+        - id
+      filter: {}
+      check: null
+    comment: ""

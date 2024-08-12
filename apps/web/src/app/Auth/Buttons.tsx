@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 
 const Buttons: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className={cn("grid gap-3 lg:w-[300px] w-full")}>
       <Button
@@ -33,7 +34,7 @@ const Buttons: React.FC = () => {
         disabled={isLoading}
         onClick={() => {
           setIsLoading(true);
-          signIn("google");
+          signIn("google").then((x) => console.log(x));
         }}
         // className="max-w-[400px]"
       >

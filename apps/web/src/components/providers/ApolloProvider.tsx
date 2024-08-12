@@ -1,5 +1,5 @@
 "use client";
-import { GRAPHQL_SECRET, GRAPHQL_URL } from "@/config/res";
+import { GRAPHQL_URL } from "@/config/res";
 import {
   ApolloClient,
   InMemoryCache,
@@ -18,7 +18,8 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      "x-hasura-admin-secret": GRAPHQL_SECRET,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+      // "x-hasura-admin-secret": GRAPHQL_SECRET,
     },
   };
 });

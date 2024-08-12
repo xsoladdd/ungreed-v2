@@ -3,14 +3,15 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 require("dotenv").config();
 
 // const graphqlUrl = process.env.HASURA_GRAPHQL_ENDPOINT as string;
-// const graphqlSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET as string;
+const graphqlSecret = process.env
+  .NEXT_APP_HASURA_GRAPHQL_ADMIN_SECRET as string;
 
 const config: CodegenConfig = {
   overwrite: true,
   schema: {
     [GRAPHQL_URL]: {
       headers: {
-        "x-hasura-admin-secret": GRAPHQL_SECRET,
+        "x-hasura-admin-secret": graphqlSecret,
       },
     },
   },

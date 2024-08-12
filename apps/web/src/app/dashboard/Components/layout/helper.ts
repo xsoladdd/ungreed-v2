@@ -1,14 +1,14 @@
 export const sidebarLinkItems = [
   {
     title: "Ledger List",
-    href: "/dashboard",
+    href: "/dashboard/ledger",
   },
   {
     title: "Transaction Defaults",
-    href: "/dashboard/profile/transaction-defaults",
+    href: "/dashboard/transaction-defaults",
   },
   {
-    title: "Transaction Defaults",
-    href: "/dashboard/profile/transaction-defaults",
+    title: "test",
+    href: "/dashboard/test",
   },
 ];

@@ -4,12 +4,14 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev:loose": "turbo dev --env-mode=loose",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "dotenv-cli": "^7.4.2",
     "prettier": "^3.1.1",
     "turbo": "latest"
   },
@@ -20,5 +22,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "js-cookie": "^3.0.5",
+    "jwt-simple": "^0.5.6"
+  }
 }

@@ -14,7 +14,7 @@ interface IAlertDialogProps {
   isOpen?: boolean;
   handleOpen?: () => void;
   handleSubmit?: () => void;
-  handleCancel?: () => void;
+  handleClose?: () => void;
   button?: ReactNode;
   title?: ReactNode;
   children?: ReactNode;
@@ -31,7 +31,7 @@ interface IAlertDialogProps {
 const AlertDialog: React.FC<IAlertDialogProps> = ({
   isOpen,
   handleOpen,
-  handleCancel,
+  handleClose,
   handleSubmit,
   button,
   children,
@@ -55,8 +55,8 @@ const AlertDialog: React.FC<IAlertDialogProps> = ({
             )}
           </AlertDialogHeader>
           <AlertDialogFooter className="flex gap-3">
-            <Button onClick={handleCancel} disabled={loading} variant="outline">
-              Cancel
+            <Button onClick={handleClose} disabled={loading} variant="outline">
+              Close
             </Button>
             <Button onClick={handleSubmit} disabled={loading} variant={variant}>
               {loading ? "Loading" : "Continue"}

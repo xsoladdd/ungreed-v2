@@ -6,7 +6,8 @@ import {
   Users_Insert_Input,
 } from "../client.generated";
 export const upsertUser = async (
-  props: Users_Insert_Input
+  props: Users_Insert_Input,
+  token: string
 ): Promise<UpsertUserMutation["insert_users_one"]> => {
   if (!props.email) {
     throw new Error("No Session, EmailError ");
@@ -16,6 +17,11 @@ export const upsertUser = async (
     object: props,
   };
 
-  const res = query && (await fetchRequest(query, variables));
+  const res =
+    query &&
+    (await fetchRequest(query, variables, {
+      authorization: `Bearer ${token}`,
+    }));
+
   return res.data.insert_users_one;
 };
