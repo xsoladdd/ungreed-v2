@@ -5,7 +5,7 @@ import { Table, TableBody } from "@/components/ui/table";
 import { Order_By, useGetLedgerListQuery } from "@/graphql/client.generated";
 import LedgerTableHead from "./Header";
 import Row from "./Row";
-import TableInfo from "./TableInfo";
+import TableInfo from "../../../../../components/TableInfo";
 import NewRecordDialog from "../../NewRecordDialog";
 import { useLedgerContext } from "../../Context/useLedgerContext";
 import TablePagination from "./Pagination";

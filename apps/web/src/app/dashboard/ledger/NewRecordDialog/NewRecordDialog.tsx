@@ -20,6 +20,7 @@ import FormControl from "./FormControl";
 import { getCurrentCutoff, getCurrentMonthNumber } from "./helper";
 import { useRouter } from "next/navigation";
 import { getMonthNumber } from "@/lib/getMonth";
+import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 
 const NewRecordDialog: React.FC = () => {
   const { addRecordDialogStatus, toggleAddRecordDialog } = useLedgerContext();
@@ -181,28 +182,7 @@ const NewRecordDialog: React.FC = () => {
                 }}
               />
             </FormControl>
-            <FormControl label="Record">
-              <div className="flex gap-4">
-                <Button
-                  type="button"
-                  className="h-8"
-                  variant={"outline"}
-                  onClick={handlePrevious}
-                  disabled={loading}
-                >
-                  Previous
-                </Button>
-                <Button
-                  type="button"
-                  className="h-8"
-                  variant={"outline"}
-                  onClick={handleNext}
-                  disabled={loading}
-                >
-                  Next
-                </Button>
-              </div>
-            </FormControl>
+            {/* <FormControl label="Record"></FormControl> */}
           </div>
           <div className="flex justify-between">
             <div className="">
@@ -233,7 +213,29 @@ const NewRecordDialog: React.FC = () => {
                 </>
               )}
             </div>
-            <div className="">
+            <div className="flex justify-between w-full">
+              <div className="flex gap-4">
+                <Button
+                  type="button"
+                  className="h-8"
+                  variant={"outline"}
+                  onClick={handlePrevious}
+                  disabled={loading}
+                  size="icon"
+                >
+                  <CaretLeftIcon className=" h-4 w-4" />
+                </Button>
+                <Button
+                  type="button"
+                  className="h-8"
+                  variant={"outline"}
+                  onClick={handleNext}
+                  disabled={loading}
+                  size="icon"
+                >
+                  <CaretRightIcon className=" h-4 w-4" />
+                </Button>
+              </div>
               <Button type="submit" className="h-8" disabled={loading}>
                 Generate
               </Button>

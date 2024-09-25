@@ -1,7 +1,10 @@
+import { GetLedgerListQuery } from "@/graphql/client.generated";
 import { create } from "zustand";
 
+export type TLedger = GetLedgerListQuery["ledger"][0];
+
 export type TValues = {
-  selectedLedger: number[];
+  selectedLedger: TLedger[];
 };
 
 export type TFilter = {

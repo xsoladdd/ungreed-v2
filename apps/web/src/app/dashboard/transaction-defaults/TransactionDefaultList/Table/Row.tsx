@@ -5,22 +5,20 @@ import { GetLedgerListQuery } from "@/graphql/client.generated";
 import { formatMoney } from "@/lib/formatMoney";
 import { getMonthName } from "@/lib/getMonth";
 import { cn } from "@/lib/utils";
-import { TLedger, useLedgerContext } from "../../Context/useLedgerContext";
-import { useRouter } from "next/navigation";
+import { useLedgerContext } from "../../Context/useLedgerContext";
 
 interface IRowProps {
-  row: TLedger;
+  row: GetLedgerListQuery["ledger"][0];
 }
 
 const Row: React.FC<IRowProps> = ({ row }) => {
   const { setValue, values } = useLedgerContext();
-  const { push } = useRouter();
 
   const actionMenuData = [
     {
       item: [
         {
-          label: `View`,
+          label: `Edit`,
           onClick: () => console.log(`data.id.toString()`),
         },
         {
@@ -46,47 +44,20 @@ const Row: React.FC<IRowProps> = ({ row }) => {
 
   const net = income - expense;
 
-  const checked = !!values?.selectedLedger?.find(({ id: x }) => x === row.id);
-
-  const url = `/dashboard/ledger/${row.cutoff === "1st" ? 1 : 2}-${row.month}-${row.year}`;
-
+  const checked = !!values?.selectedLedger?.find((x) => x === row.id);
   return (
     <>
-      <TableRow
-        className={cn(
-          "hover:bg-card odd:bg-[#fafafa03] font-light cursor-pointer"
-        )}
-        onClick={(e) => {
-          if (
-            e.ctrlKey ||
-            e.shiftKey ||
-            e.metaKey ||
-            (e.button && e.button === 1)
-          ) {
-            // Do not override the default behavior when special key is active -> will open link in a new tab/window depending on ctrl/shift
-            if (window && window.open) {
-              // @ts-ignore
-              window.open(url, "_blank").focus();
-            }
-            return;
-          }
-          e.preventDefault();
-          push(url);
-          console.log("hello");
-        }}
-      >
+      <TableRow className={cn("hover:bg-card odd:bg-[#fafafa03] font-light")}>
         <TableCell className="font-medium ">
           <Checkbox
             checked={checked}
-            onClick={(e) => {
-              e.stopPropagation();
-
+            onClick={() => {
               if (checked) {
                 setValue("selectedLedger", [
-                  ...values.selectedLedger.filter(({ id: x }) => x !== row.id),
+                  ...values.selectedLedger.filter((x) => x !== row.id),
                 ]);
               } else {
-                setValue("selectedLedger", [...values.selectedLedger, row]);
+                setValue("selectedLedger", [...values.selectedLedger, row.id]);
               }
             }}
           />

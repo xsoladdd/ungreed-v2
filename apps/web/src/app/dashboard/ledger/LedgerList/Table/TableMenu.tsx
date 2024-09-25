@@ -20,18 +20,43 @@ import {
 } from "lucide-react";
 import { useLedgerContext } from "../../Context/useLedgerContext";
 import { useGlobalAlertContext } from "@/components/GlobalAlert";
+import { useRouter } from "next/navigation";
 
 interface ITableMenuProps {}
 
 const TableMenu: React.FC<ITableMenuProps> = ({}) => {
   const { values } = useLedgerContext();
   const { createAlert, setProps } = useGlobalAlertContext();
+  const { push } = useRouter();
 
   const list = [
     {
       label: "Compare",
       Icon: <Columns2 className="h-3 w-3" />,
       disabled: values.selectedLedger.length < 2,
+      handleClick: (e: any) => {
+        const f: string[] = values.selectedLedger.map(
+          ({ cutoff, month, year }) =>
+            `${cutoff === "1st" ? 1 : 2}-${month}-${year}`
+        );
+        const url = `/dashboard/ledger/${f.join("/")}`;
+        if (
+          e.ctrlKey ||
+          e.shiftKey ||
+          e.metaKey ||
+          (e.button && e.button === 1)
+        ) {
+          // Do not override the default behavior when special key is active -> will open link in a new tab/window depending on ctrl/shift
+          if (window && window.open) {
+            // @ts-ignore
+            window.open(url, "_blank").focus();
+          }
+          return;
+        }
+        e.preventDefault();
+        push(url);
+        console.log("hello");
+      },
     },
     {
       label: "Lock",
@@ -97,7 +122,7 @@ const TableMenu: React.FC<ITableMenuProps> = ({}) => {
                 disabled={disabled}
                 key={idx}
                 className="cursor-pointer"
-                onClick={handleClick}
+                onClick={(e) => handleClick && handleClick(e)}
               >
                 {label}
                 <DropdownMenuShortcut>{Icon}</DropdownMenuShortcut>

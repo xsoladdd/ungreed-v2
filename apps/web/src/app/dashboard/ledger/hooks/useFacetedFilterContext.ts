@@ -6,14 +6,15 @@ export const useFacetedFilterContext = (
 ): facetedFilterProps => {
   const { filter, setFilter } = useLedgerContext();
 
-  const selectedValues = filter[key];
+  const selectedValues = Array.isArray(filter[key]) ? filter[key] : [];
 
   const addValue = (value: string) => {
-    setFilter(key, [...filter[key], value]);
+    setFilter(key, [...selectedValues, value]);
   };
 
   const removeValue = (value: any) => {
-    let newArr = filter[key];
+    const x = filter[key];
+    let newArr = Array.isArray(x) ? x : [];
     const index = newArr.indexOf(value as never);
     if (index !== -1) {
       newArr.splice(index, 1);
