@@ -1,7 +1,0 @@
-fragment UserProfileFragment on user_profile {
-  id
-  created_at
-  name
-  image
-  updated_at
-}

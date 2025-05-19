@@ -1,5 +1,0 @@
-query getUser($where: users_bool_exp) {
-  users(where: $where) {
-    ...UserFragment
-  }
-}

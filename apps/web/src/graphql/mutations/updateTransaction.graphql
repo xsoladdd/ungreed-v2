@@ -1,8 +1,0 @@
-mutation updateTransaction(
-  $pkColumns: transaction_pk_columns_input!
-  $set: transaction_set_input
-) {
-  update_transaction_by_pk(pk_columns: $pkColumns, _set: $set) {
-    ...TransactionFragment
-  }
-}
