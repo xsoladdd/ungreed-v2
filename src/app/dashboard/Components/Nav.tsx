@@ -11,17 +11,17 @@ const Nav: React.FC = () => {
   return (
     <>
       {" "}
-      <nav className="flex-1 space-y-1 p-4">
+      <nav className="flex-1 space-y-1 p-4 pt-8">
         {routes.map((route) => (
           <Link
             key={route.href}
             href={route.href}
             className={cn(
               "flex items-center rounded-lg px-4 py-2 text-sm  transition-colors font-semibold",
-              "hover:bg-accent-2/10  ",
+              "hover:bg-primary/15",
               pathname === route.href
-                ? "bg-accent-2/10 text-accent-1"
-                : "text-accent-1"
+                ? "bg-primary/15 text-white"
+                : "text-white"
             )}
           >
             {route.title}

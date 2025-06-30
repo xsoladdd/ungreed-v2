@@ -60,11 +60,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
             <div className="flex-1 overflow-y-auto p-4">
               <Nav />
             </div>
-
-            {/* Mobile Footer */}
-            <div className="border-t border-accent-2/20 p-4">
-              {/* <SidebarFooter /> */}
-            </div>
           </motion.div>
         </motion.div>
       )}

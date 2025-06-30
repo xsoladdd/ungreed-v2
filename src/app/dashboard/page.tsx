@@ -1,3 +1,3 @@
-import { default as Main } from "./main";
-
-export default Main;
+export default function Page() {
+  return <div>Hello</div>;
+}
