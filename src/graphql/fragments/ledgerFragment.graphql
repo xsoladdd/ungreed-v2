@@ -1,0 +1,12 @@
+fragment LedgerFragment on ledger {
+  created_at
+  cutoff
+  id
+  lock
+  month
+  transactions(order_by: { transaction_type: asc }) {
+    ...TransactionFragment
+  }
+  updated_at
+  year
+}

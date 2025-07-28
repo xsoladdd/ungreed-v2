@@ -1,0 +1,6 @@
+query getMe($email: String = "") {
+  users(limit: 1, where: { email: { _eq: $email } }) {
+    id
+    email
+  }
+}

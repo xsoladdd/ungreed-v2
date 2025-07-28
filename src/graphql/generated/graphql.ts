@@ -1718,6 +1718,7 @@ export type Transaction = {
   /** An object relationship */
   ledger: Ledger;
   ledger_id: Scalars['Int']['output'];
+  note?: Maybe<Scalars['String']['output']>;
   transaction_type: Scalars['bpchar']['output'];
   updated_at: Scalars['timestamptz']['output'];
 };
@@ -1828,6 +1829,7 @@ export type Transaction_Bool_Exp = {
   is_deleted?: InputMaybe<Boolean_Comparison_Exp>;
   ledger?: InputMaybe<Ledger_Bool_Exp>;
   ledger_id?: InputMaybe<Int_Comparison_Exp>;
+  note?: InputMaybe<String_Comparison_Exp>;
   transaction_type?: InputMaybe<Bpchar_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -1854,6 +1856,7 @@ export type Transaction_Insert_Input = {
   is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   ledger?: InputMaybe<Ledger_Obj_Rel_Insert_Input>;
   ledger_id?: InputMaybe<Scalars['Int']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -1866,6 +1869,7 @@ export type Transaction_Max_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   ledger_id?: Maybe<Scalars['Int']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
   transaction_type?: Maybe<Scalars['bpchar']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1877,6 +1881,7 @@ export type Transaction_Max_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   ledger_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   transaction_type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1889,6 +1894,7 @@ export type Transaction_Min_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   ledger_id?: Maybe<Scalars['Int']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
   transaction_type?: Maybe<Scalars['bpchar']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1900,6 +1906,7 @@ export type Transaction_Min_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   ledger_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   transaction_type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1929,6 +1936,7 @@ export type Transaction_Order_By = {
   is_deleted?: InputMaybe<Order_By>;
   ledger?: InputMaybe<Ledger_Order_By>;
   ledger_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   transaction_type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1952,6 +1960,8 @@ export enum Transaction_Select_Column {
   IsDeleted = 'is_deleted',
   /** column name */
   LedgerId = 'ledger_id',
+  /** column name */
+  Note = 'note',
   /** column name */
   TransactionType = 'transaction_type',
   /** column name */
@@ -1978,6 +1988,7 @@ export type Transaction_Set_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   ledger_id?: InputMaybe<Scalars['Int']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -2043,6 +2054,7 @@ export type Transaction_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   ledger_id?: InputMaybe<Scalars['Int']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   transaction_type?: InputMaybe<Scalars['bpchar']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -2076,6 +2088,8 @@ export enum Transaction_Update_Column {
   IsDeleted = 'is_deleted',
   /** column name */
   LedgerId = 'ledger_id',
+  /** column name */
+  Note = 'note',
   /** column name */
   TransactionType = 'transaction_type',
   /** column name */
@@ -2609,12 +2623,249 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type LedgerFragmentFragment = { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null }> };
+
+export type DefaultLedgerTransactionsFragmentFragment = { __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any };
+
+export type TransactionFragmentFragment = { __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null };
+
+export type GenerateLedgerMutationVariables = Exact<{
+  input: Ledger_Insert_Input;
+}>;
+
+
+export type GenerateLedgerMutation = { __typename?: 'mutation_root', insert_ledger_one?: { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null }> } | null };
+
+export type GetLedgerIdsQueryVariables = Exact<{
+  userId: Scalars['uuid']['input'];
+}>;
+
+
+export type GetLedgerIdsQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', id: number }> };
+
+export type GetLedgerListQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Ledger_Bool_Exp>;
+  orderBy?: InputMaybe<Array<Ledger_Order_By> | Ledger_Order_By>;
+}>;
+
+
+export type GetLedgerListQuery = { __typename?: 'query_root', ledger: Array<{ __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null }> }>, ledger_aggregate: { __typename?: 'ledger_aggregate', aggregate?: { __typename?: 'ledger_aggregate_fields', count: number } | null } };
+
+export type GetMeQueryVariables = Exact<{
+  email?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetMeQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, email: string }> };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any }> };
 
+export const TransactionFragmentFragmentDoc = gql`
+    fragment TransactionFragment on transaction {
+  amount
+  created_at
+  description
+  id
+  is_deleted
+  ledger_id
+  transaction_type
+  updated_at
+  note
+}
+    `;
+export const LedgerFragmentFragmentDoc = gql`
+    fragment LedgerFragment on ledger {
+  created_at
+  cutoff
+  id
+  lock
+  month
+  transactions(order_by: {transaction_type: asc}) {
+    ...TransactionFragment
+  }
+  updated_at
+  year
+}
+    ${TransactionFragmentFragmentDoc}`;
+export const DefaultLedgerTransactionsFragmentFragmentDoc = gql`
+    fragment DefaultLedgerTransactionsFragment on default_ledger_transactions {
+  amount
+  created_at
+  cutoff
+  description
+  id
+  is_deleted
+  transaction_type
+  updated_at
+}
+    `;
+export const GenerateLedgerDocument = gql`
+    mutation generateLedger($input: ledger_insert_input!) {
+  insert_ledger_one(object: $input) {
+    ...LedgerFragment
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
+export type GenerateLedgerMutationFn = Apollo.MutationFunction<GenerateLedgerMutation, GenerateLedgerMutationVariables>;
 
+/**
+ * __useGenerateLedgerMutation__
+ *
+ * To run a mutation, you first call `useGenerateLedgerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateLedgerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [generateLedgerMutation, { data, loading, error }] = useGenerateLedgerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGenerateLedgerMutation(baseOptions?: Apollo.MutationHookOptions<GenerateLedgerMutation, GenerateLedgerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GenerateLedgerMutation, GenerateLedgerMutationVariables>(GenerateLedgerDocument, options);
+      }
+export type GenerateLedgerMutationHookResult = ReturnType<typeof useGenerateLedgerMutation>;
+export type GenerateLedgerMutationResult = Apollo.MutationResult<GenerateLedgerMutation>;
+export type GenerateLedgerMutationOptions = Apollo.BaseMutationOptions<GenerateLedgerMutation, GenerateLedgerMutationVariables>;
+export const GetLedgerIdsDocument = gql`
+    query getLedgerIds($userId: uuid!) {
+  ledger(where: {user_id: {_eq: $userId}}, order_by: {id: desc}) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetLedgerIdsQuery__
+ *
+ * To run a query within a React component, call `useGetLedgerIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLedgerIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLedgerIdsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetLedgerIdsQuery(baseOptions: Apollo.QueryHookOptions<GetLedgerIdsQuery, GetLedgerIdsQueryVariables> & ({ variables: GetLedgerIdsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>(GetLedgerIdsDocument, options);
+      }
+export function useGetLedgerIdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>(GetLedgerIdsDocument, options);
+        }
+export function useGetLedgerIdsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>(GetLedgerIdsDocument, options);
+        }
+export type GetLedgerIdsQueryHookResult = ReturnType<typeof useGetLedgerIdsQuery>;
+export type GetLedgerIdsLazyQueryHookResult = ReturnType<typeof useGetLedgerIdsLazyQuery>;
+export type GetLedgerIdsSuspenseQueryHookResult = ReturnType<typeof useGetLedgerIdsSuspenseQuery>;
+export type GetLedgerIdsQueryResult = Apollo.QueryResult<GetLedgerIdsQuery, GetLedgerIdsQueryVariables>;
+export const GetLedgerListDocument = gql`
+    query getLedgerList($limit: Int, $offset: Int, $where: ledger_bool_exp, $orderBy: [ledger_order_by!]) {
+  ledger(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
+    ...LedgerFragment
+  }
+  ledger_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    ${LedgerFragmentFragmentDoc}`;
+
+/**
+ * __useGetLedgerListQuery__
+ *
+ * To run a query within a React component, call `useGetLedgerListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLedgerListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLedgerListQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useGetLedgerListQuery(baseOptions?: Apollo.QueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+      }
+export function useGetLedgerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+        }
+export function useGetLedgerListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLedgerListQuery, GetLedgerListQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument, options);
+        }
+export type GetLedgerListQueryHookResult = ReturnType<typeof useGetLedgerListQuery>;
+export type GetLedgerListLazyQueryHookResult = ReturnType<typeof useGetLedgerListLazyQuery>;
+export type GetLedgerListSuspenseQueryHookResult = ReturnType<typeof useGetLedgerListSuspenseQuery>;
+export type GetLedgerListQueryResult = Apollo.QueryResult<GetLedgerListQuery, GetLedgerListQueryVariables>;
+export const GetMeDocument = gql`
+    query getMe($email: String = "") {
+  users(limit: 1, where: {email: {_eq: $email}}) {
+    id
+    email
+  }
+}
+    `;
+
+/**
+ * __useGetMeQuery__
+ *
+ * To run a query within a React component, call `useGetMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeQuery({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useGetMeQuery(baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
+      }
+export function useGetMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
+        }
+export function useGetMeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
+        }
+export type GetMeQueryHookResult = ReturnType<typeof useGetMeQuery>;
+export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
+export type GetMeSuspenseQueryHookResult = ReturnType<typeof useGetMeSuspenseQuery>;
+export type GetMeQueryResult = Apollo.QueryResult<GetMeQuery, GetMeQueryVariables>;
 export const UsersDocument = gql`
     query Users {
   users {

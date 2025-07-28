@@ -18,13 +18,8 @@ export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const isValidRoute = routes.some((route) => route.href === pathname);
 
-    if (pathname !== "/dashboard" && !isValidRoute) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-
-    // Allow /dashboard but redirect invalid routes to /dashboard/main
-    // if (pathname !== "/dashboard/main" && !isValidRoute) {
-    //   return NextResponse.redirect(new URL("/dashboard/main", request.url));
+    // if (pathname !== "/dashboard" && !isValidRoute) {
+    //   return NextResponse.redirect(new URL("/dashboard", request.url));
     // }
   }
 

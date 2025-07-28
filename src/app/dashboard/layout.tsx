@@ -2,12 +2,14 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SiteHeader } from "./Components/Layout/site-header";
 import { AppSidebar } from "./Components/Layout/app-sidebar";
+import { usePopulateUser } from "@/hooks/usePopulateUser";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { data, loading, error } = usePopulateUser();
   return (
     <SidebarProvider
       style={
@@ -22,6 +24,7 @@ export default function DashboardLayout({
         <SiteHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
+            {loading && "Loading"}
             {children}
           </div>
         </div>

@@ -18,8 +18,13 @@ export function NavMain() {
     router.push(url);
   };
 
-  const isActive = (url: string) => {
-    return pathname === url;
+  const isActive = (href: string) => {
+    console.log(pathname);
+    console.log(href);
+    if (pathname.includes("/dashboard/ledger") && href === "/dashboard") {
+      return true;
+    }
+    return pathname.startsWith(href);
   };
 
   return (

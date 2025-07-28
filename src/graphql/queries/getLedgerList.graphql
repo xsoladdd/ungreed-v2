@@ -1,0 +1,15 @@
+query getLedgerList(
+  $limit: Int
+  $offset: Int
+  $where: ledger_bool_exp
+  $orderBy: [ledger_order_by!]
+) {
+  ledger(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
+    ...LedgerFragment
+  }
+  ledger_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
