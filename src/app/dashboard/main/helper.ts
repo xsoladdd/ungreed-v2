@@ -15,7 +15,8 @@ export const filterData: FilterProp[] = [
     key: "year",
     type: "select",
     label: "Year",
-    value: new Date().getFullYear().toString(),
+    // value: new Date().getFullYear().toString(),
+    value: "all",
     options: [
       ...Array.from({ length: 7 }, (_, i) => {
         const year = new Date().getFullYear() - 3 + i;

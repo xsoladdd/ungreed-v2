@@ -1,79 +1,52 @@
-import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Icon } from "@iconify/react";
+import React, { useState } from "react";
+import LedgerListModal from "../../Components/LedgerListModal";
 
 const DropdownSettings: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
-            <Icon icon="mdi-light:home" />
+          <Button
+            variant="outline"
+            size="icon"
+            className="focus-visible:ring-0 focus-visible:ring-offset-0"
+          >
+            <Icon icon="qlementine-icons:menu-dots-16" width={24} height={24} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>Manage Ledger</DropdownMenuLabel>
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <DropdownMenuItem onClick={() => setIsOpen(true)}>
+              Compare
+              <DropdownMenuShortcut>
+                {" "}
+                <Icon icon="pajamas:comparison" width={24} height={24} />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              Billing
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Settings
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Keyboard shortcuts
-              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              Delete
+              <DropdownMenuShortcut>
+                {" "}
+                <Icon icon="fa7-regular:trash-alt" width={24} height={24} />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuItem>
-              New Team
-              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>GitHub</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuItem disabled>API</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            Log out
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <LedgerListModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };

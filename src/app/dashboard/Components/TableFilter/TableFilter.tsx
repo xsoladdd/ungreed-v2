@@ -30,35 +30,32 @@ const TableFilter: React.FC<TableFilterProps> = ({
     params.delete("search");
     router.push(`?${params.toString()}`);
   };
-  return (
-    <div
-      className="flex lg:gap-4  flex-col lg:flex-row
-     justify-between
-    "
+
+  const reset = hasReset && (
+    <Button
+      className="bg-primary text-white"
+      variant="outline"
+      onClick={handleReset}
     >
-      <div className="flex gap-4">
-        {hasSearch && <SearchInput />}
-        {data &&
-          data.map((item) => {
-            return <SelectTypeFilter filterData={item} key={item.key} />;
-          })}
-        <div className="flex pb-2 lg:pb-4 lg:place-self-end ">
-          {hasReset && (
-            <Button
-              className="bg-primary text-white"
-              variant="outline"
-              onClick={handleReset}
-            >
-              Reset Filter
-            </Button>
-          )}
+      Reset Filter
+    </Button>
+  );
+  return (
+    <>
+      <div className="flex lg:gap-4  flex-col lg:flex-row justify-between">
+        <div className="flex  flex-col md:flex-row md:gap-4">
+          {hasSearch && <SearchInput />}
+          {data &&
+            data.map((item) => {
+              return <SelectTypeFilter filterData={item} key={item.key} />;
+            })}
         </div>
       </div>
-
-      <div className="flex flex-row gap-4 pb-2 lg:pb-4 lg:place-self-end">
-        {buttons}
+      <div className="flex gap-2 md:justify-between">
+        {reset && <div>{reset}</div>}
+        <div className="flex flex-row gap-4 pb-2  ">{buttons}</div>
       </div>
-    </div>
+    </>
   );
 };
 

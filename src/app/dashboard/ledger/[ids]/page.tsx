@@ -1,6 +1,9 @@
 "use client";
-import { useGetLedgerListQuery } from "@/graphql/generated/graphql";
-import { useParams } from "next/navigation";
+import {
+  GetLedgerListQuery,
+  useGetLedgerListQuery,
+} from "@/graphql/generated/graphql";
+import { useParams, useSearchParams } from "next/navigation";
 import { useGlobalStore } from "@/store/globalStore";
 import HeadingCaption from "../../Components/HeadingCaption";
 import PageLoader from "../../Components/PageLoader";
@@ -12,10 +15,19 @@ import { decodeIds } from "./helper";
 import LedgerNavigation from "./LedgerNavigation";
 import TableFilter from "../../Components/TableFilter";
 import DropdownSettings from "./DropdownSettings";
+import AddEntryFormModal from "./AddEntryFormModal";
+import { useState } from "react";
+import EditEntryModalForm from "./EditEntryModalForm/EditEntryModalForm";
+import { useEditFormStore } from "./EditEntryModalForm/useEditFormStore";
 
 export default function LedgerPage() {
   const { ids } = useParams();
   const { user } = useGlobalStore();
+
+  const [isEntryFormOpen, setIsEntryFormOpen] = useState(false);
+  const { isOpen, setIsOpen, transaction, populateTransaction } =
+    useEditFormStore();
+
   // Decode URL parameter and split by comma to handle multiple IDs
   const idArray = decodeIds(ids as string);
 
@@ -66,16 +78,21 @@ export default function LedgerPage() {
         right={!isMultipleDisplay && <LedgerNavigation loading={loading} />}
       />
 
-      <div className="px-6">
-        <TableFilter
-          buttons={
-            <>
-              <Button>Create a new entry</Button>
-              <DropdownSettings />
-            </>
-          }
-        />
-      </div>
+      {!isMultipleDisplay && (
+        <div className="pl-6">
+          <TableFilter
+            buttons={
+              <>
+                <AddEntryFormModal
+                  isOpen={isEntryFormOpen}
+                  setIsOpen={setIsEntryFormOpen}
+                />
+                <DropdownSettings />
+              </>
+            }
+          />
+        </div>
+      )}
 
       <div className="px-6">
         {loading && <PageLoader />}
@@ -85,11 +102,15 @@ export default function LedgerPage() {
             isMultipleDisplay ? "md:grid-cols-2" : "md:grid-cols-1"
           )}
         >
+          {<EditEntryModalForm />}
           {data?.ledger.map((ledger) => (
             <LedgerTransactionsTable
               key={ledger.id}
               ledger={ledger}
               showLabel={isMultipleDisplay}
+              onTransactionClick={(transaction) => {
+                populateTransaction(transaction);
+              }}
             />
           ))}
         </div>

@@ -84,7 +84,7 @@ const LedgerNavigation: React.FC<{ loading: boolean }> = ({
   return (
     <div className="flex flex-row gap-2">
       <Button
-        variant="outline"
+        variant="ghost"
         size="sm"
         onClick={handlePrevious}
         disabled={!navigationData.hasPrevious || loadingProps}
@@ -92,7 +92,7 @@ const LedgerNavigation: React.FC<{ loading: boolean }> = ({
         Previous
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         size="sm"
         onClick={handleNext}
         disabled={!navigationData.hasNext || loadingProps}

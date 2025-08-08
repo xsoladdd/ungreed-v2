@@ -1,0 +1,9 @@
+mutation inserTransaction(
+  $input: transaction_insert_input!
+  $onConflict: transaction_on_conflict
+) {
+  insert_transaction_one(object: $input, on_conflict: $onConflict) {
+    ...TransactionFragment
+    __typename
+  }
+}

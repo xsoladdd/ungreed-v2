@@ -1,0 +1,38 @@
+query getDefaultLedgerTransactions(
+  $where: default_ledger_transactions_bool_exp = {}
+  $user_Id: uuid!
+  $orderBy: [default_ledger_transactions_order_by!]
+  $offset: Int
+  $limit: Int
+) {
+  default_ledger_transactions(
+    where: {
+      is_deleted: { _eq: false }
+      user_id: { _eq: $user_Id }
+      _and: [$where]
+    }
+    order_by: $orderBy
+    offset: $offset
+    limit: $limit
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+  }
+  default_ledger_transactions_aggregate(
+    where: {
+      is_deleted: { _eq: false }
+      user_id: { _eq: $user_Id }
+      _and: [$where]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -19,12 +19,12 @@ export function NavMain() {
   };
 
   const isActive = (href: string) => {
-    console.log(pathname);
-    console.log(href);
+    console.log(`pathname: ${pathname}`);
+    console.log(`href: ${href}`);
     if (pathname.includes("/dashboard/ledger") && href === "/dashboard") {
       return true;
     }
-    return pathname.startsWith(href);
+    return pathname === href;
   };
 
   return (

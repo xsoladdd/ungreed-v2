@@ -1,0 +1,19 @@
+mutation upsertTransactionDefault(
+  $object: default_ledger_transactions_insert_input!
+  $onConflict: default_ledger_transactions_on_conflict
+) {
+  insert_default_ledger_transactions_one(
+    object: $object
+    on_conflict: $onConflict
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+    user_id
+  }
+}

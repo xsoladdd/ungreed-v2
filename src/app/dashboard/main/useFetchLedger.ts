@@ -1,16 +1,16 @@
 import { Order_By, useGetLedgerListQuery } from "@/graphql/generated/graphql";
-import { limit } from "./helper";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalStore } from "@/store/globalStore";
 
-export const useFetchLedger = () => {
+export const useFetchLedger = (limit = 10) => {
   const router = useRouter();
   const { user } = useGlobalStore();
   const searchParams = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
-  const year = searchParams.get("year") || new Date().getFullYear().toString();
+  const year = searchParams.get("year") || "all";
 
   const month = searchParams.get("month") || undefined;
 

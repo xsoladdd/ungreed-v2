@@ -4,7 +4,10 @@ fragment LedgerFragment on ledger {
   id
   lock
   month
-  transactions(order_by: { transaction_type: asc }) {
+  transactions(
+    order_by: { transaction_type: asc }
+    where: { is_deleted: { _eq: false } }
+  ) {
     ...TransactionFragment
   }
   updated_at

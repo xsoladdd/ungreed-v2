@@ -1,5 +1,8 @@
 query getLedgerIds($userId: uuid!) {
-  ledger(where: { user_id: { _eq: $userId } }, order_by: { id: desc }) {
+  ledger(
+    where: { user_id: { _eq: $userId }, is_deleted: { _eq: false } }
+    order_by: { id: desc }
+  ) {
     id
   }
 }

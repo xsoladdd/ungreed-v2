@@ -2636,6 +2636,33 @@ export type GenerateLedgerMutationVariables = Exact<{
 
 export type GenerateLedgerMutation = { __typename?: 'mutation_root', insert_ledger_one?: { __typename?: 'ledger', created_at: any, cutoff: any, id: number, lock: boolean, month: number, updated_at: any, year: number, transactions: Array<{ __typename?: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null }> } | null };
 
+export type InserTransactionMutationVariables = Exact<{
+  input: Transaction_Insert_Input;
+  onConflict?: InputMaybe<Transaction_On_Conflict>;
+}>;
+
+
+export type InserTransactionMutation = { __typename?: 'mutation_root', insert_transaction_one?: { __typename: 'transaction', amount: number, created_at: any, description: string, id: number, is_deleted: boolean, ledger_id: number, transaction_type: any, updated_at: any, note?: string | null } | null };
+
+export type UpsertTransactionDefaultMutationVariables = Exact<{
+  object: Default_Ledger_Transactions_Insert_Input;
+  onConflict?: InputMaybe<Default_Ledger_Transactions_On_Conflict>;
+}>;
+
+
+export type UpsertTransactionDefaultMutation = { __typename?: 'mutation_root', insert_default_ledger_transactions_one?: { __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any, user_id: any } | null };
+
+export type GetDefaultLedgerTransactionsQueryVariables = Exact<{
+  where?: InputMaybe<Default_Ledger_Transactions_Bool_Exp>;
+  user_Id: Scalars['uuid']['input'];
+  orderBy?: InputMaybe<Array<Default_Ledger_Transactions_Order_By> | Default_Ledger_Transactions_Order_By>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetDefaultLedgerTransactionsQuery = { __typename?: 'query_root', default_ledger_transactions: Array<{ __typename?: 'default_ledger_transactions', amount: number, created_at: any, cutoff: string, description: string, id: number, is_deleted: boolean, transaction_type: any, updated_at: any }>, default_ledger_transactions_aggregate: { __typename?: 'default_ledger_transactions_aggregate', aggregate?: { __typename?: 'default_ledger_transactions_aggregate_fields', count: number } | null } };
+
 export type GetLedgerIdsQueryVariables = Exact<{
   userId: Scalars['uuid']['input'];
 }>;
@@ -2685,7 +2712,10 @@ export const LedgerFragmentFragmentDoc = gql`
   id
   lock
   month
-  transactions(order_by: {transaction_type: asc}) {
+  transactions(
+    order_by: {transaction_type: asc}
+    where: {is_deleted: {_eq: false}}
+  ) {
     ...TransactionFragment
   }
   updated_at
@@ -2737,9 +2767,155 @@ export function useGenerateLedgerMutation(baseOptions?: Apollo.MutationHookOptio
 export type GenerateLedgerMutationHookResult = ReturnType<typeof useGenerateLedgerMutation>;
 export type GenerateLedgerMutationResult = Apollo.MutationResult<GenerateLedgerMutation>;
 export type GenerateLedgerMutationOptions = Apollo.BaseMutationOptions<GenerateLedgerMutation, GenerateLedgerMutationVariables>;
+export const InserTransactionDocument = gql`
+    mutation inserTransaction($input: transaction_insert_input!, $onConflict: transaction_on_conflict) {
+  insert_transaction_one(object: $input, on_conflict: $onConflict) {
+    ...TransactionFragment
+    __typename
+  }
+}
+    ${TransactionFragmentFragmentDoc}`;
+export type InserTransactionMutationFn = Apollo.MutationFunction<InserTransactionMutation, InserTransactionMutationVariables>;
+
+/**
+ * __useInserTransactionMutation__
+ *
+ * To run a mutation, you first call `useInserTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInserTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [inserTransactionMutation, { data, loading, error }] = useInserTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      onConflict: // value for 'onConflict'
+ *   },
+ * });
+ */
+export function useInserTransactionMutation(baseOptions?: Apollo.MutationHookOptions<InserTransactionMutation, InserTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InserTransactionMutation, InserTransactionMutationVariables>(InserTransactionDocument, options);
+      }
+export type InserTransactionMutationHookResult = ReturnType<typeof useInserTransactionMutation>;
+export type InserTransactionMutationResult = Apollo.MutationResult<InserTransactionMutation>;
+export type InserTransactionMutationOptions = Apollo.BaseMutationOptions<InserTransactionMutation, InserTransactionMutationVariables>;
+export const UpsertTransactionDefaultDocument = gql`
+    mutation upsertTransactionDefault($object: default_ledger_transactions_insert_input!, $onConflict: default_ledger_transactions_on_conflict) {
+  insert_default_ledger_transactions_one(
+    object: $object
+    on_conflict: $onConflict
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+    user_id
+  }
+}
+    `;
+export type UpsertTransactionDefaultMutationFn = Apollo.MutationFunction<UpsertTransactionDefaultMutation, UpsertTransactionDefaultMutationVariables>;
+
+/**
+ * __useUpsertTransactionDefaultMutation__
+ *
+ * To run a mutation, you first call `useUpsertTransactionDefaultMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertTransactionDefaultMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertTransactionDefaultMutation, { data, loading, error }] = useUpsertTransactionDefaultMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *      onConflict: // value for 'onConflict'
+ *   },
+ * });
+ */
+export function useUpsertTransactionDefaultMutation(baseOptions?: Apollo.MutationHookOptions<UpsertTransactionDefaultMutation, UpsertTransactionDefaultMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpsertTransactionDefaultMutation, UpsertTransactionDefaultMutationVariables>(UpsertTransactionDefaultDocument, options);
+      }
+export type UpsertTransactionDefaultMutationHookResult = ReturnType<typeof useUpsertTransactionDefaultMutation>;
+export type UpsertTransactionDefaultMutationResult = Apollo.MutationResult<UpsertTransactionDefaultMutation>;
+export type UpsertTransactionDefaultMutationOptions = Apollo.BaseMutationOptions<UpsertTransactionDefaultMutation, UpsertTransactionDefaultMutationVariables>;
+export const GetDefaultLedgerTransactionsDocument = gql`
+    query getDefaultLedgerTransactions($where: default_ledger_transactions_bool_exp = {}, $user_Id: uuid!, $orderBy: [default_ledger_transactions_order_by!], $offset: Int, $limit: Int) {
+  default_ledger_transactions(
+    where: {is_deleted: {_eq: false}, user_id: {_eq: $user_Id}, _and: [$where]}
+    order_by: $orderBy
+    offset: $offset
+    limit: $limit
+  ) {
+    amount
+    created_at
+    cutoff
+    description
+    id
+    is_deleted
+    transaction_type
+    updated_at
+  }
+  default_ledger_transactions_aggregate(
+    where: {is_deleted: {_eq: false}, user_id: {_eq: $user_Id}, _and: [$where]}
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetDefaultLedgerTransactionsQuery__
+ *
+ * To run a query within a React component, call `useGetDefaultLedgerTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDefaultLedgerTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDefaultLedgerTransactionsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      user_Id: // value for 'user_Id'
+ *      orderBy: // value for 'orderBy'
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useGetDefaultLedgerTransactionsQuery(baseOptions: Apollo.QueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables> & ({ variables: GetDefaultLedgerTransactionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+      }
+export function useGetDefaultLedgerTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+        }
+export function useGetDefaultLedgerTransactionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>(GetDefaultLedgerTransactionsDocument, options);
+        }
+export type GetDefaultLedgerTransactionsQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsQuery>;
+export type GetDefaultLedgerTransactionsLazyQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsLazyQuery>;
+export type GetDefaultLedgerTransactionsSuspenseQueryHookResult = ReturnType<typeof useGetDefaultLedgerTransactionsSuspenseQuery>;
+export type GetDefaultLedgerTransactionsQueryResult = Apollo.QueryResult<GetDefaultLedgerTransactionsQuery, GetDefaultLedgerTransactionsQueryVariables>;
 export const GetLedgerIdsDocument = gql`
     query getLedgerIds($userId: uuid!) {
-  ledger(where: {user_id: {_eq: $userId}}, order_by: {id: desc}) {
+  ledger(
+    where: {user_id: {_eq: $userId}, is_deleted: {_eq: false}}
+    order_by: {id: desc}
+  ) {
     id
   }
 }
