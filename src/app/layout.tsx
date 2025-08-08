@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     "Manage your budget and finances with Ungreed - a comprehensive budget tracking application",
 };
 
+// Trigger build
 export default function RootLayout({
   children,
 }: Readonly<{
