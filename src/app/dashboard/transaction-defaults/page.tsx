@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import HeadingCaption from "../Components/HeadingCaption";
 import TransactionDefaultFilter from "./TransactionDefaultFilter";
 import TransactionDefaultTable from "./TransactionDefaultTable";
 import TransactionDefaultPagination from "./TransactionDefaultPagination";
 import AddEditTDModal from "./AddEditTDModal";
 
-const page: React.FC = () => {
+const TransactionDefaultsContent: React.FC = () => {
   return (
     <div className="py-4 px-4">
       <HeadingCaption
@@ -25,4 +25,9 @@ const page: React.FC = () => {
     </div>
   );
 };
+
+const page: React.FC = () => {
+  return <TransactionDefaultsContent />;
+};
+
 export default page;

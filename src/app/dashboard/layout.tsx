@@ -3,6 +3,8 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SiteHeader } from "./Components/Layout/site-header";
 import { AppSidebar } from "./Components/Layout/app-sidebar";
 import { usePopulateUser } from "@/hooks/usePopulateUser";
+import { Suspense } from "react";
+import PageLoader from "./Components/PageLoader";
 
 export default function DashboardLayout({
   children,
@@ -24,8 +26,8 @@ export default function DashboardLayout({
         <SiteHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
-            {loading && "Loading"}
-            {children}
+            {loading && <PageLoader />}
+            <Suspense fallback={<PageLoader />}>{children}</Suspense>
           </div>
         </div>
       </SidebarInset>
